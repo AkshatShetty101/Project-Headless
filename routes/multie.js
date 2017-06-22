@@ -24,7 +24,6 @@ router.post('/',function(request,response) {
     horseman
     .viewport(3700,2800)
     .zoom(2);
-    //horseman.clipRect={top:200,left:900,width:800,height:400};'1~Regional Language~0~~~marathi'
     horseman
     .open('http://services.ecourts.gov.in/ecourtindia_v5/')
     .catch(function(err) {
@@ -125,7 +124,6 @@ router.post('/',function(request,response) {
       }
     }, '#sess_state_code','#court_complex_code','#sess_dist_code',"#petres_name","#rgyearP","#radB",unique)
     .then(function(size){
-
       Jimp.read(unique+".png", function (err, img) {
         if (err) throw err;
         img.crop(780,820,240,80)            // resize
@@ -197,7 +195,6 @@ router.post('/a',function(request,response){
         height5 : jQuery(selector6).is(':checked'),
         height6 : jQuery(selector8).attr('class'),
         height7 : jQuery('.Gobtn').attr('onclick')
-
       }
     }, '#sess_state_code','#court_complex_code','#sess_dist_code',"#petres_name","#rgyearP","#radB",'#captcha','#captcha_container_2')
     .then(function(data){
@@ -215,10 +212,6 @@ router.post('/a',function(request,response){
     },'#errSpan','#showList')
     .then(function(data){
       console.log(data);
-    })
-    //.wait(18000)
-    .evaluate(function(){
-
     })
     .waitFor(function wait2(selector1,selector2){
       if(jQuery(selector1).css("display")=='block')
@@ -299,9 +292,9 @@ router.post('/a',function(request,response){
       else return false;
     },'#errSpan','#showList')
     .then(function(data){
-      console.log('data found');
       if(data!=false)
       {
+        console.log('data found');
         var d ={"status":"1","html":data,"code":code.toString()}
         response.json(d);
       }
@@ -354,7 +347,6 @@ router.post('/refreshCaptcha',function(request,response) {
       }
     }, '#sess_state_code','#court_complex_code','#sess_dist_code',"#petres_name","#rgyearP","#radB",code)
     .then(function(size){
-
       Jimp.read(code+".png", function (err, img) {
         if (err) throw err;
         img.crop(780,820,240,80)
