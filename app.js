@@ -8,7 +8,8 @@ var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
-var supreme = require('./routes/multie.js');
+var ecourt = require('./routes/multie.js');
+var supreme = require('./routes/supreme.js');
 // var url = 'mongodb://localhost:27017/Prodirect';
 // var mongoose = require('mongoose'),
 //     assert = require('assert');
@@ -31,7 +32,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 app.use('/', index);
 app.use('/users', users);
-app.use('/supreme', supreme);
+app.use('/supreme', ecourt);
+app.use('/supreme1', supreme);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
