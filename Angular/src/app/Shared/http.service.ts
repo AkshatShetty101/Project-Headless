@@ -43,6 +43,7 @@ export class HttpService {
   }
 
   getCaptcha(request: any){
+    console.log('Inside refresh!');
     const body = request;
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');

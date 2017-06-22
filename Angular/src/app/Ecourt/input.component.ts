@@ -206,14 +206,13 @@ export class InputComponent implements OnInit {
           }
           console.log(invalid);
           console.log(this.hallpass);
-          /*
           if( this.hallpass == true){
             this.router.navigateByUrl('/eCourt/records');
           }
           else{
             alert('Invalid Captcha!');
             this.invalidHandler(invalid);
-          }*/
+          }
         });
   }
 
@@ -221,7 +220,10 @@ export class InputComponent implements OnInit {
     let i: any;
     for (i = 0; i < invalid.length; i++) {
       this.getCaptcha(invalid[i]);
-      while(this.hallpass == false){}
+      while(this.hallpass == false){
+      //  console.log('I');
+      }
+      console.log('Exit');
     }
   }
 
@@ -236,8 +238,9 @@ export class InputComponent implements OnInit {
       .subscribe(
         (data) => {
           console.log(data);
-          this.auth.storeId(data.code, 'invalid');
-          this.recaptcha = data.img;
+          this.hallpass = true;
+          //this.auth.storeId(data.code, 'invalid');
+          //this.recaptcha = data.img;
         }
       );
   }
@@ -252,7 +255,7 @@ export class InputComponent implements OnInit {
       .subscribe(
         (data) => {
           console.log(data);
-          this.resultHandler(data);
+          //this.resultHandler(data);
         }
       );
   }
