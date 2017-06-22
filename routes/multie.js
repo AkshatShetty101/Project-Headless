@@ -312,13 +312,14 @@ router.post('/refreshCaptcha',function(request,response) {
   var code = request.body.code.toString();
   if(horseman1["'"+code+"'"]!=undefined)
   {
+    console.log("IN!!!");
     horseman1["'"+code+"'"]
     .click('a[title="Refresh Image"]')
     .click('img[src="images/refresh-btn.jpg"]')
     .wait(3000)
     .evaluate( function(selector1){
       return {
-        height : jQuery(selector1).attr('src'),
+        height : jQuery(selector1).attr('src')
       }
     }, '#captcha_image')
     .then(function(data){
@@ -366,6 +367,7 @@ router.post('/refreshCaptcha',function(request,response) {
     });
   }
   else {
+    console.log("OUT!!");
     response.json("Too early");
   }
 });
