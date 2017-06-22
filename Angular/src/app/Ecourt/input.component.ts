@@ -29,6 +29,8 @@ export class InputComponent implements OnInit {
   count : any = 0;
   opt : any;
   hallpass: any = true;
+  invalid: any[] = new Array(0);
+  tout: any[] = new Array(0);
   constructor(
     private formBuilder: FormBuilder,
     private http: HttpService,
@@ -191,7 +193,7 @@ export class InputComponent implements OnInit {
       .subscribe(
         results => {
           console.log(results);
-          let n: any = 0, invalid: any[] = new Array(0);
+          let n: any = 0, m: any = 0;
           for(i=0; i<results.length; i++){
             result = results[i];
             if(result.status === "1"){
@@ -200,33 +202,60 @@ export class InputComponent implements OnInit {
             }
             else
             if(result.status === "2"){
-              invalid[n++] = result.code;
-              this.hallpass = false;
+              this.invalid[n++] = result.code;
+            }
+            else
+            if(data.status === "3"){
+              console.log('No records!');
+            }
+            else{
+              //this.tout[m++] = result.code;
             }
           }
-          console.log(invalid);
+          console.log(this.invalid);
           console.log(this.hallpass);
+          if(this.invalid.length > 0){
+            alert('Invalid Captcha!');
+            this.invalidHandler(this.invalid);
+          }
+          else
+          if(this.tout.length > 0){
+            alert('Timeout!');
+            //this.toutHandler(this.tout, request);
+          }
+          else
           if( this.hallpass == true){
             this.router.navigateByUrl('/eCourt/records');
-          }
-          else{
-            alert('Invalid Captcha!');
-            this.invalidHandler(invalid);
           }
         });
   }
 
   invalidHandler(invalid: any[]) {
-    let i: any;
-    for (i = 0; i < invalid.length; i++) {
-      this.getCaptcha(invalid[i]);
-      while(this.hallpass == false){
+
+    if(this.invalid.length !==0)
+      this.getCaptcha(invalid[0]);
+      //while(this.hallpass == false){
       //  console.log('I');
-      }
-      console.log('Exit');
+      //}
+      //console.log('Exit');
+  }
+
+  toutHandler(tout: any[], requests: any[]){
+    let i: any;
+    for(i=0; i<tout.length; i++){
+      this.requestSearch(tout[i], requests);
     }
   }
 
+  requestSearch(check: any, requests: any[]){
+    let j:any, request:any;
+    for(j=0; j<requests.length; j++){
+      request = requests[j];
+      if(check === request.code){
+
+      }
+    }
+  }
   getCaptcha(code: any) {
     let request : any;
     console.log('Inside Invalid!');
@@ -238,14 +267,15 @@ export class InputComponent implements OnInit {
       .subscribe(
         (data) => {
           console.log(data);
-          this.hallpass = true;
-          //this.auth.storeId(data.code, 'invalid');
-          //this.recaptcha = data.img;
+          this.auth.storeId(data.code, 'invalid');
+          this.recaptcha = data.img;
+          this.hallpass = false;
         }
       );
   }
 
   testInvalid(data:any){
+    console.log('Inside TestInvalid!');
     let request: any;
     request={
       code: this.auth.getId('invalid'),
@@ -255,7 +285,7 @@ export class InputComponent implements OnInit {
       .subscribe(
         (data) => {
           console.log(data);
-          //this.resultHandler(data);
+          this.resultHandler(data);
         }
       );
   }
@@ -264,7 +294,8 @@ export class InputComponent implements OnInit {
     if(data.status === "1"){
       console.log('Records!');
       //this.logic.fillRecords(data.html);
-      this.hallpass = true;
+      this.invalid.splice(0,1);
+      this.invalidHandler(this.invalid)
     }
     else
     if(data.status === "2"){
