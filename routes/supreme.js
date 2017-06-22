@@ -18,6 +18,7 @@ router.post('/',function(request,response) {
     var horseman = new Horseman({timeout:20000});
     var name = request.body.name.toString();
     var year = request.body.year.toString();
+    var st = request.body.status.toString();
     console.log(name);
     console.log("HERe!!");
     horseman
@@ -30,14 +31,13 @@ router.post('/',function(request,response) {
       return response.send({"status":"-5","html":"Unable to access site"});
     })
     .click('li[data-link="tab3"]')
-    .evaluate(function(){
-      jQuery('#partyname').val("Akshat");
-      jQuery('#ppd').val("D");
-      jQuery('#partyyear').val("2015");
+    .evaluate(function(name,year,st){
+      jQuery('#partyname').val(name);
+      jQuery('#ppd').val(st);
+      jQuery('#partyyear').val(year);
       jQuery('#party_case_type').val(1);
       return;
-      //     //console.log("das");
-    })
+    },name,year,st)
     .click('#getPartyData')
     .waitFor(function waitForSelector(selector) {
       if(jQuery('#PNdisplay table').html())
@@ -65,22 +65,64 @@ router.post('/',function(request,response) {
     }, '#PNdisplay p','#PNdisplay table','#PNdisplay')
     .then(function(size){
       console.log("done!");
-      //console.log(size);
+      console.log(size);
       var data;
       if(size.height1)
       {
-        data={"status":"1","html":size.height2};
+        // data={"status":"1","html":size.height2,"code":unique};
+        horseman1["'"+unique+"'"]=horseman;
       }
       else
       if(size.height)
       {
         data={"status":"2","html":size.height2};
+        response.send(data);
       }
       else {
         data={"status":"-1","html":"Do it again!"};
+        response.send(data);
       }
-      response.send(data);
-      return horseman.close();
+    })
+    .evaluate( function(selector1,selector2,selector3){
+      if(jQuery(selector2).html())
+      {
+        var res=[];
+        var ct=0;
+        var flag=-1;
+        var final =[];
+        jQuery('#cj tbody').find('tr').each(function(){
+          if(ct==0)
+          final.push(jQuery(this).html());
+          else {
+            flag=-1;
+            if((ct)%4==0)
+            {
+              flag=1;
+              ct=1;
+            }
+            res.push(jQuery(this).html());
+            if(flag==1)
+            {
+              final.push(res);
+              res=[];
+            }
+          }
+          ct++;
+        });
+        return final;
+      }
+      else return false;
+    }, '#PNdisplay p','#PNdisplay table','#PNdisplay')
+    .then(function(data){
+      if(data!=false)
+      {
+        console.log('data found');
+        var d ={"status":"1","html":data,"code":unique.toString()}
+        response.json(d);
+      }
+      else {
+        horseman.close();  
+      }
     });
   }
   catch(err)
