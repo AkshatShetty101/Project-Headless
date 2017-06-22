@@ -466,16 +466,16 @@ router.post('/view',function(request,response){
   }
 });
 
-// router.post('/view',function(request,response){
-//   var code = request.body.code.toString();
-//   var x = (parseInt(request.body.x)).toString();
-//   console.log(horseman1);
-//   if(horseman1["'"+code+"'"]!=undefined)
-//   {
-//   }
-//   else {
-//     response.json("Too early");
-//   }
-// });
+router.post('/release',function(request,response){
+  var code = request.body.code.toString();
+  if(horseman1["'"+code+"'"]!=undefined)
+  {
+    delete horseman1["'"+code+"'"];
+    response.json("Resource released");
+  }
+  else {
+    response.json("Too early");
+  }
+});
 
 module.exports = router;
