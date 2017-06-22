@@ -24,9 +24,12 @@ router.post('/',function(request,response) {
     .viewport(3200,1800)
     .zoom(2)
     .open('http://www.sci.gov.in/case-status')
-    .type('input[name="partyname"]', 'Akshat')
+    .catch(function(err){
+      console.log("Unable to access site");
+      horseman.close();
+      return response.send({"status":"-5","html":"Unable to access site"});
+    })
     .click('li[data-link="tab3"]')
-    .screenshot('2.png')
     .evaluate(function(){
       jQuery('#partyname').val("Akshat");
       jQuery('#ppd').val("D");
@@ -36,17 +39,13 @@ router.post('/',function(request,response) {
       //     //console.log("das");
     })
     .click('#getPartyData')
-    .wait(9000)
-    .screenshot('img.png')
-    //.waitForSelector("#PNdisplay br")
-    //  //.wait(9000)
     .waitFor(function waitForSelector(selector) {
-      if(jQuery('#PNdisplay table').html()!='')
+      if(jQuery('#PNdisplay table').html())
       {
         return true;
       }
       else
-      if(jQuery('#PNdisplay p').html()!='')
+      if(jQuery('#PNdisplay p').html())
       {
         return true;
       }
@@ -54,17 +53,33 @@ router.post('/',function(request,response) {
         return false;
       }
     },'#PNdisplay',true)
-    .screenshot('img1.png')
+    .catch(function(err) {
+      console.log("Timeout Occured");
+    })
     .evaluate( function(selector1,selector2,selector3){
       return {
-        height : jQuery(selector1).val(),
-        height1 : jQuery(selector2).val(),
+        height : jQuery(selector1).html(),
+        height1 : jQuery(selector2).html(),
         height2 : jQuery(selector3).html()
       }
-    }, '#ppd','#partyname','#PNdisplay')
+    }, '#PNdisplay p','#PNdisplay table','#PNdisplay')
     .then(function(size){
       console.log("done!");
-      response.send(size);
+      //console.log(size);
+      var data;
+      if(size.height1)
+      {
+        data={"status":"1","html":size.height2};
+      }
+      else
+      if(size.height)
+      {
+        data={"status":"2","html":size.height2};
+      }
+      else {
+        data={"status":"-1","html":"Do it again!"};
+      }
+      response.send(data);
       return horseman.close();
     });
   }
