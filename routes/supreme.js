@@ -121,7 +121,7 @@ router.post('/',function(request,response) {
         response.json(d);
       }
       else {
-        horseman.close();  
+        horseman.close();
       }
     });
   }
@@ -130,5 +130,19 @@ router.post('/',function(request,response) {
     response.json(err);
   }
 });
+
+router.post('/release',function(request,response){
+  var code = request.body.code.toString();
+  if(horseman1["'"+code+"'"]!=undefined)
+  {
+    horseman1["'"+code+"'"].close();
+    delete horseman1["'"+code+"'"];
+    response.json("Resource released");
+  }
+  else {
+    response.json("Too early");
+  }
+});
+
 
 module.exports = router;
