@@ -58,9 +58,9 @@ typings/
 .env
 
 #images
-.png
-.jpg
-.jpeg
+*.png
+*.jpg
+*.jpeg
 
 # Webstorm config
 
