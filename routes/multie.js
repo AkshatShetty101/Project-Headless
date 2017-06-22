@@ -20,15 +20,16 @@ router.post('/',function(request,response) {
     var z = request.body.val3.toString();
     var name = request.body.name.toString();
     var year = request.body.year.toString();
-  console.log(x);
+    console.log(x);
     horseman
     .viewport(3700,2800)
     .zoom(2);
     horseman
     .open('http://services.ecourts.gov.in/ecourtindia_v5/')
-    .catch(function(err) {
+    .catch(function(err){
       console.log("Unable to access site");
-      return response.end({"status":"-5","html":"Unable to access site"});
+      horseman.close();
+      return response.send({"status":"-5","html":"Unable to access site"});
     })
     .click('div[id="leftPaneMenuCS"]')
     .wait(1000)
@@ -246,6 +247,7 @@ router.post('/a',function(request,response){
       {
         res={"status":"-1","html":'do it again'}
         response.json(res);
+        horseman1["'"+code+"'"].close();
         delete horseman1["'"+code+"'"];
       }
       else
@@ -261,6 +263,7 @@ router.post('/a',function(request,response){
         console.log('Record Not Found')
         res={"status":"3","html":data.errmsg}
         response.json(res);
+        horseman1["'"+code+"'"].close();
         delete horseman1["'"+code+"'"];
       }
     })
@@ -271,23 +274,23 @@ router.post('/a',function(request,response){
         var i=0;
         var final =[];
         jQuery('#dispTable tbody').find('tr').each(function(){
-            res=[];
-            if(jQuery(this).children().length>1)
-            {
-              i=0;
-              jQuery(this).find('td').each(function(){
-                if(i<3)
-                res.push(jQuery(this).html());
-                i++;
-              });
-            }
-            else
-            {
+          res=[];
+          if(jQuery(this).children().length>1)
+          {
+            i=0;
+            jQuery(this).find('td').each(function(){
+              if(i<3)
+              res.push(jQuery(this).html());
+              i++;
+            });
+          }
+          else
+          {
             res.push(jQuery(this).find('td').html());
-            }
-            final.push(res);
-          });
-          return final;
+          }
+          final.push(res);
+        });
+        return final;
       }
       else return false;
     },'#errSpan','#showList')
@@ -462,6 +465,7 @@ router.post('/release',function(request,response){
   var code = request.body.code.toString();
   if(horseman1["'"+code+"'"]!=undefined)
   {
+    horseman1["'"+code+"'"].close();
     delete horseman1["'"+code+"'"];
     response.json("Resource released");
   }
