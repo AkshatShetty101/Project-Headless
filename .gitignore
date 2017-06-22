@@ -67,5 +67,8 @@ typings/
 .idea/
 
 # temporary files
-
 *~
+
+# document files
+*.docx
+*.odt
