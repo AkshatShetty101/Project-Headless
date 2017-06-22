@@ -1,0 +1,53 @@
+
+  <div class="row">
+    <div class="heading col-sm-offset-5">Data Input Page</div>
+  </div>
+  <div class="row">
+    <form [formGroup]="myForm" class="col-sm-8" method="post" (ngSubmit)="stack=push(myForm.value);k=k+1;">
+      <div class="row">
+        Individual's Details
+      </div>
+      <div class="row">
+          <span>Enter the name:&nbsp;</span><input class="form-control" formControlName="name" placeholder="Name or Part of Name" name="name" type="text" required/>
+      </div>
+      <div class="row">
+          <span>Enter year:&nbsp;</span>
+          <input class="form-control" formControlName="year_upper" placeholder="upper" name="year_upper" type="text" size="4" maxlength="4" required/>
+          <span>&nbsp;through&nbsp;</span>
+          <input class="form-control" formControlName="year_lower" placeholder="lower" name="year_lower" type="text" size="4" maxlength="4" required/>
+          <button type="submit" [disabled]="!myForm.valid">Add to stack</button>
+      </div>
+    </form>
+    <div class="col-sm-4">
+      <form method="post" class="row" (ngSubmit)="onSearch();">
+        <!--<label>Click Submit when all desired names entered!</label>-->
+        <button type="submit">Search</button>
+      </form>
+    </div>
+    <div class="col-sm-12">
+      <form [formGroup]="myCaptcha" method="post" class="row" (ngSubmit)="collectCaptcha(myCaptcha.value);" *ngIf="flag == 1">
+        <span class="row">Response Area / Captcha</span>
+        <!--<label>{{response_status}}</label>-->
+        <img class="captcha" [src]="'data:image/png;base64,'+captcha[opt]" />&nbsp;
+        <input class="form-control" formControlName="captcha_code" placeholder="Enter captcha" name="captcha_code" type="text" size="10" minlength="5" maxlength="5" required/>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+    <div class="col-sm-12">
+      <form [formGroup]="myCaptchaInvalid" method="post" class="row" (ngSubmit)="testInvalid(myCaptchaInvalid.value);" *ngIf="hallpass == false">
+        <span class="row">Response Area / Captcha</span>
+        <!--<label>{{response_status}}</label>-->
+        <img class="captcha" [src]="'data:image/png;base64,'+recaptcha" />&nbsp;
+        <input class="form-control" formControlName="captcha_code" placeholder="Enter captcha" name="captcha_code" type="text" size="10" minlength="5" maxlength="5" required/>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+    <!--
+    <div class="col-sm-12" *ngIf="k != 0">
+      <p>Names in stack:</p><br>
+      <div id="stacknames" *ngFor="let name of stackname;let i=index">
+        <span *ngIf="name != -1">{{i+1}}.&nbsp;{{name}}</span>
+      </div>
+    </div>  -->
+

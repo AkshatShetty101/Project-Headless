@@ -1,0 +1,13 @@
+.form-control{
+  display: inline;
+  width: auto;
+}
+
+#stacknames{
+  display: inline;
+}
+
+.captcha{
+  height: 20%;
+  width: 40%;
+}
