@@ -10,6 +10,25 @@ var gen = rn.generator({
     , max:  9999
     , integer: true
 });
+
+router.get('/',function(request,response) {
+        var horseman = new Horseman({timeout:3000});
+        horseman
+            .open('http://services.ecourts.gov.in/ecourtindia_v5/')
+            .catch(function(err){
+                console.log("Unable to access site");
+                return false;
+            })
+            .then(function(data){
+                console.log(data);
+                if(data==false)
+                    response.send({"status":"-1"});
+                else
+                    response.send({"status":"1"});
+                horseman.close();
+            })
+});
+
 router.post('/',function(request,response) {
     try{
         var unique = gen().toString();
@@ -73,7 +92,7 @@ router.post('/',function(request,response) {
             //.wait(2000)
             .evaluate( function(selector1){
                 return {
-                    height : jQuery(selector1).attr('src'),
+                    height : jQuery(selector1).attr('src')
                 }
             }, '#captcha_image')
             .then(function(data){
@@ -92,7 +111,7 @@ router.post('/',function(request,response) {
             .wait(15000)
             .evaluate( function(selector1){
                 return {
-                    height : jQuery(selector1).attr('src'),
+                    height : jQuery(selector1).attr('src')
                 }
             }, '#captcha_image')
             .then(function(data){
@@ -130,7 +149,7 @@ router.post('/',function(request,response) {
                     img.crop(780,820,240,80)            // resize
                         .quality(100)
                         .getBuffer(Jimp.MIME_PNG,function(err,buffer){
-                            base64Image = buffer.toString('base64');
+                            var base64Image = buffer.toString('base64');
                             console.log(img.hash());
                             var x = {"img":base64Image,'code':unique};
                             console.log(size);
@@ -165,7 +184,7 @@ router.post('/a',function(request,response){
             .log()
             .evaluate( function(selector1){
                 return {
-                    height : jQuery(selector1).attr('src'),
+                    height : jQuery(selector1).attr('src')
                     //image : jQuery(selector7).attr('src')
                 }
             }, '#captcha_image')
@@ -254,15 +273,15 @@ router.post('/a',function(request,response){
                 else
                 if( data.height == 'block' &&  data.html=="" && data.errmsg=="Invalid Captcha")
                 {
-                    console.log('Invalid Captcha')
-                    res={"status":"2","html":data.errmsg,"code":code.toString()}
+                    console.log('Invalid Captcha');
+                    res={"status":"2","html":data.errmsg,"code":code.toString()};
                     response.json(res);
                 }
                 else
                 if(data.height == 'block' && data.html=="" && data.errmsg=="Record Not Found")
                 {
-                    console.log('Record Not Found')
-                    res={"status":"3","html":data.errmsg}
+                    console.log('Record Not Found');
+                    res={"status":"3","html":data.errmsg};
                     response.json(res);
                     horseman1["'"+code+"'"].close();
                     delete horseman1["'"+code+"'"];
@@ -299,7 +318,7 @@ router.post('/a',function(request,response){
                 if(data!=false)
                 {
                     console.log('data found');
-                    var d ={"status":"1","html":data,"code":code.toString()}
+                    var d ={"status":"1","html":data,"code":code.toString()};
                     response.json(d);
                 }
             });
@@ -452,7 +471,7 @@ router.post('/view',function(request,response){
             .wait(3000)
             .wait(3000)
             .waitForSelector('#shareSelect')
-            .html('#caseHistoryDiv')
+            .html('#caseHistoryDiv div')
             .then(function(data){
                 console.log('done');
                 response.json(data);
