@@ -14,23 +14,26 @@ import {Observable} from "rxjs/Observable";
 })
 export class InputComponent implements OnInit {
 
-  myForm: FormGroup;
-  myCaptcha: FormGroup;
-  myCaptchaInvalid: FormGroup;
   stackname: any[] = new Array(1);
   stackupper: any[] = new Array(1);
   stacklower: any[] = new Array(1);
+  captcha: any[] = new Array(1);
+  captcha_response: any[] = new Array(1);
+  invalid: any[] = new Array(0);
+  secondchance : any[]= new Array(0);
+
+  myForm: FormGroup;
+  myCaptcha: FormGroup;
+  myCaptchaInvalid: FormGroup;
+
   k:number = 0;
   flag:any = 0;
-  captcha_response: any[] = new Array(1);
   recaptcha: any;
-  captcha: any[] = new Array(1);
-  //code: any[] = new Array(1);
   count : any = 0;
   opt : any;
   hallpass: any = true;
-  invalid: any[] = new Array(0);
-  tout: any[] = new Array(0);
+  crashcount:any = 0;
+
   constructor(
     private formBuilder: FormBuilder,
     private http: HttpService,
@@ -70,10 +73,6 @@ export class InputComponent implements OnInit {
     this.stackname[this.k] = data.name;
     this.stackupper[this.k] = data.year_upper;
     this.stacklower[this.k] = data.year_lower;
-
-    // this.printstack(this.stackupper);
-    // this.printstack(this.stacklower);
-    // this.printstack(this.stackname);
   }
 
   printstack(stack: any[]){
@@ -103,33 +102,46 @@ export class InputComponent implements OnInit {
         };
       }
       console.log(request);
-      //this.stackUpdate();
-      //console.log(this.stackname);
       this.sendMultiple(request);
-
-    // this.sendUserData(request[0]);
-    //}
   }
+
   //"val1":"1~Regional Language~0~~~marathi","val2":"37","val3":"119@1,2","name":"Akshat","year":"2016"}
+
   sendMultiple(request: any[]){
-    let obj : any[], i: any, result: any;
+    let obj : any[], i: any, result: any, flag: any = 0;
     obj = this.http.sendMultipleData(request);
     Observable.forkJoin(obj)
       .subscribe(
         results => {
           console.log(results);
-          //console.log(results[0]);
            for(i=0; i<results.length; i++){
              result = results[i];
+             if(result.status === "-5"){
+               flag = -1;
+               break;
+             }
              this.pushId(result.code);
              this.pushCaptcha(result.img);
              this.count ++;
            }
-           this.flag =1;
-           this.setCaptcha();
+           if(flag === -1){
+             if(this.crashcount < 2){
+               alert('Timeout!Please be patient.');
+               this.crashcount ++;
+               this.onSearch();
+             }
+             else{
+               alert('Refresh Page and try after some time!');
+             }
+           }
+           else{
+             this.flag =1;
+             this.setCaptcha();
+           }
     });
   }
 
+  //Use for Single Post Request
   sendUserData(request: any) {
     this.http.sendData(request)
       .subscribe(
@@ -148,15 +160,12 @@ export class InputComponent implements OnInit {
   }
 
   pushId(data:any){
-    console.log(data);
     this.auth.storeId(data,this.count);
   }
 
   setCaptcha(){
     this.opt = this.captcha.length - this.count;
-    //console.log(this.captcha);
     this.flag = 1;
-    console.log('Print');
   }
 
   collectCaptcha(data: any){
@@ -166,13 +175,11 @@ export class InputComponent implements OnInit {
     if(this.count !=0)
       this.setCaptcha();
     else{
-      console.log(this.captcha_response);
       this.testCaptcha(this.captcha_response);
     }
 
   }
   testCaptcha(data: any){
-    //this.captcha_response.splice(0,this.captcha_response.length);
     let request: any[] = new Array(1),i: any, code: any;
     console.log('Inside testCaptcha');
     //console.log(data);
@@ -186,19 +193,17 @@ export class InputComponent implements OnInit {
     }
     console.log(request);
 
-    let obj : any[], result: any;
+    let obj : any[], result: any, re_request: any;
     obj = this.http.sendMCaptcha(request);
     Observable.forkJoin(obj)
       .subscribe(
         results => {
           console.log(results);
-          console.log(this.tout);
-          let n: any = 0, m: any = 0;
+          let n: any = 0;
           for(i=0; i<results.length; i++){
             result = results[i];
             if(result.status === "1"){
               console.log('Records!');
-              console.log(result.html[1][2]);
               this.logic.fillRecords(result.html);
               this.logic.fillCodes(result.code);
             }
@@ -207,26 +212,30 @@ export class InputComponent implements OnInit {
               this.invalid[n++] = result.code;
             }
             else
-            if(data.status === "3"){
+            if(result.status === "3"){
               console.log('No records!');
             }
             else{
-              this.tout[m++] = result.code;
+              console.log(result);
+              alert('Timeout');
+              re_request = {
+                name : result.name,
+                year : result.year,
+                val1 : result.val1,
+                val2 : result.val2,
+                val3 : result.val3
+              };
+              this.secondchance.push(re_request);
             }
           }
-
-          console.log(this.invalid);
-          console.log(this.tout);
-          console.log(this.hallpass);
           if(this.invalid.length > 0){
             alert('Invalid Captcha!');
             this.invalidHandler(this.invalid);
           }
-          /*else
-          if(this.tout.length > 0){
-            alert('Timeout!');
-            //this.toutHandler(this.tout, request);
-          }*/
+          else
+          if(this.secondchance.length > 0){
+            console.log(this.secondchance);
+          }
           else
           if( this.hallpass == true){
             this.router.navigateByUrl('/eCourt/records');
@@ -235,20 +244,13 @@ export class InputComponent implements OnInit {
   }
 
   invalidHandler(invalid: any[]) {
-
     if(this.invalid.length !==0)
       this.getCaptcha(invalid[0]);
-      //while(this.hallpass == false){
-      //  console.log('I');
-      //}
-      //console.log('Exit');
   }
 
-  toutHandler(tout: any[], requests: any[]){
-    let i: any;
-    for(i=0; i<tout.length; i++){
-      this.requestSearch(tout[i], requests);
-    }
+  secondHandler(){
+
+
   }
 
   requestSearch(check: any, requests: any[]){
@@ -325,31 +327,3 @@ export class InputComponent implements OnInit {
     console.log(this.stacklower);
   }
 }
-
-/*this.http.sendMCaptcha(request)
- .subscribe(
- data => {
- console.log(data.html);
- this.logic.fillRecords(data.html);
- if(data.status === "1"){
- this.router.navigateByUrl('/eCourt/records');
- this.myForm.reset();
- this.stackUpdate();
- }
- else
- if(data.status === "2"){
- alert('Invalid Captcha!');
- this.getCaptcha(code);
- }
- else
- if(data.status === "3"){
- alert('No records found!Enter and submit new name.');
- this.myForm.reset();
- this.stackUpdate();
- }
- else{
- alert('Site Crash!');
- this.onSearch();
- }
- }
- );*/
