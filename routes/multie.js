@@ -228,84 +228,85 @@ router.post('/a',function(request,response){
     .catch(function(err) {
       console.log("Timeout Occured");
     })
-    .evaluate( function(selector1,selector2,selector3){
+    .evaluate( function(selector1,selector2,selector3,selector4,selector5,selector6,name,year){
       return {
         errmsg : jQuery(selector1).html(),
         html : jQuery(selector2).html(),
         height : jQuery(selector3).css("display"),
-        height1 : jQuery(selector2).css("display")
+        height1 : jQuery(selector2).css("display"),
+        val1 : jQuery(selector4).val(),
+        val2 : jQuery(selector5).val(),
+        val3 : jQuery(selector6).val(),
+        name : jQuery(name).val(),
+        year : jQuery(year).val(),
       }
-    },'#errSpan p','#showList','#errSpan')
+    },'#errSpan p','#showList','#errSpan','#sess_state_code','#sess_dist_code','#court_complex_code',"#petres_name","#rgyearP")
     .then(function(data){
       var res;
       fs.unlinkSync(code+'.png');
-      // console.log(code+"  ads"+data.html);
-      // console.log("   "+data.errmsg);
-      // console.log('show list:'+data.height1);
-      // console.log('err span:'+data.height);
       if(data.height=='none' && data.height1=='none')
       {
-        res={"status":"-1","html":'do it again'}
-        response.json(res);
-        horseman1["'"+code+"'"].close();
-        delete horseman1["'"+code+"'"];
-      }
-      else
-      if( data.height == 'block' &&  data.html=="" && data.errmsg=="Invalid Captcha")
-      {
-        console.log('Invalid Captcha')
-        res={"status":"2","html":data.errmsg,"code":code.toString()}
-        response.json(res);
-      }
-      else
-      if(data.height == 'block' && data.html=="" && data.errmsg=="Record Not Found")
-      {
-        console.log('Record Not Found')
-        res={"status":"3","html":data.errmsg}
-        response.json(res);
-        horseman1["'"+code+"'"].close();
-        delete horseman1["'"+code+"'"];
-      }
-    })
-    .evaluate( function(selector1,selector2){
-      if(jQuery(selector2).css("display")=='block' && jQuery(selector1).css("display")=='none')
-      {
-        var res="";
-        var i=0;
-        var final =[];
-        jQuery('#dispTable tbody').find('tr').each(function(){
-          res=[];
-          if(jQuery(this).children().length>1)
-          {
-            i=0;
-            jQuery(this).find('td').each(function(){
-              if(i<3)
-              res.push(jQuery(this).html());
-              i++;
-            });
-          }
-          else
-          {
-            res.push(jQuery(this).find('td').html());
-          }
-          final.push(res);
-        });
-        return final;
-      }
-      else return false;
-    },'#errSpan','#showList')
-    .then(function(data){
-      if(data!=false)
-      {
-        console.log('data found');
-        var d ={"status":"1","html":data,"code":code.toString()}
-        response.json(d);
-      }
-    });
-  }
-  else {
-    response.json("Too early");
-  }
+        res={"status":"-1","html":'do it again',val1 : data.val1,val2 : data.val2,val3 : data.val3,name : data.name,year : data.year};
+      response.json(res);
+      horseman1["'"+code+"'"].close();
+      delete horseman1["'"+code+"'"];
+    }
+    else
+    if( data.height == 'block' &&  data.html=="" && data.errmsg=="Invalid Captcha")
+    {
+      console.log('Invalid Captcha')
+      res={"status":"2","html":data.errmsg,"code":code.toString()}
+      response.json(res);
+    }
+    else
+    if(data.height == 'block' && data.html=="" && data.errmsg=="Record Not Found")
+    {
+      console.log('Record Not Found')
+      res={"status":"3","html":data.errmsg}
+      response.json(res);
+      horseman1["'"+code+"'"].close();
+      delete horseman1["'"+code+"'"];
+    }
+  })
+  .evaluate( function(selector1,selector2){
+    if(jQuery(selector2).css("display")=='block' && jQuery(selector1).css("display")=='none')
+    {
+      var res="";
+      var i=0;
+      var final =[];
+      jQuery('#dispTable tbody').find('tr').each(function(){
+        res=[];
+        if(jQuery(this).children().length>1)
+        {
+          i=0;
+          jQuery(this).find('td').each(function(){
+            if(i<3)
+            res.push(jQuery(this).html());
+            i++;
+          });
+        }
+        else
+        {
+          res.push(jQuery(this).find('td').html());
+        }
+        final.push(res);
+      });
+      return final;
+    }
+    else return false;
+  },'#errSpan','#showList')
+  .then(function(data){
+    if(data!=false)
+    {
+      console.log('data found');
+      var d ={"status":"1","html":data,"code":code.toString()}
+      response.json(d);
+    }
+  });
+}
+else {
+  response.json("Too early");
+}
 });
 
 router.post('/refreshCaptcha',function(request,response) {
