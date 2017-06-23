@@ -12,21 +12,21 @@ var gen = rn.generator({
 });
 
 router.get('/',function(request,response) {
-        var horseman = new Horseman({timeout:3000});
-        horseman
-            .open('http://services.ecourts.gov.in/ecourtindia_v5/')
-            .catch(function(err){
-                console.log("Unable to access site");
-                return false;
-            })
-            .then(function(data){
-                console.log(data);
-                if(data==false)
-                    response.send({"status":"-1"});
-                else
-                    response.send({"status":"1"});
-                horseman.close();
-            })
+    var horseman = new Horseman({timeout:3000});
+    horseman
+        .open('http://services.ecourts.gov.in/ecourtindia_v5/')
+        .catch(function(err){
+            console.log("Unable to access site");
+            return false;
+        })
+        .then(function(data){
+            console.log(data);
+            if(data==false)
+                response.send({"status":"-1"});
+            else
+                response.send({"status":"1"});
+            horseman.close();
+        })
 });
 
 router.post('/',function(request,response) {
@@ -484,16 +484,18 @@ router.post('/view',function(request,response){
 });
 
 router.post('/release',function(request,response){
-    var code = request.body.code.toString();
-    if(horseman1["'"+code+"'"]!=undefined)
+    var arr = request.body.code.toString();
+    var code;
+    for(var i=0;i<arr.length;i++)
     {
-        horseman1["'"+code+"'"].close();
-        delete horseman1["'"+code+"'"];
-        response.json("Resource released");
+        code = arr[i].toString();
+        if(horseman1["'"+code+"'"]!=undefined)
+        {
+            horseman1["'" + code + "'"].close();
+            delete horseman1["'" + code + "'"];
+        }
     }
-    else {
-        response.json("Too early");
-    }
+    response.json("Resources released");
 });
 
 module.exports = router;
