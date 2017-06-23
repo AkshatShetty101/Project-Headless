@@ -484,13 +484,15 @@ router.post('/view',function(request,response){
 });
 
 router.post('/release',function(request,response){
-    var arr = request.body.code.toString();
+    var arr = request.body;
+    console.log(arr);
     var code;
     for(var i=0;i<arr.length;i++)
     {
         code = arr[i].toString();
         if(horseman1["'"+code+"'"]!=undefined)
         {
+            console.log(code+"-is released!");
             horseman1["'" + code + "'"].close();
             delete horseman1["'" + code + "'"];
         }

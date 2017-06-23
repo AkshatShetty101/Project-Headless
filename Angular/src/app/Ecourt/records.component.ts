@@ -41,4 +41,21 @@ export class RecordsComponent implements OnInit {
         }
       );
   }
+
+  done(){
+    let request: any[] = new Array(0), i: any;
+    for(i=0; i < this.codes.length; i++){
+      request[i] = {
+        code: this.codes[i]
+      };
+    }
+    console.log(request);
+    this.http.terminate(request)
+      .subscribe(
+        (data) => {
+          console.log(data);
+          this.router.navigateByUrl('/eCourt');
+        }
+      );
+  }
 }
