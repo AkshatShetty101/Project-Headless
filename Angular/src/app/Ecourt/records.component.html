@@ -1,13 +1,17 @@
-<div class="row" *ngFor="let record of records">
-  <table border="1">
+<div class="row" *ngFor="let record of records; let i = index">
+  <table class="table table-bordered table-responsive" border="1">
     <tr>
       <th>Sr.No</th>
       <th>Case Type / Case Number / Case Year</th>
       <th>Petitioner Name vs Respondent Name</th>
       <th>View</th>
     </tr>
-    <tr>
-
+    <tr *ngFor="let row of record; let j = index ">
+      <td *ngIf="row.length === 1" style="color:red;" colspan="4" [innerHTML]="row[0]"></td>
+      <td *ngIf="row.length !== 1" [innerHTML]="row[0]"></td>
+      <td *ngIf="row.length !== 1" [innerHTML]="row[1]"></td>
+      <td *ngIf="row.length !== 1" [innerHTML]="row[2]"></td>
+      <td *ngIf="row.length !== 1"><a (click)="view(i,j+1)">View Details</a></td>
     </tr>
   </table>
 </div>

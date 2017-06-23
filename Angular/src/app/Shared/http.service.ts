@@ -50,6 +50,15 @@ export class HttpService {
     return this.http.post('http://localhost:3000/supreme/refreshCaptcha', body, {headers})
       .map((response: Response) => response.json());
   }
+
+  sendViewData(request: any){
+    console.log('Inside Send View!');
+    const body = request;
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.post('http://localhost:3000/supreme/view', body, {headers})
+      .map((response: Response) => response.json());
+  }
   /*registerUser(request: any) {
     console.log("INSIDE");
     const body = request;

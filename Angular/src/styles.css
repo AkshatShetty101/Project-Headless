@@ -11,3 +11,7 @@ body{
   /*padding: 10%;*/
   position: static;
 }
+
+a{
+  cursor: hand!important;
+}

@@ -200,6 +200,7 @@ export class InputComponent implements OnInit {
               console.log('Records!');
               console.log(result.html[1][2]);
               this.logic.fillRecords(result.html);
+              this.logic.fillCodes(result.code);
             }
             else
             if(result.status === "2"){
@@ -221,11 +222,11 @@ export class InputComponent implements OnInit {
             alert('Invalid Captcha!');
             this.invalidHandler(this.invalid);
           }
-          else
+          /*else
           if(this.tout.length > 0){
             alert('Timeout!');
             //this.toutHandler(this.tout, request);
-          }
+          }*/
           else
           if( this.hallpass == true){
             this.router.navigateByUrl('/eCourt/records');
@@ -259,6 +260,7 @@ export class InputComponent implements OnInit {
       }
     }
   }
+
   getCaptcha(code: any) {
     let request : any;
     console.log('Inside Invalid!');
