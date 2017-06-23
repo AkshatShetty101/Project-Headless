@@ -83,14 +83,14 @@ router.post('/',function(request,response) {
         response.send(data);
       }
     })
-    .evaluate( function(selector1,selector2,selector3){
+    .evaluate( function(selector1,selector2){
       if(jQuery(selector2).html())
       {
         var res=[];
-        var ct=0;
-        var flag=-1;
-        var final =[];
-        jQuery('#cj tbody').find('tr').each(function(){
+          var ct=0;
+          var flag=-1;
+          var final =[];
+        jQuery('#cj').find('tbody').find('tr').each(function(){
           if(ct==0)
           final.push(jQuery(this).html());
           else {
@@ -112,12 +112,12 @@ router.post('/',function(request,response) {
         return final;
       }
       else return false;
-    }, '#PNdisplay p','#PNdisplay table','#PNdisplay')
+    }, '#PNdisplay p','#PNdisplay table')
     .then(function(data){
       if(data!=false)
       {
         console.log('data found');
-        var d ={"status":"1","html":data,"code":unique.toString()}
+        var d ={"status":"1","html":data,"code":unique.toString()};
         response.json(d);
       }
       else {
@@ -131,9 +131,26 @@ router.post('/',function(request,response) {
   }
 });
 
+router.post('/view',function(request,response){
+    var code = request.body.code.toString();
+    if (horseman1["'" + code + "'"] !== undefined) {
+        console.log("In!!");
+        var x= ((parseInt(request.body.x)-1)*4+2).toString();
+        console.log(x);
+        horseman1["'" + code + "'"]
+            .waitFor(function(){
+
+            })
+            .then(function(data){
+
+                response.json(data);
+            })
+    }
+});
+
 router.post('/release',function(request,response){
   var code = request.body.code.toString();
-  if(horseman1["'"+code+"'"]!=undefined)
+  if(horseman1["'"+code+"'"]!==undefined)
   {
     horseman1["'"+code+"'"].close();
     delete horseman1["'"+code+"'"];
