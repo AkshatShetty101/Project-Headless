@@ -157,7 +157,6 @@ export class InputComponent implements OnInit {
     //console.log(this.captcha);
     this.flag = 1;
     console.log('Print');
-
   }
 
   collectCaptcha(data: any){
@@ -176,10 +175,10 @@ export class InputComponent implements OnInit {
     //this.captcha_response.splice(0,this.captcha_response.length);
     let request: any[] = new Array(1),i: any, code: any;
     console.log('Inside testCaptcha');
-    console.log(data);
+    //console.log(data);
     for(i=0; i<data.length; i++){
       code = this.auth.getId(i);
-      console.log(code);
+      //console.log(code);
       request[i] = {
         code : code,
         captcha: data[i]
@@ -193,12 +192,14 @@ export class InputComponent implements OnInit {
       .subscribe(
         results => {
           console.log(results);
+          console.log(this.tout);
           let n: any = 0, m: any = 0;
           for(i=0; i<results.length; i++){
             result = results[i];
             if(result.status === "1"){
-              alert('Records!');
-              //this.logic.fillRecords(result.html);
+              console.log('Records!');
+              console.log(result.html[1][2]);
+              this.logic.fillRecords(result.html);
             }
             else
             if(result.status === "2"){
@@ -209,10 +210,12 @@ export class InputComponent implements OnInit {
               console.log('No records!');
             }
             else{
-              //this.tout[m++] = result.code;
+              this.tout[m++] = result.code;
             }
           }
+
           console.log(this.invalid);
+          console.log(this.tout);
           console.log(this.hallpass);
           if(this.invalid.length > 0){
             alert('Invalid Captcha!');

@@ -1,0 +1,17 @@
+{
+  "name": "public",
+  "homepage": "",
+  "authors": [
+    ""
+  ],
+  "description": "Front end for interface",
+  "main": "",
+  "license": "None",
+  "private": true,
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "font-awesome": "^4.7.0",
+    "bootstrap-material-design": "0.5.10",
+    "jquery-ui": "^1.12.1"
+  }
+}
