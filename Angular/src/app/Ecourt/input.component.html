@@ -3,7 +3,7 @@
     <div class="heading col-sm-offset-5">Data Input Page</div>
   </div>
   <div class="row">
-    <form [formGroup]="myForm" class="col-sm-8" method="post" (ngSubmit)="stack=push(myForm.value);k=k+1;">
+    <form [formGroup]="myForm" class="col-sm-12" method="post" (ngSubmit)="push(myForm.value);">
       <div class="row">
         Individual's Details
       </div>
@@ -15,15 +15,9 @@
           <input class="form-control" formControlName="year_upper" placeholder="upper" name="year_upper" type="text" size="4" maxlength="4" required/>
           <span>&nbsp;through&nbsp;</span>
           <input class="form-control" formControlName="year_lower" placeholder="lower" name="year_lower" type="text" size="4" maxlength="4" required/>
-          <button type="submit" [disabled]="!myForm.valid">Add to stack</button>
+          &nbsp;<button type="submit" [disabled]="!myForm.valid">Submit</button>
       </div>
     </form>
-    <div class="col-sm-4">
-      <form method="post" class="row" (ngSubmit)="onSearch();">
-        <!--<label>Click Submit when all desired names entered!</label>-->
-        <button type="submit">Search</button>
-      </form>
-    </div>
     <div class="col-sm-12">
       <form [formGroup]="myCaptcha" method="post" class="row" (ngSubmit)="collectCaptcha(myCaptcha.value);" *ngIf="flag == 1">
         <span class="row">Response Area / Captcha</span>
