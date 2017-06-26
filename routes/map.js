@@ -43,7 +43,7 @@ router.post('/addCourt',function(request,response){
     var ccode = request.body.ccode.toString();
     var dcode = request.body.dcode.toString();
     var scode = request.body.scode.toString();
-    Map.findOne( { 'code' : scode },{ 'district': { '$elemMatch': { 'code': dcode } } },function (err,data){
+    Map.findOne({'code' : scode},{'district':{'$elemMatch':{'code': dcode}}},function (err,data){
         if(err)
             response.json(err);
         else {
@@ -85,5 +85,16 @@ router.post('/getDistrict',function(request,response){
     });
 });
 
+router.post('/getCourt',function(request,response){
+    var scode = request.body.scode.toString();
+    var dcode = request.body.dcode.toString();
+    Map.find({ 'code' : scode },{'district': { '$elemMatch': { 'code': dcode }}},function (err,data){
+        if (err)
+            response.json(err);
+        else {
+            response.json(data[0].district[0].court);
+        }
+    });
+});
 
 module.exports =router;
