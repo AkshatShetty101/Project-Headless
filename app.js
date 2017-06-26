@@ -1,5 +1,5 @@
 var express = require('express'),
-  cors = require('cors');
+    cors = require('cors');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -8,13 +8,19 @@ var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
-var ecourt = require('./routes/multie.js');
-var supreme = require('./routes/supreme.js');
-// var url = 'mongodb://localhost:27017/Prodirect';
-// var mongoose = require('mongoose'),
-//     assert = require('assert');
-// mongoose.connect(url);
-// var db = mongoose.connection;
+var ecourt = require('./routes/multie');
+var supreme = require('./routes/supreme');
+var map = require('./routes/map');
+var url = 'mongodb://localhost:27017/Ecourt';
+var mongoose = require('mongoose'),
+    assert = require('assert');
+mongoose.connect(url);
+var db = mongoose.connection;
+
+db.on('error',console.error.bind(console,'connection error:'));
+db.once('open',function (){
+    console.log('Connected to server Successfully');
+});
 
 var app = express();
 
@@ -34,23 +40,24 @@ app.use('/', index);
 app.use('/users', users);
 app.use('/supreme', ecourt);
 app.use('/supreme1', supreme);
+app.use('/map', map);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
 });
 
 // error handler
 app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+    // set locals, only providing error in development
+    res.locals.message = err.message;
+    res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+    // render the error page
+    res.status(err.status || 500);
+    res.render('error');
 });
 
 module.exports = app;
