@@ -39,15 +39,5 @@ var StateSchema = new Schema(
         district : [districtSchema]
     }
 );
-// var mapSchema = new Schema(
-//     {
-//         state : [StateSchema]
-//     },
-//     {
-//         timestamps : true
-//     }
-// );
-
-
 var map = mongoose.model('map',StateSchema);
 module.exports=map;
