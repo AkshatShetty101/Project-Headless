@@ -4,7 +4,32 @@ var path = require('path');
 var router = express.Router();
 var Map = require('../models/map');
 
+router.get('/addStatePage',function(request,response){
+    var link="../public/html/addState.html";
+    link = path.join(__dirname,link);
+    console.log(link+"-"+fs.existsSync(link));
+    var stream=fs.createReadStream(link);
+    stream.pipe(response);
+});
+
+router.get('/addDistrictPage',function(request,response){
+    var link='../public/html/addDistrict.html';
+    link = path.join(__dirname,link);
+    console.log(link+"-"+fs.existsSync(link));
+    var stream=fs.createReadStream(link);
+    stream.pipe(response);
+});
+
+router.get('/addCourtPage',function(request,response){
+    var link='../public/html/addCourt.html';
+    link = path.join(__dirname,link);
+    console.log(link+"-"+fs.existsSync(link));
+    var stream=fs.createReadStream(link);
+    stream.pipe(response);
+});
+
 router.post('/addState',function(request,response){
+    console.log(request.body);
     var name = request.body.name.toString();
     var code = request.body.code.toString();
     Map.create({'name':name,'code':code},function (err,data){
@@ -97,4 +122,6 @@ router.post('/getCourt',function(request,response){
     });
 });
 
+router.post('/getCourt',function(request,response) {
+});
 module.exports =router;
