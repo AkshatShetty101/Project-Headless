@@ -3,21 +3,22 @@
     <div class="heading col-sm-offset-5">Data Input Page</div>
   </div>
   <div class="row">
+    <div class="row">
+      Individual's Details
+    </div>
+    <div class="row">
+      <select  class="col-sm-3" [(ngModel)]="default_state" (ngModelChange)="selectState($event)">
+        <option disabled [innerHTML]="default_state" selected></option>
+        <option name="state" *ngFor="let state of states;let i =index" [value]="state_value[i]" [innerHTML]="state"></option>
+      </select>
+      <select class="col-sm-offset-1 col-sm-3">
+        <option disabled selected>--Select a district--</option>
+      </select>
+      <select class="col-sm-offset-1 col-sm-3">
+        <option disabled selected>--Select a court complex--</option>
+      </select>
+    </div>
     <form [formGroup]="myForm" class="col-sm-12" method="post" (ngSubmit)="push(myForm.value);">
-      <div class="row">
-        Individual's Details
-      </div>
-      <div class="row">
-        <select class="col-sm-4">
-          <option disabled selected>-Select a state</option>
-        </select>
-        <select class="col-sm-4">
-          <option disabled selected>-Select a district</option>
-        </select>
-        <select class="col-sm-4">
-          <option disabled selected>-Select a court complex</option>
-        </select>
-      </div>
       <div class="row">
           <span>Enter the name:&nbsp;</span><input class="form-control" formControlName="name" placeholder="Name or Part of Name" name="name" type="text" required/>
       </div>

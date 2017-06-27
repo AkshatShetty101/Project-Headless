@@ -15,9 +15,13 @@ import {Observable} from "rxjs/Observable";
 
 export class InputComponent implements OnInit {
 
+  default_state: any = '--Select a state--';
   stackname: any;
   stackupper: any;
   stacklower: any;
+
+  states: any[] = new Array(0);
+  state_value: any[] = new  Array(0);
   captcha: any[] = new Array(1);
   captcha_response: any[] = new Array(1);
   invalid: any[] = new Array(0);
@@ -55,8 +59,42 @@ export class InputComponent implements OnInit {
 
   ngOnInit() {
     this.logic.initRecords();
+    this.fillState();
   }
 
+  //Select List Fuctions
+  fillState(){
+    let i: any;
+
+    this.http.getState()
+      .subscribe(
+        (data)=>{
+          console.log(data);
+          for(i=0; i<data.length; i++){
+            this.states[i] = data[i].name;
+            this.state_value[i] = data[i].code;
+          }
+        }
+      )
+  }
+
+  selectState(data: any){
+    console.log('Inside!');
+    console.log(data);
+    this.fillDistrict(data);
+  }
+
+  fillDistrict(request: any){
+    let i: any;
+
+    this.http.getDistrict(request)
+      .subscribe(
+        (data)=>{
+          console.log(data);
+        }
+      )
+  }
+  /**********************/
   //Stack Functions
   stackinit(stack: any) {
     let i: any;
@@ -109,7 +147,6 @@ export class InputComponent implements OnInit {
         val3: "119@1,2"
       };
     }
-    console.log(request);
     this.sendMultiple(request);
   }
 
@@ -201,7 +238,6 @@ export class InputComponent implements OnInit {
         captcha: data[i]
       }
     }
-    console.log(request);
 
     let obj: any[], result: any, re_request: any;
     obj = this.http.sendMCaptcha(request);
@@ -213,7 +249,6 @@ export class InputComponent implements OnInit {
           for (i = 0; i < results.length; i++) {
             result = results[i];
             if (result.status === "1") {
-              console.log('Records!');
               this.logic.fillRecords(result.html);
               this.logic.fillCodes(result.code);
             }
@@ -262,7 +297,6 @@ export class InputComponent implements OnInit {
     request = {
       code: code,
     };
-    console.log(request);
     this.http.getCaptcha(request)
       .subscribe(
         (data) => {
@@ -292,7 +326,6 @@ export class InputComponent implements OnInit {
 
   resultHandler(data: any) {
     if (data.status === "1") {
-      console.log('Records!');
       this.logic.fillRecords(data.html);
       this.invalid.splice(0, 1);
       this.invalidHandler(this.invalid);

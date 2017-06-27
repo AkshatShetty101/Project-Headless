@@ -10,6 +10,19 @@ export class HttpService {
     private http: Http
   ) { }
 
+  getState(){
+    return this.http.get('http://localhost:3000/map/getState')
+      .map((response: Response) => response.json());
+  }
+
+  getDistrict(request: any){
+    const body = request;
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.post('http://localhost:3000/map/getDistrict', body, {headers})
+      .map((response: Response) => response.json());
+  }
+
   sendMCaptcha(requests: any[]){
     let obj:any[] = new Array(1), i: any;
     for(i=0; i<requests.length; i++){
