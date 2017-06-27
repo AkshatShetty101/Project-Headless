@@ -5,6 +5,8 @@ export class LogicService {
   private records: any[][][];
   private codes: any[];
   private data: any;
+  recordFlag: boolean;
+
   constructor() { }
 
   initRecords(){

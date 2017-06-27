@@ -1,5 +1,7 @@
-<div>
-  <button (click)="done();" class="col-sm-offset-10 col-sm-2">Click when done viewing page</button>
+<div class="row" (load)="function()">
+  <label class="col-sm-offset-6">Kindly click this button to free resources!
+    <button (click)="done();" class="btn btn-primary">Click when done viewing page</button>
+  </label>
 </div>
 <div class="row" *ngFor="let record of records; let i = index">
   <table class="table table-bordered table-responsive" border="1">
@@ -10,11 +12,11 @@
       <th>View</th>
     </tr>
     <tr *ngFor="let row of record; let j = index ">
-      <td *ngIf="row.length === 1" style="color:red;" colspan="4" [innerHTML]="row[0]"></td>
+      <td *ngIf="row.length === 1" style="color:rgba(255,46,51,0.99);" colspan="4" [innerHTML]="row[0]"></td>
       <td *ngIf="row.length !== 1" [innerHTML]="row[0]"></td>
       <td *ngIf="row.length !== 1" [innerHTML]="row[1]"></td>
       <td *ngIf="row.length !== 1" [innerHTML]="row[2]"></td>
-      <td *ngIf="row.length !== 1"><a (click)="view(i,j+1)">View Details</a></td>
+      <td *ngIf="row.length !== 1"><a *ngIf="!disable" (click)="view(i,j+1)">View Details</a></td>
     </tr>
   </table>
 </div>

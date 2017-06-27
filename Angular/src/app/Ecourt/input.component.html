@@ -8,6 +8,17 @@
         Individual's Details
       </div>
       <div class="row">
+        <select class="col-sm-4">
+          <option disabled selected>-Select a state</option>
+        </select>
+        <select class="col-sm-4">
+          <option disabled selected>-Select a district</option>
+        </select>
+        <select class="col-sm-4">
+          <option disabled selected>-Select a court complex</option>
+        </select>
+      </div>
+      <div class="row">
           <span>Enter the name:&nbsp;</span><input class="form-control" formControlName="name" placeholder="Name or Part of Name" name="name" type="text" required/>
       </div>
       <div class="row">
@@ -15,7 +26,7 @@
           <input class="form-control" formControlName="year_upper" placeholder="upper" name="year_upper" type="text" size="4" maxlength="4" required/>
           <span>&nbsp;through&nbsp;</span>
           <input class="form-control" formControlName="year_lower" placeholder="lower" name="year_lower" type="text" size="4" maxlength="4" required/>
-          &nbsp;<button type="submit" [disabled]="!myForm.valid">Submit</button>
+          &nbsp;<button type="submit" *ngIf="!submitted" [disabled]="!myForm.valid">Submit</button>
       </div>
     </form>
     <div class="col-sm-12">

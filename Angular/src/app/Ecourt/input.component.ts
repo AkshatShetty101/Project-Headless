@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from '@angular/router';
 
 import {HttpService} from "../Shared/http.service";
@@ -12,6 +12,7 @@ import {Observable} from "rxjs/Observable";
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.css']
 })
+
 export class InputComponent implements OnInit {
 
   stackname: any;
@@ -20,36 +21,35 @@ export class InputComponent implements OnInit {
   captcha: any[] = new Array(1);
   captcha_response: any[] = new Array(1);
   invalid: any[] = new Array(0);
-  secondchance : any[]= new Array(0);
+  secondchance: any[] = new Array(0);
 
   myForm: FormGroup;
   myCaptcha: FormGroup;
   myCaptchaInvalid: FormGroup;
 
-  flag:any = 0;
+  submitted: boolean = false;
+  flag: any = 0;
   recaptcha: any;
-  count : any = 0;
-  opt : any;
+  count: any = 0;
+  opt: any;
   hallpass: any = true;
-  crashcount:any = 0;
+  crashcount: any = 0;
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private http: HttpService,
-    private auth: AuthService,
-    private router: Router,
-    private logic: LogicService
-  ) {
+  constructor(private formBuilder: FormBuilder,
+              private http: HttpService,
+              private auth: AuthService,
+              private router: Router,
+              private logic: LogicService) {
     this.myForm = formBuilder.group({
-      'name': ['',[Validators.required, Validators.pattern("[^0-9]*")]],
-      'year_upper' : ['',[Validators.required, Validators.pattern("^[2-9][0-9]{3}$")]],
-      'year_lower' : ['',[Validators.required, Validators.pattern("^[2-9][0-9]{3}$")]]
+      'name': ['', [Validators.required, Validators.pattern("[^0-9]*")]],
+      'year_upper': ['', Validators.compose([Validators.required, Validators.pattern("^[2-9][0-9]{3}$"), this.yearValid.bind(this)])],
+      'year_lower': ['', [Validators.required, Validators.pattern("^[2-9][0-9]{3}$")]]
     });
     this.myCaptcha = formBuilder.group({
-      'captcha_code': ['',[Validators.required]],
+      'captcha_code': ['', [Validators.required]],
     });
     this.myCaptchaInvalid = formBuilder.group({
-      'captcha_code': ['',[Validators.required]]
+      'captcha_code': ['', [Validators.required]]
     });
   }
 
@@ -58,43 +58,55 @@ export class InputComponent implements OnInit {
   }
 
   //Stack Functions
-  stackinit(stack:any){
-    let i:any;
-    for(i=0; i<stack.length; i++){
+  stackinit(stack: any) {
+    let i: any;
+    for (i = 0; i < stack.length; i++) {
       stack[i] = -1;
     }
   }
 
-  push(data:any){
+  yearValid(control: FormControl):{[s:string]:boolean} {
+    if(!this.myForm){
+      return {notValid: true};
+    }
+    if(control.value < this.myForm.controls['year_lower'].value){
+      return {notValid: true};
+    }
+  }
+
+  push(data: any) {
+    this.submitted = true;
+    console.log('Changed!');
     this.stackname = data.name;
     this.stackupper = data.year_upper;
     this.stacklower = data.year_lower;
     this.onSearch();
   }
 
-  printstack(stack: any[]){
-    let i:any;
-    for(i=0; i<stack.length; i++){
-        console.log(stack[i]);
+  printstack(stack: any[]) {
+    let i: any;
+    for (i = 0; i < stack.length; i++) {
+      console.log(stack[i]);
     }
   }
+
   /***********************************/
   //User Details
-  onSearch(){
+  onSearch() {
     console.log('Submitted');
     let i: any, limit: number;
     let request: any[] = new Array(1);
     console.log(this.stackname);
     console.log(this.stackupper);
     console.log(this.stacklower);
-    limit = this.stackupper-this.stacklower;
-    for(i=0; i <= limit; i++){
+    limit = this.stackupper - this.stacklower;
+    for (i = 0; i <= limit; i++) {
       request[i] = {
-        name : this.stackname,
-        year : (parseInt(this.stacklower) + parseInt(i)).toString(),
-        val1 : "1~Regional Language~0~~~marathi",
-        val2 : "37",
-        val3 : "119@1,2"
+        name: this.stackname,
+        year: (parseInt(this.stacklower) + parseInt(i)).toString(),
+        val1: "1~Regional Language~0~~~marathi",
+        val2: "37",
+        val3: "119@1,2"
       };
     }
     console.log(request);
@@ -103,38 +115,38 @@ export class InputComponent implements OnInit {
 
   //"val1":"1~Regional Language~0~~~marathi","val2":"37","val3":"119@1,2","name":"Akshat","year":"2016"}
 
-  sendMultiple(request: any[]){
-    let obj : any[], i: any, result: any, flag: any = 0;
+  sendMultiple(request: any[]) {
+    let obj: any[], i: any, result: any, flag: any = 0;
     obj = this.http.sendMultipleData(request);
     Observable.forkJoin(obj)
       .subscribe(
         results => {
           console.log(results);
-           for(i=0; i<results.length; i++){
-             result = results[i];
-             if(result.status === "-5"){
-               flag = -1;
-               break;
-             }
-             this.pushId(result.code);
-             this.pushCaptcha(result.img);
-             this.count ++;
-           }
-           if(flag === -1){
-             if(this.crashcount < 2){
-               alert('Timeout!Please be patient.');
-               this.crashcount ++;
-               this.onSearch();
-             }
-             else{
-               alert('Refresh Page and try after some time!');
-             }
-           }
-           else{
-             this.flag =1;
-             this.setCaptcha();
-           }
-    });
+          for (i = 0; i < results.length; i++) {
+            result = results[i];
+            if (result.status === "-5") {
+              flag = -1;
+              break;
+            }
+            this.pushId(result.code);
+            this.pushCaptcha(result.img);
+            this.count++;
+          }
+          if (flag === -1) {
+            if (this.crashcount < 2) {
+              alert('Timeout!Please be patient.');
+              this.crashcount++;
+              this.onSearch();
+            }
+            else {
+              alert('Refresh Page and try after some time!');
+            }
+          }
+          else {
+            this.flag = 1;
+            this.setCaptcha();
+          }
+        });
   }
 
   //Use for Single Post Request
@@ -144,123 +156,108 @@ export class InputComponent implements OnInit {
         (data) => {
           console.log(data.code);
           //this.auth.storeId(data.code);
-         // this.setCaptcha(data.img);
+          // this.setCaptcha(data.img);
         }
       );
   }
+
   /**************************/
   //Captcha Functions
 
-  pushCaptcha(data: any){
+  pushCaptcha(data: any) {
     this.captcha[this.count] = data;
   }
 
-  pushId(data:any){
-    this.auth.storeId(data,this.count);
+  pushId(data: any) {
+    this.auth.storeId(data, this.count);
   }
 
-  setCaptcha(){
+  setCaptcha() {
     this.opt = this.captcha.length - this.count;
     this.flag = 1;
   }
 
-  collectCaptcha(data: any){
+  collectCaptcha(data: any) {
     this.captcha_response[this.opt] = data.captcha_code;
     this.flag = 0;
-    this.count --;
-    if(this.count !=0)
+    this.count--;
+    if (this.count != 0)
       this.setCaptcha();
-    else{
+    else {
       this.testCaptcha(this.captcha_response);
     }
 
   }
-  testCaptcha(data: any){
-    let request: any[] = new Array(1),i: any, code: any;
+
+  testCaptcha(data: any) {
+    let request: any[] = new Array(1), i: any, code: any;
     console.log('Inside testCaptcha');
     //console.log(data);
-    for(i=0; i<data.length; i++){
+    for (i = 0; i < data.length; i++) {
       code = this.auth.getId(i);
       //console.log(code);
       request[i] = {
-        code : code,
+        code: code,
         captcha: data[i]
       }
     }
     console.log(request);
 
-    let obj : any[], result: any, re_request: any;
+    let obj: any[], result: any, re_request: any;
     obj = this.http.sendMCaptcha(request);
     Observable.forkJoin(obj)
       .subscribe(
         results => {
           console.log(results);
           let n: any = 0;
-          for(i=0; i<results.length; i++){
+          for (i = 0; i < results.length; i++) {
             result = results[i];
-            if(result.status === "1"){
+            if (result.status === "1") {
               console.log('Records!');
               this.logic.fillRecords(result.html);
               this.logic.fillCodes(result.code);
             }
-            else
-            if(result.status === "2"){
+            else if (result.status === "2") {
               this.invalid[n++] = result.code;
             }
-            else
-            if(result.status === "3"){
+            else if (result.status === "3") {
               console.log('No records!');
             }
-            else{
+            else {
               console.log(result);
               alert('Timeout');
               re_request = {
-                name : result.name,
-                year : result.year,
-                val1 : result.val1,
-                val2 : result.val2,
-                val3 : result.val3
+                name: result.name,
+                year: result.year,
+                val1: result.val1,
+                val2: result.val2,
+                val3: result.val3
               };
               this.secondchance.push(re_request);
             }
           }
-          if(this.invalid.length > 0){
+          if (this.invalid.length > 0) {
             alert('Invalid Captcha!');
             this.invalidHandler(this.invalid);
           }
-          else
-          if(this.secondchance.length > 0){
+          else if (this.secondchance.length > 0) {
             console.log(this.secondchance);
           }
-          else
-          if( this.hallpass == true){
+          else if (this.hallpass == true) {
             this.router.navigateByUrl('/eCourt/records');
           }
         });
   }
 
   invalidHandler(invalid: any[]) {
-    if(this.invalid.length !==0)
+    if (this.invalid.length !== 0)
       this.getCaptcha(invalid[0]);
-  }
-
-  secondHandler(){
-
-
-  }
-
-  requestSearch(check: any, requests: any[]){
-    let j:any, request:any;
-    for(j=0; j<requests.length; j++){
-      request = requests[j];
-      if(check === request.code){
-
-      }
-    }
+    else
+      this.router.navigateByUrl('/eCourt/records');
   }
 
   getCaptcha(code: any) {
-    let request : any;
+    let request: any;
     console.log('Inside Invalid!');
     request = {
       code: code,
@@ -277,10 +274,10 @@ export class InputComponent implements OnInit {
       );
   }
 
-  testInvalid(data:any){
+  testInvalid(data: any) {
     console.log('Inside TestInvalid!');
     let request: any;
-    request={
+    request = {
       code: this.auth.getId('invalid'),
       captcha: data.captcha_code
     };
@@ -293,33 +290,32 @@ export class InputComponent implements OnInit {
       );
   }
 
-  resultHandler(data: any){
-    if(data.status === "1"){
+  resultHandler(data: any) {
+    if (data.status === "1") {
       console.log('Records!');
-      //this.logic.fillRecords(data.html);
-      this.invalid.splice(0,1);
-      this.invalidHandler(this.invalid)
+      this.logic.fillRecords(data.html);
+      this.invalid.splice(0, 1);
+      this.invalidHandler(this.invalid);
     }
-    else
-    if(data.status === "2"){
+    else if (data.status === "2") {
       alert('Invalid Captcha!');
       this.getCaptcha(data.code);
     }
-    else
-    if(data.status === "3"){
+    else if (data.status === "3") {
       console.log('No records!');
     }
-    else{
+    else {
       alert('Timeout!');
     }
   }
 
-  stackUpdate(){
-    this.stackname.splice(0,1);
-    this.stackupper.splice(0,1);
-    this.stacklower.splice(0,1);
+  stackUpdate() {
+    this.stackname.splice(0, 1);
+    this.stackupper.splice(0, 1);
+    this.stacklower.splice(0, 1);
     console.log(this.stackname);
     console.log(this.stackupper);
     console.log(this.stacklower);
   }
 }
+

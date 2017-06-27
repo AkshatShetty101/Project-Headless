@@ -11,6 +11,8 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home.component';
 import {AuthService} from "./Shared/auth.service";
 import {LogicService} from "./Shared/logic.service";
+import {DeactivateGuard} from "./Shared/deactivate.guard";
+import {ActivateGuard} from "./Shared/activate.guard";
 
 
 
@@ -31,7 +33,7 @@ import {LogicService} from "./Shared/logic.service";
       storageType: 'localStorage'
     })
   ],
-  providers: [HttpService, AuthService, LogicService],
+  providers: [HttpService, AuthService, LogicService, DeactivateGuard, ActivateGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

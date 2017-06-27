@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {LogicService} from "../Shared/logic.service";
 import {HttpService} from "../Shared/http.service";
 import {Router} from "@angular/router";
@@ -9,24 +9,56 @@ import {Router} from "@angular/router";
   styleUrls: ['./records.component.css']
 })
 
-export class RecordsComponent implements OnInit {
+export class RecordsComponent implements OnInit{
   records: any[][][];
   codes: any[];
+  disable: boolean = false;
 
   constructor(
     private logic: LogicService,
     private http: HttpService,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.records = this.logic.getRecords();
     this.codes = this.logic.getCodes();
+    this.logic.recordFlag = true;
+    let codes: any[];
+    let http: HttpService;
+    let router: Router;
+    let logic: LogicService;
+    logic = this.logic;
+    http = this.http;
+    router = this.router;
+    codes = this.codes;
+    console.log(codes);
+    window.onbeforeunload = function () {
+      return 'please';
+    };
+    window.onunload = function () {
+      logic.recordFlag = false;
+      console.log('Leaving');
+      let request: any[] = new Array(0), i: any;
+      for(i=0; i < codes.length; i++){
+        request[i] = {
+          code: codes[i]
+        };
+      }
+      http.terminate(request)
+        .subscribe(
+          (data) => {
+            console.log(data);
+            router.navigateByUrl('/eCourt');
+          }
+        );
+      return 'please';
+    };
   }
 
   view(n: any, data: any){
+    this.disable = true;
     let request: any;
-
     request= {
       code: this.codes[n],
       x: data
@@ -35,7 +67,6 @@ export class RecordsComponent implements OnInit {
     this.http.sendViewData(request)
       .subscribe(
         (data) => {
-          //console.log(data);
           this.logic.fillDetails(data);
           this.router.navigateByUrl('/eCourt/details');
         }
@@ -43,13 +74,14 @@ export class RecordsComponent implements OnInit {
   }
 
   done(){
+    console.log('Leaving');
+    this.logic.recordFlag = false;
     let request: any[] = new Array(0), i: any;
     for(i=0; i < this.codes.length; i++){
       request[i] = {
         code: this.codes[i]
       };
     }
-    console.log(request);
     this.http.terminate(request)
       .subscribe(
         (data) => {
