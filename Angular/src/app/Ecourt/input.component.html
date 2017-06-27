@@ -20,7 +20,7 @@
         <option name="court" *ngFor="let court of courts;let i =index" [value]="court_value[i]" [innerHTML]="court"></option>
       </select>
     </div>
-    <form [formGroup]="myForm" class="col-sm-12" method="post" (ngSubmit)="push(myForm.value);">
+    <form *ngIf="ready" [formGroup]="myForm" class="col-sm-12" method="post" (ngSubmit)="push(myForm.value);">
       <div class="row">
           <span>Enter the name:&nbsp;</span><input class="form-control" formControlName="name" placeholder="Name or Part of Name" name="name" type="text" required/>
       </div>

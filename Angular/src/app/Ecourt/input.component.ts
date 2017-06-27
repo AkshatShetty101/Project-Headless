@@ -20,6 +20,8 @@ export class InputComponent implements OnInit {
   default_court: any = '--Select a court--';
   s_code: any;
   d_code: any;
+  c_code: any;
+  ready: any;
   stackname: any;
   stackupper: any;
   stacklower: any;
@@ -68,6 +70,7 @@ export class InputComponent implements OnInit {
   ngOnInit() {
     this.logic.initRecords();
     this.fillState();
+    this.ready = false;
   }
 
   //Select List Fuctions
@@ -88,7 +91,13 @@ export class InputComponent implements OnInit {
   selectState(data: any){
     this.districts.splice(0, this.districts.length);
     this.district_value.splice(0, this.district_value.length);
+    this.courts.splice(0, this.courts.length);
+    this.court_value.splice(0, this.court_value.length);
     this.s_code = data;
+    this.default_state = '--Select a state--';
+    this.default_district = '--Select a district--';
+    this.default_court = '--Select a court--';
+    this.ready = false;
     this.fillDistrict();
   }
 
@@ -97,7 +106,6 @@ export class InputComponent implements OnInit {
     request = {
       scode: this.s_code
     };
-    console.log(request);
     this.http.getDistrict(request)
       .subscribe(
         (data)=>{
@@ -113,21 +121,21 @@ export class InputComponent implements OnInit {
     this.courts.splice(0, this.courts.length);
     this.court_value.splice(0, this.court_value.length);
     this.d_code = data;
+    //this.default_district = '--Select a district--';
+    this.default_court = '--Select a court--';
+    this.ready = false;
     this.fillCourt();
   }
 
   fillCourt(){
     let request: any, i: any;
-    console.log('InsideC!');
     request ={
       scode: this.s_code,
       dcode: this.d_code
     };
-    console.log(request);
     this.http.getCourt(request)
       .subscribe(
         (data)=>{
-          console.log(data);
            for(i=0; i<data.length; i++){
              this.courts[i] = data[i].name;
              this.court_value[i] = data[i].code;
@@ -137,7 +145,8 @@ export class InputComponent implements OnInit {
   }
 
   selectCourt(data: any){
-    console.log(data);
+    this.c_code = data;
+    this.ready = true;
   }
   /**********************/
   //Stack Functions
@@ -187,15 +196,13 @@ export class InputComponent implements OnInit {
       request[i] = {
         name: this.stackname,
         year: (parseInt(this.stacklower) + parseInt(i)).toString(),
-        val1: "1~Regional Language~0~~~marathi",
-        val2: "37",
-        val3: "119@1,2"
+        val1: this.s_code,
+        val2: this.d_code,
+        val3: this.c_code
       };
     }
     this.sendMultiple(request);
   }
-
-  //"val1":"1~Regional Language~0~~~marathi","val2":"37","val3":"119@1,2","name":"Akshat","year":"2016"}
 
   sendMultiple(request: any[]) {
     let obj: any[], i: any, result: any, flag: any = 0;
