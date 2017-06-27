@@ -11,7 +11,7 @@ var users = require('./routes/users');
 var ecourt = require('./routes/multie');
 var supreme = require('./routes/supreme');
 var map = require('./routes/map');
-var url = 'mongodb://localhost:27017/Ecourt';
+var url = 'mongodb://127.0.0.1:27017/Ecourt';
 var mongoose = require('mongoose'),
     assert = require('assert');
 mongoose.connect(url);
