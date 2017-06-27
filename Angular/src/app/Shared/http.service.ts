@@ -16,6 +16,7 @@ export class HttpService {
   }
 
   getDistrict(request: any){
+    console.log('Inside getDistrict!');
     const body = request;
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');

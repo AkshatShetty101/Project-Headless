@@ -16,12 +16,16 @@ import {Observable} from "rxjs/Observable";
 export class InputComponent implements OnInit {
 
   default_state: any = '--Select a state--';
+  default_district: any = '--Select a district--';
+  s_code: any;
   stackname: any;
   stackupper: any;
   stacklower: any;
 
   states: any[] = new Array(0);
   state_value: any[] = new  Array(0);
+  districts: any[] = new Array(0);
+  district_value: any[] = new  Array(0);
   captcha: any[] = new Array(1);
   captcha_response: any[] = new Array(1);
   invalid: any[] = new Array(0);
@@ -69,7 +73,6 @@ export class InputComponent implements OnInit {
     this.http.getState()
       .subscribe(
         (data)=>{
-          console.log(data);
           for(i=0; i<data.length; i++){
             this.states[i] = data[i].name;
             this.state_value[i] = data[i].code;
@@ -79,20 +82,36 @@ export class InputComponent implements OnInit {
   }
 
   selectState(data: any){
-    console.log('Inside!');
-    console.log(data);
     this.fillDistrict(data);
   }
 
-  fillDistrict(request: any){
-    let i: any;
-
+  fillDistrict(code: any){
+    let i: any, request: any;
+    this.s_code = code;
+    request = {
+      scode: code
+    };
+    console.log(request);
     this.http.getDistrict(request)
       .subscribe(
         (data)=>{
-          console.log(data);
+          for(i=0; i<data.length; i++){
+            this.districts[i] = data[i].name;
+            this.district_value[i] = data[i].code;
+          }
         }
       )
+  }
+
+  selectDistrict(code: any){
+    let request: any;
+    console.log('InsideD!');
+    request ={
+      scode: this.s_code,
+      dcode: code
+    };
+    console.log(request);
+    //this.fillDistrict(data);
   }
   /**********************/
   //Stack Functions
