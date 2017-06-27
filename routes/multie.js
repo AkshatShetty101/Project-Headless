@@ -5,7 +5,7 @@ var Jimp = require("jimp");
 var horseman1 =[];
 var fs = require('fs');
 var buffer = new ArrayBuffer(160);
- var view = new DataView(buffer,0,16);
+var view = new DataView(buffer,0,16);
 var rn = require('random-number');
 var gen = rn.generator({
     min:  0
@@ -46,7 +46,7 @@ router.post('/',function(request,response) {
         horseman
             .viewport(3700,2800)
             .zoom(2);
-         console.log(Object.keys(horseman).length);
+        console.log(Object.keys(horseman).length);
         horseman
             .open('http://services.ecourts.gov.in/ecourtindia_v5/')
             .catch(function(err){
@@ -176,8 +176,8 @@ router.post('/a',function(request,response){
     var code = request.body.code.toString();
     if(horseman1["'"+code+"'"]!=undefined)
     {
-         console.log(Object.keys(horseman1["'"+code+"'"]).length);
-         console.log(Object.keys(horseman1).length);
+        console.log(Object.keys(horseman1["'"+code+"'"]).length);
+        console.log(Object.keys(horseman1).length);
         var captcha = request.body.captcha.toString();
         //console.log(horseman1);
         console.log(captcha);
@@ -479,6 +479,11 @@ router.post('/view',function(request,response){
             .wait(3000)
             .wait(3000)
             .waitForSelector('#shareSelect')
+            .catch(function(err){
+                console.log("Unable to access site");
+                horseman.close();
+                return response.send({"status":"-5","html":"Unable to access site","val1" : x,"val2" :y,"val3" :z,"name":name,"year":year});
+            })
             .html('#caseHistoryDiv div')
             .then(function(data){
                 console.log('done');
