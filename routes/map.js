@@ -210,13 +210,11 @@ router.get('/adddt',function(request,response) {
         else
         {
             var values=line.split(/"(.*?)"/gim);
-            //console.log(values);
-            //console.log('Line from file:', line);
             splitString4 = line.split(/([^<>]+)<\/option>/gi);
             splitString4.pop();
-            //console.log(splitString4);
-            handleResultsDistrict(values,splitString4,scode,response);
         }
+        if(ct%2==1)
+            handleResultsDistrict(values,splitString4,scode,response);
         ct++;
     });
     response.json("done");
@@ -247,10 +245,9 @@ router.get('/adct',function(request,response) {
                 var values=line.split(/"(.*?)"/gim);
                 splitString4 = line.split(/([^<>]+)<\/option>/gi);
                 splitString4.pop();
-
             }
             if(ct%3==2)
-                   handleResultsCourt(values,splitString4,scode,dcode,response);
+                handleResultsCourt(values,splitString4,scode,dcode,response);
             ct++;
         }
 
@@ -259,7 +256,6 @@ router.get('/adct',function(request,response) {
 });
 
 function handleResultsDistrict(values,splitString4,scode,response){
-    //console.log(values.length);
     var arr = [];
     async.each(values,function(data,callback){
         var x,y;
@@ -267,26 +263,21 @@ function handleResultsDistrict(values,splitString4,scode,response){
         x= values.indexOf(data);
         if(x%2==1) {
             y= splitString4[x];
-            console.log("outside:"+data+"   "+y);
             var j ={'name':y,'code':data};
             arr.push(j);
         }
         if(x==(values.length-1))
             callback(arr);
     },function(arr){
-        console.log(arr);
         Map.findOne({'code' : scode},function (err,data) {
             if (err)
                 response.json(err);
             else {
+                console.log(data);
                 data.district=arr;
                 data.save(function(err,result){
                     if(err)
                         response.json(err);
-                    else
-                    {
-                        response.json(result);
-                    }
                 });
 
             }
@@ -316,15 +307,12 @@ function handleResultsCourt(values,splitString4,scode,dcode,response){
             if (err)
                 response.json(err);
             else {
+                console.log(scode+"----"+dcode);
                 console.log(data);
                 data.district[0].court=arr;
                 data.save(function(err,result){
                     if(err)
                         response.json(err);
-                    else
-                    {
-                      //  response.json(result);
-                    }
                 });
 
             }
