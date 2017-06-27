@@ -24,6 +24,15 @@ export class HttpService {
       .map((response: Response) => response.json());
   }
 
+  getCourt(request: any){
+    console.log('Inside getCourt!');
+    const body = request;
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.post('http://localhost:3000/map/getCourt', body, {headers})
+      .map((response: Response) => response.json());
+  }
+
   sendMCaptcha(requests: any[]){
     let obj:any[] = new Array(1), i: any;
     for(i=0; i<requests.length; i++){

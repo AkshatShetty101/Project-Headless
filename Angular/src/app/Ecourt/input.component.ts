@@ -17,7 +17,9 @@ export class InputComponent implements OnInit {
 
   default_state: any = '--Select a state--';
   default_district: any = '--Select a district--';
+  default_court: any = '--Select a court--';
   s_code: any;
+  d_code: any;
   stackname: any;
   stackupper: any;
   stacklower: any;
@@ -26,6 +28,8 @@ export class InputComponent implements OnInit {
   state_value: any[] = new  Array(0);
   districts: any[] = new Array(0);
   district_value: any[] = new  Array(0);
+  courts: any[] = new Array(0);
+  court_value: any[] = new  Array(0);
   captcha: any[] = new Array(1);
   captcha_response: any[] = new Array(1);
   invalid: any[] = new Array(0);
@@ -82,14 +86,16 @@ export class InputComponent implements OnInit {
   }
 
   selectState(data: any){
-    this.fillDistrict(data);
+    this.districts.splice(0, this.districts.length);
+    this.district_value.splice(0, this.district_value.length);
+    this.s_code = data;
+    this.fillDistrict();
   }
 
-  fillDistrict(code: any){
+  fillDistrict(){
     let i: any, request: any;
-    this.s_code = code;
     request = {
-      scode: code
+      scode: this.s_code
     };
     console.log(request);
     this.http.getDistrict(request)
@@ -100,18 +106,38 @@ export class InputComponent implements OnInit {
             this.district_value[i] = data[i].code;
           }
         }
-      )
+      );
   }
 
-  selectDistrict(code: any){
-    let request: any;
-    console.log('InsideD!');
+  selectDistrict(data: any){
+    this.courts.splice(0, this.courts.length);
+    this.court_value.splice(0, this.court_value.length);
+    this.d_code = data;
+    this.fillCourt();
+  }
+
+  fillCourt(){
+    let request: any, i: any;
+    console.log('InsideC!');
     request ={
       scode: this.s_code,
-      dcode: code
+      dcode: this.d_code
     };
     console.log(request);
-    //this.fillDistrict(data);
+    this.http.getCourt(request)
+      .subscribe(
+        (data)=>{
+          console.log(data);
+           for(i=0; i<data.length; i++){
+             this.courts[i] = data[i].name;
+             this.court_value[i] = data[i].code;
+           }
+        }
+      );
+  }
+
+  selectCourt(data: any){
+    console.log(data);
   }
   /**********************/
   //Stack Functions

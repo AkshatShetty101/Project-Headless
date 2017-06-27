@@ -15,8 +15,9 @@
         <option disabled [innerHTML]="default_district" selected></option>
         <option name="district" *ngFor="let district of districts;let i =index" [value]="district_value[i]" [innerHTML]="district"></option>
       </select>
-      <select class="col-sm-offset-1 col-sm-3">
-        <option disabled selected>--Select a court complex--</option>
+      <select class="col-sm-offset-1 col-sm-3" [(ngModel)]="default_court" (ngModelChange)="selectCourt($event)">
+        <option disabled [innerHTML]="default_court" selected>--Select a court complex--</option>
+        <option name="court" *ngFor="let court of courts;let i =index" [value]="court_value[i]" [innerHTML]="court"></option>
       </select>
     </div>
     <form [formGroup]="myForm" class="col-sm-12" method="post" (ngSubmit)="push(myForm.value);">
