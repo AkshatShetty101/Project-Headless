@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Http, Response, Headers} from "@angular/http";
 import 'rxjs/Rx';
-import {Observable} from "rxjs/Observable";
 
 @Injectable()
 export class HttpService {
@@ -16,7 +15,6 @@ export class HttpService {
   }
 
   getDistrict(request: any){
-    console.log('Inside getDistrict!');
     const body = request;
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
@@ -25,7 +23,6 @@ export class HttpService {
   }
 
   getCourt(request: any){
-    console.log('Inside getCourt!');
     const body = request;
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
@@ -41,7 +38,6 @@ export class HttpService {
     return obj;
   }
   sendCaptcha(request: any){
-    console.log("INSIDE sendCaptcha");
     const body = request;
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
@@ -66,7 +62,6 @@ export class HttpService {
   }
 
   getCaptcha(request: any){
-    console.log('Inside refresh!');
     const body = request;
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
@@ -75,7 +70,6 @@ export class HttpService {
   }
 
   sendViewData(request: any){
-    console.log('Inside Send View!');
     const body = request;
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
@@ -84,7 +78,6 @@ export class HttpService {
   }
 
   terminate(request: any){
-    console.log('Inside Terminate!');
     const body = request;
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');

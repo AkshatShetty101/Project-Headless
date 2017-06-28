@@ -25,6 +25,14 @@ export class InputComponent implements OnInit {
   stackname: any;
   stackupper: any;
   stacklower: any;
+  submitted: boolean = false;
+  flag: any ;
+  recaptcha: any;
+  count: any = 0;
+  opt: any = 0;
+  hallpass: any = true;
+  crashcount: any = 0;
+  returns : any;
 
   states: any[] = new Array(0);
   state_value: any[] = new  Array(0);
@@ -36,18 +44,11 @@ export class InputComponent implements OnInit {
   captcha_response: any[] = new Array(1);
   invalid: any[] = new Array(0);
   secondchance: any[] = new Array(0);
+  repeat: any[] = new Array(0);
 
   myForm: FormGroup;
   myCaptcha: FormGroup;
   myCaptchaInvalid: FormGroup;
-
-  submitted: boolean = false;
-  flag: any = 0;
-  recaptcha: any;
-  count: any = 0;
-  opt: any;
-  hallpass: any = true;
-  crashcount: any = 0;
 
   constructor(private formBuilder: FormBuilder,
               private http: HttpService,
@@ -70,10 +71,14 @@ export class InputComponent implements OnInit {
   ngOnInit() {
     this.logic.initRecords();
     this.fillState();
-    this.ready = false;
+    this.returns = this.logic.returns;
+    console.log(this.returns);
+    if(this.returns){
+      this.requestSender();
+    }
   }
 
-  //Select List Fuctions
+  //Select List Functions
   fillState(){
     let i: any;
 
@@ -140,6 +145,7 @@ export class InputComponent implements OnInit {
              this.courts[i] = data[i].name;
              this.court_value[i] = data[i].code;
            }
+          this.ready = true;
         }
       );
   }
@@ -168,7 +174,6 @@ export class InputComponent implements OnInit {
 
   push(data: any) {
     this.submitted = true;
-    console.log('Changed!');
     this.stackname = data.name;
     this.stackupper = data.year_upper;
     this.stacklower = data.year_lower;
@@ -185,23 +190,46 @@ export class InputComponent implements OnInit {
   /***********************************/
   //User Details
   onSearch() {
-    console.log('Submitted');
-    let i: any, limit: number;
+    //console.log('Submitted');
+    let i: any, n: any,ct: any=0, limit: number, no_years: any;
     let request: any[] = new Array(1);
-    console.log(this.stackname);
-    console.log(this.stackupper);
-    console.log(this.stacklower);
+    //console.log(this.stackname);
+    //console.log(this.stackupper);
+    //console.log(this.stacklower);
     limit = this.stackupper - this.stacklower;
-    for (i = 0; i <= limit; i++) {
-      request[i] = {
-        name: this.stackname,
-        year: (parseInt(this.stacklower) + parseInt(i)).toString(),
-        val1: this.s_code,
-        val2: this.d_code,
-        val3: this.c_code
-      };
+    for(n= 0; n< this.court_value.length; n++){
+      for (i= 0; i <= limit; i++) {
+        request[ct++] = {
+          name: this.stackname,
+          year: (parseInt(this.stacklower) + parseInt(i)).toString(),
+          val1: this.s_code,
+          val2: this.d_code,
+          val3: this.court_value[n]
+        };
+      }
     }
-    this.sendMultiple(request);
+    no_years = limit + 1;
+    this.logic.fillRequests(request, no_years);
+    this.requestSender();
+  }
+
+  requestSender(){
+    let request: any[] = new Array(0), i: any;
+    if(this.logic.requests.length > 0){
+      for(i=0; i<this.logic.no_years; i++){
+        request[i] = this.logic.requests[i];
+      }
+      this.logic.requestHandler();
+      console.log('Set');
+      console.log(request);
+      this.repeat = request;
+      this.sendMultiple(request);
+    }
+    else{
+      this.logic.returns = false;
+      this.router.navigateByUrl('/eCourt/input');
+      alert('All Done!');
+    }
   }
 
   sendMultiple(request: any[]) {
@@ -214,6 +242,7 @@ export class InputComponent implements OnInit {
           for (i = 0; i < results.length; i++) {
             result = results[i];
             if (result.status === "-5") {
+              console.log(result);
               flag = -1;
               break;
             }
@@ -225,14 +254,13 @@ export class InputComponent implements OnInit {
             if (this.crashcount < 2) {
               alert('Timeout!Please be patient.');
               this.crashcount++;
-              this.onSearch();
+              this.sendMultiple(this.repeat);
             }
             else {
               alert('Refresh Page and try after some time!');
             }
           }
           else {
-            this.flag = 1;
             this.setCaptcha();
           }
         });
@@ -263,12 +291,14 @@ export class InputComponent implements OnInit {
 
   setCaptcha() {
     this.opt = this.captcha.length - this.count;
-    this.flag = 1;
+    this.flag = true;
+    console.log(this.flag);
+    //console.log(this.captcha[this.opt]);
   }
 
   collectCaptcha(data: any) {
     this.captcha_response[this.opt] = data.captcha_code;
-    this.flag = 0;
+    this.flag = false;
     this.count--;
     if (this.count != 0)
       this.setCaptcha();
@@ -311,7 +341,7 @@ export class InputComponent implements OnInit {
               console.log('No records!');
             }
             else {
-              console.log(result);
+              //console.log(result);
               alert('Timeout');
               re_request = {
                 name: result.name,

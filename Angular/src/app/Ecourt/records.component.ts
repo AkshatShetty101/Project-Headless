@@ -30,15 +30,9 @@ export class RecordsComponent implements OnInit{
     let logic: LogicService;
     logic = this.logic;
     http = this.http;
-    router = this.router;
     codes = this.codes;
-    console.log(codes);
-    window.onbeforeunload = function () {
-      return 'please';
-    };
     window.onunload = function () {
       logic.recordFlag = false;
-      console.log('Leaving');
       let request: any[] = new Array(0), i: any;
       for(i=0; i < codes.length; i++){
         request[i] = {
@@ -49,10 +43,10 @@ export class RecordsComponent implements OnInit{
         .subscribe(
           (data) => {
             console.log(data);
-            router.navigateByUrl('/eCourt');
+            logic.returns = true;
+            router.navigateByUrl('/eCourt/input');
           }
         );
-      return 'please';
     };
   }
 
@@ -63,7 +57,6 @@ export class RecordsComponent implements OnInit{
       code: this.codes[n],
       x: data
     };
-    console.log(request);
     this.http.sendViewData(request)
       .subscribe(
         (data) => {
@@ -74,7 +67,6 @@ export class RecordsComponent implements OnInit{
   }
 
   done(){
-    console.log('Leaving');
     this.logic.recordFlag = false;
     let request: any[] = new Array(0), i: any;
     for(i=0; i < this.codes.length; i++){
@@ -86,7 +78,8 @@ export class RecordsComponent implements OnInit{
       .subscribe(
         (data) => {
           console.log(data);
-          this.router.navigateByUrl('/eCourt');
+          this.logic.returns = true;
+          this.router.navigateByUrl('/eCourt/input');
         }
       );
   }
