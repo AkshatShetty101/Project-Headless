@@ -5,6 +5,7 @@ var router = express.Router();
 var Map = require('../models/map');
 var lineReader = require('readline');
 var async = require('async');
+var _ = require('underscore');
 
 router.get('/addStatePage',function(request,response){
     var link="../public/html/addState.html";
@@ -109,6 +110,24 @@ router.post('/deleteCourts',function(request,response){
                     response.json(data);
                 }
             });
+        }
+    });
+});
+
+router.post('/getNames',function(request,response){
+    var scode = request.body.scode.toString();
+    var dcode = request.body.dcode.toString();
+    var ccode = request.body.ccode.toString();
+    Map.find({ 'code' : scode },{'name':"1",'district': { '$elemMatch': { 'code': dcode }}},function (err,data){
+        if (err)
+            response.json(err);
+        else {
+            var sname = data[0].name;
+            console.log(sname);
+            var dname = data[0].district[0].name;
+            console.log(dname);
+             var cname =  _.findWhere(data[0].district[0].court,{code : ccode}).name;
+             response.json({'sname':sname,'dname':dname,'cname':cname});
         }
     });
 });
