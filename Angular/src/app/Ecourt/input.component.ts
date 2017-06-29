@@ -20,7 +20,7 @@ export class InputComponent implements OnInit {
   default_court: any = '--Select a court--';
   s_code: any;
   d_code: any;
-  c_code: any;
+  c_code: any = -1;
   ready: any;
   stackname: any;
   stackupper: any;
@@ -32,6 +32,7 @@ export class InputComponent implements OnInit {
   opt: any = 0;
   hallpass: any = true;
   crashcount: any = 0;
+  secondchances: any = 0;
   returns : any;
 
   states: any[] = new Array(0);
@@ -72,7 +73,6 @@ export class InputComponent implements OnInit {
     this.logic.initRecords();
     this.fillState();
     this.returns = this.logic.returns;
-    console.log(this.returns);
     if(this.returns){
       this.requestSender();
     }
@@ -126,7 +126,6 @@ export class InputComponent implements OnInit {
     this.courts.splice(0, this.courts.length);
     this.court_value.splice(0, this.court_value.length);
     this.d_code = data;
-    //this.default_district = '--Select a district--';
     this.default_court = '--Select a court--';
     this.ready = false;
     this.fillCourt();
@@ -152,6 +151,7 @@ export class InputComponent implements OnInit {
 
   selectCourt(data: any){
     this.c_code = data;
+    console.log(this.c_code);
     this.ready = true;
   }
   /**********************/
@@ -197,15 +197,30 @@ export class InputComponent implements OnInit {
     //console.log(this.stackupper);
     //console.log(this.stacklower);
     limit = this.stackupper - this.stacklower;
-    for(n= 0; n< this.court_value.length; n++){
-      for (i= 0; i <= limit; i++) {
-        request[ct++] = {
-          name: this.stackname,
-          year: (parseInt(this.stacklower) + parseInt(i)).toString(),
-          val1: this.s_code,
-          val2: this.d_code,
-          val3: this.court_value[n]
-        };
+    if(this.c_code === -1){
+      for(n= 0; n< this.court_value.length; n++){
+        for (i= 0; i <= limit; i++) {
+          request[ct++] = {
+            name: this.stackname,
+            year: (parseInt(this.stacklower) + parseInt(i)).toString(),
+            val1: this.s_code,
+            val2: this.d_code,
+            val3: this.court_value[n]
+          };
+        }
+      }
+    }
+    else {
+      for(n= 0; n< this.court_value.length; n++){
+        for (i= 0; i <= limit; i++) {
+          request[ct++] = {
+            name: this.stackname,
+            year: (parseInt(this.stacklower) + parseInt(i)).toString(),
+            val1: this.s_code,
+            val2: this.d_code,
+            val3: this.c_code
+          };
+        }
       }
     }
     no_years = limit + 1;
@@ -228,7 +243,7 @@ export class InputComponent implements OnInit {
     else{
       this.logic.returns = false;
       this.router.navigateByUrl('/eCourt/input');
-      alert('All Done!');
+      alert('All Done!Refresh Page.');
     }
   }
 
@@ -292,14 +307,13 @@ export class InputComponent implements OnInit {
   setCaptcha() {
     this.opt = this.captcha.length - this.count;
     this.flag = true;
-    console.log(this.flag);
-    //console.log(this.captcha[this.opt]);
   }
 
   collectCaptcha(data: any) {
     this.captcha_response[this.opt] = data.captcha_code;
     this.flag = false;
     this.count--;
+    this.myCaptcha.reset();
     if (this.count != 0)
       this.setCaptcha();
     else {
@@ -310,11 +324,8 @@ export class InputComponent implements OnInit {
 
   testCaptcha(data: any) {
     let request: any[] = new Array(1), i: any, code: any;
-    console.log('Inside testCaptcha');
-    //console.log(data);
     for (i = 0; i < data.length; i++) {
       code = this.auth.getId(i);
-      //console.log(code);
       request[i] = {
         code: code,
         captcha: data[i]
@@ -338,7 +349,7 @@ export class InputComponent implements OnInit {
               this.invalid[n++] = result.code;
             }
             else if (result.status === "3") {
-              console.log('No records!');
+              alert('No records!');
             }
             else {
               //console.log(result);
@@ -359,6 +370,16 @@ export class InputComponent implements OnInit {
           }
           else if (this.secondchance.length > 0) {
             console.log(this.secondchance);
+            if(this.secondchances < 2){
+              this.sendMultiple(this.secondchance);
+            }
+            else {
+              alert('No hope!');
+              for(i=0; i<this.secondchance.length; i++){
+                alert('this.secondchance[i].name'+'\n'+'this.secondchance[i].year');
+              }
+            }
+
           }
           else if (this.hallpass == true) {
             this.router.navigateByUrl('/eCourt/records');
