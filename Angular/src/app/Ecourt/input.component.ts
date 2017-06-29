@@ -257,7 +257,10 @@ export class InputComponent implements OnInit {
   }
 
   sendMultiple(request: any[]) {
-    let obj: any[], i: any, result: any, flag: any = 0;
+    let obj: any[], i: any, result: any, flag: any = 0, codes: any[] = new Array(0);
+
+    this.count = 0;
+    this.captcha.splice(0,this.captcha.length);
     obj = this.http.sendMultipleData(request);
     Observable.forkJoin(obj)
       .subscribe(
@@ -266,7 +269,6 @@ export class InputComponent implements OnInit {
           for (i = 0; i < results.length; i++) {
             result = results[i];
             if (result.status === "-5") {
-              console.log(result);
               flag = -1;
               break;
             }
@@ -275,6 +277,18 @@ export class InputComponent implements OnInit {
             this.count++;
           }
           if (flag === -1) {
+            for(i=0; i<this.count; i++){
+              codes[i] = {
+                code: this.auth.getId(this.count)
+              };
+              console.log(codes);
+              this.http.terminate(codes)
+                .subscribe(
+                  (data) => {
+                    console.log(data);
+                  }
+                );
+            }
             if (this.crashcount < 2) {
               alert('Timeout!Please be patient.');
               this.crashcount++;
@@ -361,8 +375,6 @@ export class InputComponent implements OnInit {
               alert('No records!');
             }
             else {
-              //console.log(result);
-              alert('Timeout');
               re_request = {
                 name: result.name,
                 year: result.year,
@@ -375,11 +387,15 @@ export class InputComponent implements OnInit {
           }
           if (this.invalid.length > 0) {
             alert('Invalid Captcha!');
+            console.log(this.invalid);
             this.invalidHandler(this.invalid);
           }
           else if (this.secondchance.length > 0) {
-            console.log(this.secondchance);
-            if(this.secondchances < 2){
+            console.log('After captcha timeout(s)');
+            for(i=0; i<this.secondchance.length; i++){
+              alert(this.secondchance[i].name + '\n' + this.secondchance[i].year);
+            }
+            /*if(this.secondchances < 2){
               this.sendMultiple(this.secondchance);
             }
             else {
@@ -387,8 +403,8 @@ export class InputComponent implements OnInit {
               for(i=0; i<this.secondchance.length; i++){
                 alert('this.secondchance[i].name'+'\n'+'this.secondchance[i].year');
               }
-            }
-
+            }*/
+            this.router.navigateByUrl('/eCourt/records');
           }
           else if (this.hallpass == true) {
             this.router.navigateByUrl('/eCourt/records');
@@ -397,10 +413,13 @@ export class InputComponent implements OnInit {
   }
 
   invalidHandler(invalid: any[]) {
-    if (this.invalid.length !== 0)
+    if (this.invalid.length !== 0){
       this.getCaptcha(invalid[0]);
-    else
+    }
+    else{
+      console.log(this.secondchance);
       this.router.navigateByUrl('/eCourt/records');
+    }
   }
 
   getCaptcha(code: any) {
@@ -409,6 +428,7 @@ export class InputComponent implements OnInit {
     request = {
       code: code,
     };
+    console.log(request);
     this.http.getCaptcha(request)
       .subscribe(
         (data) => {
@@ -421,6 +441,7 @@ export class InputComponent implements OnInit {
   }
 
   testInvalid(data: any) {
+    this.hallpass = true;
     console.log('Inside TestInvalid!');
     let request: any;
     request = {
@@ -437,6 +458,8 @@ export class InputComponent implements OnInit {
   }
 
   resultHandler(data: any) {
+    let re_request: any;
+
     if (data.status === "1") {
       this.logic.fillRecords(data.html);
       this.invalid.splice(0, 1);
@@ -448,10 +471,26 @@ export class InputComponent implements OnInit {
     }
     else if (data.status === "3") {
       console.log('No records!');
+      this.invalid.splice(0, 1);
+      this.invalidHandler(this.invalid);
     }
     else {
       alert('Timeout!');
+      re_request = {
+        name: data.name,
+        year: data.year,
+        val1: data.val1,
+        val2: data.val2,
+        val3: data.val3
+      };
+      this.secondchance.push(re_request);
+      this.invalid.splice(0, 1);
+      this.invalidHandler(this.invalid);
     }
+  }
+
+  initialise(){
+
   }
 
   stackUpdate() {
