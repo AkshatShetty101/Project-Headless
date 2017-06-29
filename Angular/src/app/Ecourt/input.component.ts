@@ -18,6 +18,7 @@ export class InputComponent implements OnInit {
   default_state: any = '--Select a state--';
   default_district: any = '--Select a district--';
   default_court: any = '--Select a court--';
+  default_check: any = false;
   s_code: any;
   d_code: any;
   c_code: any = -1;
@@ -147,6 +148,14 @@ export class InputComponent implements OnInit {
           this.ready = true;
         }
       );
+  }
+
+  checkCourt(data: any){
+    if(!data){
+      this.c_code = -1;
+      this.default_court = '--Select a court--';
+    }
+    console.log(this.c_code);
   }
 
   selectCourt(data: any){
