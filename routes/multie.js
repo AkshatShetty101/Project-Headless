@@ -4,6 +4,7 @@ var Horseman = require('node-horseman');
 var Jimp = require("jimp");
 var horseman1 =[];
 var fs = require('fs');
+var async = require('async');
 var buffer = new ArrayBuffer(160);
 var view = new DataView(buffer,0,16);
 var rn = require('random-number');
@@ -531,18 +532,29 @@ router.get('/clean',function (request,response){
 function resourcehandler (){
     var i;
     var now = parseInt(timestamp('mm'));
-    for(i=0;i<time.length;i++){
-        console.log(time[i]+"  "+code[i]);
-        if(now - parseInt(time[i]) >= 1)
-        {
-            time.splice(i,1);
-            code.splice(i,1);
-            req.post('http://localhost:3000/supreme/release',{json:[{code:code[i]}]},function (err,data) {
-                if(err)
-                    throw err;
-            });
+    var arr = [];
+    async.each(code,function(data,callback) {
+        var x, y;
+        x = code.indexOf(data);
+        y = time[x];
+        console.log(data + "  " + y);
+        if (now - parseInt(y) >= 1) {
+            var j ={code:data};
+            arr.push(j);
+            time.splice(x,1);
+            code.splice(x,1);
         }
-    }
+        if(x==(time.length-1))
+        {
+            callback();
+        }
+    },function(){
+        req.post('http://localhost:3000/supreme/release',{json:arr},function (err,data) {
+            if(err)
+                throw err;
+        });
+
+    });
 
 }
 
