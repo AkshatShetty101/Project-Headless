@@ -20,7 +20,9 @@
     "node-horseman": "^3.3.0",
     "phantomjs-prebuilt": "^2.1.14",
     "random-number": "0.0.7",
+    "request": "^2.81.0",
     "serve-favicon": "~2.4.2",
+    "time-stamp": "^2.0.0",
     "underscore": "^1.8.3"
   }
 }

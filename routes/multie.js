@@ -12,6 +12,12 @@ var gen = rn.generator({
     , max:  9999
     , integer: true
 });
+var timestamp = require('time-stamp');
+var time =[];
+var code = [];
+var req = require('request');
+
+
 
 router.get('/',function(request,response) {
     var horseman = new Horseman({timeout:3000});
@@ -27,6 +33,7 @@ router.get('/',function(request,response) {
                 response.send({"status":"-1"});
             else
                 response.send({"status":"1"});
+            console.log(horseman);
             horseman.close();
         })
 });
@@ -36,6 +43,8 @@ router.post('/',function(request,response) {
 
         var unique = gen().toString();
         console.log(unique);
+        code.push(unique);
+        time.push(timestamp('mm'));
         var horseman = new Horseman({timeout:20000});
         var x = request.body.val1.toString();
         var y = request.body.val2.toString();
@@ -156,10 +165,10 @@ router.post('/',function(request,response) {
                             var base64Image = buffer.toString('base64');
                             console.log(img.hash());
                             var x = {"img":base64Image,'code':unique};
-                            console.log(size);
+                            //console.log(size);
                             console.log("'"+unique+"'");
                             buffer[1] =horseman;
-                            console.log(buffer[1]);
+                            // console.log(buffer[1]);
                             horseman1["'"+unique+"'"]=horseman;
                             response.send(x);
                         });
@@ -189,7 +198,7 @@ router.post('/a',function(request,response){
             //horseman1.close();
             .click('input[class="Gobtn"]')
             .cookies()
-            .log()
+            // .log()
             .evaluate( function(selector1){
                 return {
                     height : jQuery(selector1).attr('src')
@@ -408,7 +417,7 @@ router.post('/invalidCaptcha',function(request,response) {
             .wait(1500)
             .evaluate( function(selector1){
                 return {
-                    height : jQuery(selector1).attr('src'),
+                    height : jQuery(selector1).attr('src')
                 }
             }, '#captcha_image')
             .then(function(data){
@@ -512,5 +521,29 @@ router.post('/release',function(request,response){
     }
     response.json("Resources released");
 });
+
+router.get('/clean',function (request,response){
+    resourcehandler();
+    response.json('done!');
+});
+
+
+function resourcehandler (){
+    var i;
+    var now = parseInt(timestamp('mm'));
+    for(i=0;i<time.length;i++){
+        console.log(time[i]+"  "+code[i]);
+        if(now - parseInt(time[i]) >= 1)
+        {
+            time.splice(i,1);
+            code.splice(i,1);
+            req.post('http://localhost:3000/supreme/release',{json:[{code:code[i]}]},function (err,data) {
+                if(err)
+                    throw err;
+            });
+        }
+    }
+
+}
 
 module.exports = router;

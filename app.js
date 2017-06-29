@@ -11,6 +11,7 @@ var users = require('./routes/users');
 var ecourt = require('./routes/multie');
 var supreme = require('./routes/supreme');
 var map = require('./routes/map');
+var city = require('./routes/city');
 var url = 'mongodb://127.0.0.1:27017/Ecourt';
 var mongoose = require('mongoose'),
     assert = require('assert');
@@ -42,6 +43,7 @@ app.use('/users', users);
 app.use('/supreme', ecourt);
 app.use('/supreme1', supreme);
 app.use('/map', map);
+app.use('/city', city);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
