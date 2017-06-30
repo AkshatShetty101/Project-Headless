@@ -282,14 +282,14 @@ router.post('/a',function(request,response){
                 if( data.height === 'block' &&  data.html==="" && data.errmsg==="Invalid Captcha")
                 {
                     console.log('Invalid Captcha');
-                    res={"status":"2","html":data.errmsg,"code":code.toString()};
+                    res={"status":"2","html":data.errmsg,"code":code.toString(),val1 : data.val1,val2 : data.val2,val3 : data.val3,name : data.name,year : data.year};
                     response.json(res);
                 }
                 else
                 if(data.height === 'block' && data.html==="" && data.errmsg==="Record Not Found")
                 {
                     console.log('Record Not Found');
-                    res={"status":"3","html":data.errmsg};
+                    res={"status":"3","html":data.errmsg,val1 : data.val1,val2 : data.val2,val3 : data.val3,name : data.name,year : data.year};
                     response.json(res);
                     horseman1["'"+code+"'"].close();
                     delete horseman1["'"+code+"'"];
@@ -327,7 +327,7 @@ router.post('/a',function(request,response){
                 if(data!==false)
                 {
                     console.log('data found');
-                    var d ={"status":"1","html":data,"code":code.toString()};
+                    var d ={"status":"1","html":data,"code":code.toString(),val1 : data.val1,val2 : data.val2,val3 : data.val3,name : data.name,year : data.year};
                     response.json(d);
                 }
             });
@@ -518,7 +518,7 @@ router.post('/release',function(request,response){
 });
 
 router.get('/clean',function (request,response){
-    resourceHandler();
+    setInterval(resourceHandler,3600000);
     response.json('done!');
 });
 
