@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Horseman = require('node-horseman');
+//noinspection SpellCheckingInspection
 var Jimp = require("jimp");
 var horseman1 =[];
 var fs = require('fs');
@@ -21,7 +22,8 @@ var req = require('request');
 
 
 router.get('/',function(request,response) {
-    var horseman = new Horseman({timeout:3000});
+    var horseman = new Horseman({timeout:3000,interval:20});
+    //noinspection JSUnusedLocalSymbols,JSUnresolvedFunction
     horseman
         .open('http://services.ecourts.gov.in/ecourtindia_v5/')
         .catch(function(err){
@@ -30,7 +32,7 @@ router.get('/',function(request,response) {
         })
         .then(function(data){
             console.log(data);
-            if(data==false)
+            if(data===false)
                 response.send({"status":"-1"});
             else
                 response.send({"status":"1"});
@@ -45,18 +47,20 @@ router.post('/',function(request,response) {
         var unique = gen().toString();
         console.log(unique);
         code.push(unique);
-        time.push(timestamp('mm'));
-        var horseman = new Horseman({timeout:20000});
+        time.push(timestamp('HH'));
+        var horseman = new Horseman({timeout:20000,interval:10});
         var x = request.body.val1.toString();
         var y = request.body.val2.toString();
         var z = request.body.val3.toString();
         var name = request.body.name.toString();
         var year = request.body.year.toString();
         console.log(x);
+        //noinspection JSUnresolvedFunction
         horseman
             .viewport(3700,2800)
             .zoom(2);
         console.log(Object.keys(horseman).length);
+        //noinspection JSUnresolvedFunction,JSUnusedLocalSymbols
         horseman
             .open('http://services.ecourts.gov.in/ecourtindia_v5/')
             .catch(function(err){
@@ -67,9 +71,10 @@ router.post('/',function(request,response) {
             .click('div[id="leftPaneMenuCS"]')
             .wait(1000)
             .evaluate(function(x){
+                //noinspection SpellCheckingInspection
                 jQuery('#sess_state_code').val(x);
+                //noinspection JSUnresolvedFunction
                 fillDistrict();
-                return;
             },x)
             .cookies()
             .then(function(data){
@@ -79,31 +84,27 @@ router.post('/',function(request,response) {
                 return jQuery(selector).children().length>1;
             },'#sess_dist_code',true)
             .evaluate(function(y){
+                //noinspection SpellCheckingInspection
                 jQuery('#sess_dist_code').val(y);
+                //noinspection JSUnresolvedFunction
                 fillCourtComplex();
-                return;
             },y)
             .waitFor(function wait2(selector){
                 return jQuery(selector).children().length>1;
             },'#court_complex_code',true)
             .evaluate(function(z){
                 jQuery('#court_complex_code').val(z);
+                //noinspection JSUnresolvedFunction
                 funShowDefaultTab();
-                return;
             },z)
             .evaluate(function(selector1){
                 return {
-                    height : jQuery(selector1).attr('src'),
+                    height : jQuery(selector1).attr('src')
                 }
             }, '#captcha_image')
             .then(function(data){
                 console.log(data);
             })
-            //.screenshot('img3.png')
-            //.click('a[id="CSpartyName"]')
-            // .click('a[title="Refresh Image"]')
-            // .click('img[src="images/refresh-btn.jpg"]')
-            //.wait(2000)
             .evaluate( function(selector1){
                 return {
                     height : jQuery(selector1).attr('src')
@@ -112,15 +113,12 @@ router.post('/',function(request,response) {
             .then(function(data){
                 console.log(data);
             })
-            //.wait(8000)
-            //.screenshot('img4.png')
             .evaluate(function(name,year){
-                //jQuery('captcha_container_2')..removeClass(  ).addClass( "" );;
-                //validateStateDistCourt(this.id);
+                //noinspection SpellCheckingInspection
                 jQuery('#petres_name').val(name);
+                //noinspection SpellCheckingInspection
                 jQuery('#rgyearP').val(year);
                 jQuery('#radB').click();
-                return;
             },name,year)
             .wait(15000)
             .evaluate( function(selector1){
@@ -133,7 +131,6 @@ router.post('/',function(request,response) {
             })
             .screenshot(unique+'.png')
             .evaluate( function(selector1,selector2,selector3,selector4,selector5,selector6,unique){
-                //jQuery('.captcha_play_button').click();
                 var x="";
                 jQuery(selector1).find('option').each(function(){
                     x+=" "+jQuery(this).html();
@@ -146,6 +143,7 @@ router.post('/',function(request,response) {
                 jQuery(selector3).find('option').each(function(){
                     z+=" "+jQuery(this).html();
                 });
+                //noinspection JSSuspiciousNameCombination
                 return {
                     height : x,
                     height1 : y,
@@ -154,7 +152,6 @@ router.post('/',function(request,response) {
                     height4 : jQuery(selector5).val(),
                     height5 : jQuery(selector6).is(':checked'),
                     code :  unique
-                    //image : jQuery(selector7).attr('src')
                 }
             }, '#sess_state_code','#court_complex_code','#sess_dist_code',"#petres_name","#rgyearP","#radB",unique)
             .then(function(size){
@@ -166,10 +163,7 @@ router.post('/',function(request,response) {
                             var base64Image = buffer.toString('base64');
                             console.log(img.hash());
                             var x = {"img":base64Image,'code':unique};
-                            //console.log(size);
                             console.log("'"+unique+"'");
-                            buffer[1] =horseman;
-                            // console.log(buffer[1]);
                             horseman1["'"+unique+"'"]=horseman;
                             response.send(x);
                         });
@@ -184,19 +178,17 @@ router.post('/',function(request,response) {
 
 router.post('/a',function(request,response){
     var code = request.body.code.toString();
-    if(horseman1["'"+code+"'"]!=undefined)
+    if(horseman1["'"+code+"'"]!==undefined)
     {
         console.log(Object.keys(horseman1["'"+code+"'"]).length);
         console.log(Object.keys(horseman1).length);
         var captcha = request.body.captcha.toString();
-        //console.log(horseman1);
         console.log(captcha);
+        //noinspection JSUnusedLocalSymbols,SpellCheckingInspection
         horseman1["'"+code+"'"]
             .evaluate( function(captcha){
                 jQuery('#captcha').val(captcha);
-                return;
             },captcha)
-            //horseman1.close();
             .click('input[class="Gobtn"]')
             .cookies()
             // .log()
@@ -224,6 +216,7 @@ router.post('/a',function(request,response){
                 jQuery(selector3).find('option').each(function(){
                     z+=" "+jQuery(this).html();
                 });
+                //noinspection SpellCheckingInspection,JSSuspiciousNameCombination
                 return {
                     height : x,
                     height1 : y,
@@ -245,27 +238,24 @@ router.post('/a',function(request,response){
                     height : jQuery(selector1).css("display"),
                     height1 : jQuery(selector2).css("display"),
                     height2 : jQuery(selector1).children().length,
-                    height3 : jQuery(selector2).children().length,
+                    height3 : jQuery(selector2).children().length
                 }
             },'#errSpan','#showList')
             .then(function(data){
                 console.log(data);
             })
             .waitFor(function wait2(selector1,selector2){
-                if(jQuery(selector1).css("display")=='block')
+                if(jQuery(selector1).css("display")==='block')
                 {
                     return true;
                 }
-                else if(jQuery(selector2).css("display")=='block')
-                {
-                    return true;
-                }
-                else return false;
+                else return jQuery(selector2).css("display") === 'block';
             },'#errSpan','#showList',true)
             .catch(function(err) {
-                console.log("Timeout Occured");
+                console.log("Timeout Occurred");
             })
             .evaluate( function(selector1,selector2,selector3,selector4,selector5,selector6,name,year){
+                //noinspection SpellCheckingInspection
                 return {
                     errmsg : jQuery(selector1).html(),
                     html : jQuery(selector2).html(),
@@ -275,13 +265,13 @@ router.post('/a',function(request,response){
                     val2 : jQuery(selector5).val(),
                     val3 : jQuery(selector6).val(),
                     name : jQuery(name).val(),
-                    year : jQuery(year).val(),
+                    year : jQuery(year).val()
                 }
             },'#errSpan p','#showList','#errSpan','#sess_state_code','#sess_dist_code','#court_complex_code',"#petres_name","#rgyearP")
             .then(function(data){
                 var res;
                 fs.unlinkSync(code+'.png');
-                if(data.height=='none' && data.height1=='none')
+                if(data.height==='none' && data.height1==='none')
                 {
                     res={"status":"-1","html":'do it again',val1 : data.val1,val2 : data.val2,val3 : data.val3,name : data.name,year : data.year};
                     response.json(res);
@@ -289,14 +279,14 @@ router.post('/a',function(request,response){
                     delete horseman1["'"+code+"'"];
                 }
                 else
-                if( data.height == 'block' &&  data.html=="" && data.errmsg=="Invalid Captcha")
+                if( data.height === 'block' &&  data.html==="" && data.errmsg==="Invalid Captcha")
                 {
                     console.log('Invalid Captcha');
                     res={"status":"2","html":data.errmsg,"code":code.toString()};
                     response.json(res);
                 }
                 else
-                if(data.height == 'block' && data.html=="" && data.errmsg=="Record Not Found")
+                if(data.height === 'block' && data.html==="" && data.errmsg==="Record Not Found")
                 {
                     console.log('Record Not Found');
                     res={"status":"3","html":data.errmsg};
@@ -306,12 +296,13 @@ router.post('/a',function(request,response){
                 }
             })
             .evaluate( function(selector1,selector2){
-                if(jQuery(selector2).css("display")=='block' && jQuery(selector1).css("display")=='none')
+                if(jQuery(selector2).css("display")==='block' && jQuery(selector1).css("display")==='none')
                 {
                     var res="";
                     var i=0;
                     var final =[];
-                    jQuery('#dispTable tbody').find('tr').each(function(){
+                    //noinspection SpellCheckingInspection
+                    jQuery('#dispTable').find('tbody').find('tr').each(function(){
                         res=[];
                         if(jQuery(this).children().length>1)
                         {
@@ -333,7 +324,7 @@ router.post('/a',function(request,response){
                 else return false;
             },'#errSpan','#showList')
             .then(function(data){
-                if(data!=false)
+                if(data!==false)
                 {
                     console.log('data found');
                     var d ={"status":"1","html":data,"code":code.toString()};
@@ -348,7 +339,7 @@ router.post('/a',function(request,response){
 
 router.post('/refreshCaptcha',function(request,response) {
     var code = request.body.code.toString();
-    if(horseman1["'"+code+"'"]!=undefined)
+    if(horseman1["'"+code+"'"]!==undefined)
     {
         console.log("IN!!!");
         horseman1["'"+code+"'"]
@@ -377,6 +368,7 @@ router.post('/refreshCaptcha',function(request,response) {
                 jQuery(selector3).find('option').each(function(){
                     z+=" "+jQuery(this).html();
                 });
+                //noinspection JSSuspiciousNameCombination
                 return {
                     height : x,
                     height1 : y,
@@ -385,7 +377,6 @@ router.post('/refreshCaptcha',function(request,response) {
                     height4 : jQuery(selector5).val(),
                     height5 : jQuery(selector6).is(':checked'),
                     code :  unique
-                    //image : jQuery(selector7).attr('src')
                 }
             }, '#sess_state_code','#court_complex_code','#sess_dist_code',"#petres_name","#rgyearP","#radB",code)
             .then(function(size){
@@ -394,7 +385,7 @@ router.post('/refreshCaptcha',function(request,response) {
                     img.crop(780,820,240,80)
                         .quality(100)
                         .getBuffer(Jimp.MIME_PNG,function(err,buffer){
-                            base64Image = buffer.toString('base64');
+                            var base64Image = buffer.toString('base64');
                             console.log(img.hash());
                             var x = {"img":base64Image,'code':code};
                             console.log(size);
@@ -412,7 +403,7 @@ router.post('/refreshCaptcha',function(request,response) {
 
 router.post('/invalidCaptcha',function(request,response) {
     var code = request.body.code.toString();
-    if(horseman1["'"+code+"'"]!=undefined)
+    if(horseman1["'"+code+"'"]!==undefined)
     {
         horseman1["'"+code+"'"]
             .wait(1500)
@@ -438,6 +429,7 @@ router.post('/invalidCaptcha',function(request,response) {
                 jQuery(selector3).find('option').each(function(){
                     z+=" "+jQuery(this).html();
                 });
+                //noinspection JSSuspiciousNameCombination
                 return {
                     height : x,
                     height1 : y,
@@ -446,17 +438,17 @@ router.post('/invalidCaptcha',function(request,response) {
                     height4 : jQuery(selector5).val(),
                     height5 : jQuery(selector6).is(':checked'),
                     code :  unique
-                    //image : jQuery(selector7).attr('src')
                 }
             }, '#sess_state_code','#court_complex_code','#sess_dist_code',"#petres_name","#rgyearP","#radB",code)
             .then(function(size){
 
+                //noinspection JSIgnoredPromiseFromCall
                 Jimp.read(code+".png", function (err, img) {
                     if (err) throw err;
                     img.crop(780,820,240,80)
                         .quality(100)
                         .getBuffer(Jimp.MIME_PNG,function(err,buffer){
-                            base64Image = buffer.toString('base64');
+                            var base64Image = buffer.toString('base64');
                             console.log(img.hash());
                             var x = {"img":base64Image,'code':code};
                             console.log(size);
@@ -476,23 +468,25 @@ router.post('/view',function(request,response){
     var code = request.body.code.toString();
     var x = (parseInt(request.body.x)).toString();
     console.log(horseman1);
-    if(horseman1["'"+code+"'"]!=undefined)
+    if(horseman1["'"+code+"'"]!==undefined)
     {
+        //noinspection JSCheckFunctionSignatures,SpellCheckingInspection
         horseman1["'"+code+"'"]
             .click('#dispTable tbody tr:nth-child('+x+') td:nth-child(4) a')
-            .evaluate( function(x){
+            .evaluate( function(){
                 return  jQuery('#caseHistoryDiv').html();
-            },x)
-            .then(function(data){
+            })
+            .then(function () {
                 console.log('done');
             })
             .wait(3000)
             .wait(3000)
             .waitForSelector('#shareSelect')
-            .catch(function(err){
+            .catch(function(){
                 console.log("Unable to access site");
-                horseman.close();
-                return response.send({"status":"-5","html":"Unable to access site","val1" : x,"val2" :y,"val3" :z,"name":name,"year":year});
+                //noinspection NodeModulesDependencies
+                horseman1["'"+code+"'"].close();
+                return response.send({"status":"-5","html":"Unable to access site"});
             })
             .html('#caseHistoryDiv div')
             .then(function(data){
@@ -513,7 +507,7 @@ router.post('/release',function(request,response){
     {
         code = arr[i].code.toString();
         console.log(code);
-        if(horseman1["'"+code+"'"]!=undefined)
+        if(horseman1["'"+code+"'"]!==undefined)
         {
             console.log(code+'is released');
             horseman1["'" + code + "'"].close();
@@ -524,38 +518,60 @@ router.post('/release',function(request,response){
 });
 
 router.get('/clean',function (request,response){
-    resourcehandler();
+    resourceHandler();
     response.json('done!');
 });
 
 
-function resourcehandler (){
-    var i;
-    var now = parseInt(timestamp('mm'));
+function resourceHandler (){
+    var now = parseInt(timestamp('HH'));
     var arr = [];
-    async.each(code,function(data,callback) {
-        var x, y;
-        x = code.indexOf(data);
-        y = time[x];
-        console.log(data + "  " + y);
-        if (now - parseInt(y) >= 1) {
-            var j ={code:data};
-            arr.push(j);
-            time.splice(x,1);
-            code.splice(x,1);
-        }
-        if(x==(time.length-1))
-        {
-            callback();
-        }
-    },function(){
-        req.post('http://localhost:3000/supreme/release',{json:arr},function (err,data) {
-            if(err)
-                throw err;
-        });
+    console.log("dsa");
+    console.log(time);
+    if(time.length!==0)
+    {
+        console.log(time.length);
+        //noinspection JSUnresolvedFunction
+        async.each(code,function(data,callback) {
+            var x, y,j;
+            x = code.indexOf(data);
+            y = time[x];
+            console.log(x+"=="+data + "  " + y);
+            if(parseInt(now)>=parseInt(y))
+            {
+                if (parseInt(now) - parseInt(y) >= 2) {
+                    j ={code:data};
+                    arr.push(j);
+                    delete time[x];
+                    delete code[x]
+                }
 
-    });
+            }
+            else
+            {
+                y = parseInt(y)-24;
+                if (parseInt(now) - parseInt(y) >= 2) {
+                    j ={code:data};
+                    arr.push(j);
+                    delete time[x];
+                    delete code[x]
+                }
+            }
+            console.log(time.length);
+            if(parseInt(x)===(parseInt(time.length)-1))
+            {
+                callback(arr);
+            }
+        },function(arr){
+            console.log(arr);
+            req.post('http://localhost:3000/supreme/release',{json:arr},function (err) {
+                if(err)
+                    throw err;
+            });
+            time.splice(0,arr.length);
+            code.splice(0,arr.length);
+        });
+    }
 
 }
-
 module.exports = router;
