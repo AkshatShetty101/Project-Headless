@@ -115,19 +115,26 @@ router.post('/deleteCourts',function(request,response){
 });
 
 router.post('/getNames',function(request,response){
-    var scode = request.body.va11.toString();
+    //noinspection SpellCheckingInspection
+    var scode = request.body.val1.toString();
+    //noinspection SpellCheckingInspection
     var dcode = request.body.val2.toString();
+    //noinspection SpellCheckingInspection
     var ccode = request.body.val3.toString();
     Map.find({ 'code' : scode },{'name':"1",'district': { '$elemMatch': { 'code': dcode }}},function (err,data){
         if (err)
             response.json(err);
         else {
+            //noinspection SpellCheckingInspection
             var sname = data[0].name;
             console.log(sname);
+            //noinspection SpellCheckingInspection
             var dname = data[0].district[0].name;
             console.log(dname);
-             var cname =  _.findWhere(data[0].district[0].court,{code : ccode}).name;
-             response.json({'sname':sname,'dname':dname,'cname':cname});
+             //noinspection SpellCheckingInspection
+            var cname =  _.findWhere(data[0].district[0].court,{code : ccode}).name;
+             //noinspection SpellCheckingInspection
+            response.json({'sname':sname,'dname':dname,'cname':cname});
         }
     });
 });
@@ -175,12 +182,12 @@ router.get('/adc',function(request,response) {
     var scode;
     var dcode;
     a.on('line', function (line) {
-        if(ct==0)
+        if(ct===0)
         {
             scode = line;
         }
         else
-        if (ct==1)
+        if (ct===1)
         {
             dcode = line;
         }
@@ -214,15 +221,17 @@ router.get('/adc',function(request,response) {
     response.json('done');
 });
 
+//noinspection SpellCheckingInspection
 router.get('/adddt',function(request,response) {
     var splitString4=[];
     var a =lineReader.createInterface({
         input: fs.createReadStream('./a.txt')
     });
     var ct=0;
+    //noinspection SpellCheckingInspection
     var scode;
     a.on('line', function (line) {
-        if(ct%2==0)
+        if(ct%2===0)
         {
             scode = line;
         }
@@ -232,7 +241,7 @@ router.get('/adddt',function(request,response) {
             splitString4 = line.split(/([^<>]+)<\/option>/gi);
             splitString4.pop();
         }
-        if(ct%2==1)
+        if(ct%2===1)
             handleResultsDistrict(values,splitString4,scode,response);
         ct++;
     });
@@ -241,21 +250,23 @@ router.get('/adddt',function(request,response) {
 
 
 
+//noinspection SpellCheckingInspection
 router.get('/adct',function(request,response) {
     var splitString4=[];
     var a =lineReader.createInterface({
         input: fs.createReadStream('./a.txt')
     });
     var ct=0;
+    //noinspection SpellCheckingInspection
     var scode,dcode;
     a.on('line', function (line) {
-        if(line!="EOF")
+        if(line!=="EOF")
         {
-            if(ct%3==0)
+            if(ct%3===0)
             {
                 scode = line;
             }
-            if(ct%3==1)
+            if(ct%3===1)
             {
                 dcode = line;
             }
@@ -265,7 +276,7 @@ router.get('/adct',function(request,response) {
                 splitString4 = line.split(/([^<>]+)<\/option>/gi);
                 splitString4.pop();
             }
-            if(ct%3==2)
+            if(ct%3===2)
                 handleResultsCourt(values,splitString4,scode,dcode,response);
             ct++;
         }
@@ -276,16 +287,17 @@ router.get('/adct',function(request,response) {
 
 function handleResultsDistrict(values,splitString4,scode,response){
     var arr = [];
+    //noinspection JSUnresolvedFunction
     async.each(values,function(data,callback){
         var x,y;
 
         x= values.indexOf(data);
-        if(x%2==1) {
+        if(x%2===1) {
             y= splitString4[x];
             var j ={'name':y,'code':data};
             arr.push(j);
         }
-        if(x==(values.length-1))
+        if(x===(values.length-1))
             callback(arr);
     },function(arr){
         Map.findOne({'code' : scode},function (err,data) {
@@ -294,7 +306,7 @@ function handleResultsDistrict(values,splitString4,scode,response){
             else {
                 console.log(data);
                 data.district=arr;
-                data.save(function(err,result){
+                data.save(function(err){
                     if(err)
                         response.json(err);
                 });
@@ -309,16 +321,17 @@ function handleResultsDistrict(values,splitString4,scode,response){
 function handleResultsCourt(values,splitString4,scode,dcode,response){
     //console.log(values.length);
     var arr = [];
+    //noinspection JSUnresolvedFunction
     async.each(values,function(data,callback){
         var x,y;
         x= values.indexOf(data);
-        if(x%2==1) {
+        if(x%2===1) {
             y= splitString4[x];
             //  console.log("outside:"+data+"   "+y);
             var j ={'name':y,'code':data};
             arr.push(j);
         }
-        if(x==(values.length-1))
+        if(x===(values.length-1))
             callback(arr);
     },function(arr){
         // console.log(arr);
@@ -329,7 +342,7 @@ function handleResultsCourt(values,splitString4,scode,dcode,response){
                 console.log(scode+"----"+dcode);
                 console.log(data);
                 data.district[0].court=arr;
-                data.save(function(err,result){
+                data.save(function(err){
                     if(err)
                         response.json(err);
                 });
@@ -348,7 +361,7 @@ router.get('/add',function(request,response) {
     var ct=0;
     var scode;
     a.on('line', function (line) {
-        if(ct==0)
+        if(ct===0)
         {
             scode = line;
         }
