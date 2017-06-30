@@ -77,6 +77,22 @@ export class HttpService {
       .map((response: Response) => response.json());
   }
 
+  sendMultipleVal(requests: any[]){
+    let obj:any[] = new Array(1), i: any;
+    for(i=0; i<requests.length; i++){
+      obj[i] = this.sendVal(requests[i]);
+    }
+    return obj;
+  }
+
+  sendVal(request: any){
+    const body = request;
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.post('http://localhost:3000/map/getNames', body, {headers})
+      .map((response: Response) => response.json());
+  }
+
   terminate(request: any){
     const body = request;
     let headers = new Headers();
