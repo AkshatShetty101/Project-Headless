@@ -4,14 +4,27 @@
   </label>
 </div>
 <div *ngIf="fails.length > 0">
-  <h1 class="col-sm-12">These searches timed out!</h1>
+  <h1 class="col-sm-12">These searche(s) timed out!</h1>
 </div>
 <div class="row" *ngFor="let fail of fails">
-  <p>Name:&nbsp;<span [innerHTML]="fail.name"></span></p>
-  <p>Year:&nbsp;<span [innerHTML]="fail.year"></span></p>
-  <p>State:&nbsp;<span [innerHTML]="fail.state"></span></p>
-  <p>District:&nbsp;<span [innerHTML]="fail.district"></span></p>
-  <p>Court:&nbsp;<span [innerHTML]="fail.court"></span></p>
+  <p>Name:&nbsp;<span [innerHTML]="fail[0]"></span></p>
+  <p>Year:&nbsp;<span [innerHTML]="fail[1]"></span></p>
+  <p>State:&nbsp;<span [innerHTML]="fail[2]"></span></p>
+  <p>District:&nbsp;<span [innerHTML]="fail[3]"></span></p>
+  <p>Court:&nbsp;<span [innerHTML]="fail[4]"></span></p>
+</div>
+<div *ngIf="norecords.length > 0">
+  <h1 class="col-sm-12">These searche(s) have no records!</h1>
+</div>
+<div class="row" *ngFor="let search of norecords">
+  <p>Name:&nbsp;<span [innerHTML]="search[0]"></span></p>
+  <p>Year:&nbsp;<span [innerHTML]="search[1]"></span></p>
+  <p>State:&nbsp;<span [innerHTML]="search[2]"></span></p>
+  <p>District:&nbsp;<span [innerHTML]="search[3]"></span></p>
+  <p>Court:&nbsp;<span [innerHTML]="search[4]"></span></p>
+</div>
+<div *ngIf="records.length > 0">
+  <h1 class="col-sm-12">These searche(s) have records!</h1>
 </div>
 <div class="row" *ngFor="let record of records; let i = index">
   <table class="table table-bordered table-responsive" border="1">

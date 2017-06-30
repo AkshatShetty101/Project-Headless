@@ -11,7 +11,8 @@ import {Router} from "@angular/router";
 
 export class RecordsComponent implements OnInit{
   records: any[][][];
-  fails: any[];
+  fails: any[][];
+  norecords: any[][];
   codes: any[];
   disable: boolean = false;
 
@@ -24,6 +25,7 @@ export class RecordsComponent implements OnInit{
   ngOnInit() {
     this.records = this.logic.getRecords();
     this.fails = this.logic.getFails();
+    this.norecords = this.logic.getNo();
     this.codes = this.logic.getCodes();
     this.logic.recordFlag = true;
     let codes: any[];

@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class LogicService {
-  private records: any[][][];
-  private fails: any;
+  private records: any[][][] = new Array(0);
+  private fails: any[][] = new Array(0);
+  private norecords: any[][] = new Array(0);
   private codes: any[];
-  private data: any;
+  data: any;
   recordFlag: boolean;
   requests: any[];
   no_years: any;
@@ -16,9 +17,15 @@ export class LogicService {
   ) { }
 
   initRecords(){
+    console.log('Logic!');
+    this.initialise()
+  }
+
+  initialise(){
     this.records = new Array(0);
     this.codes = new Array(0);
     this.fails = new Array(0);
+    this.norecords = new Array(0);
   }
 
   fillRequests(requests: any[], years: any){
@@ -36,12 +43,16 @@ export class LogicService {
     this.records.push(data);
   }
 
-  fillFails(data: any){
+  fillCodes(data: any){
+    this.codes.push(data);
+  }
+
+  fillFails(data: any[]){
     this.fails.push(data);
   }
 
-  fillCodes(data: any){
-      this.codes.push(data);
+  fillNo(data: any[]){
+    this.norecords.push(data);
   }
 
   fillDetails(data: any){
@@ -62,5 +73,9 @@ export class LogicService {
 
   getFails(){
     return this.fails;
+  }
+
+  getNo(){
+    return this.norecords;
   }
 }

@@ -37,6 +37,7 @@ export class HttpService {
     }
     return obj;
   }
+
   sendCaptcha(request: any){
     const body = request;
     let headers = new Headers();
@@ -75,14 +76,6 @@ export class HttpService {
     headers.append('Content-Type', 'application/json');
     return this.http.post('http://localhost:3000/supreme/view', body, {headers})
       .map((response: Response) => response.json());
-  }
-
-  sendMultipleVal(requests: any[]){
-    let obj:any[] = new Array(1), i: any;
-    for(i=0; i<requests.length; i++){
-      obj[i] = this.sendVal(requests[i]);
-    }
-    return obj;
   }
 
   sendVal(request: any){

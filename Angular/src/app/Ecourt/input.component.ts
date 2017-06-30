@@ -35,6 +35,9 @@ export class InputComponent implements OnInit {
   crashcount: any = 0;
   secondchances: any = 0;
   returns : any;
+  statename: any;
+  districtname: any;
+  courtname: any;
 
   states: any[] = new Array(0);
   state_value: any[] = new  Array(0);
@@ -47,6 +50,7 @@ export class InputComponent implements OnInit {
   invalid: any[] = new Array(0);
   secondchance: any[] = new Array(0);
   repeat: any[] = new Array(0);
+  norecords: any[] = new Array(0);
 
   myForm: FormGroup;
   myCaptcha: FormGroup;
@@ -221,16 +225,14 @@ export class InputComponent implements OnInit {
       }
     }
     else {
-      for(n= 0; n< this.court_value.length; n++){
-        for (i= 0; i <= limit; i++) {
-          request[ct++] = {
-            name: this.stackname,
-            year: (parseInt(this.stacklower) + parseInt(i)).toString(),
-            val1: this.s_code,
-            val2: this.d_code,
-            val3: this.c_code
-          };
-        }
+      for (i= 0; i <= limit; i++) {
+        request[ct++] = {
+          name: this.stackname,
+          year: (parseInt(this.stacklower) + parseInt(i)).toString(),
+          val1: this.s_code,
+          val2: this.d_code,
+          val3: this.c_code
+        };
       }
     }
     no_years = limit + 1;
@@ -239,11 +241,17 @@ export class InputComponent implements OnInit {
   }
 
   requestSender(){
-    let request: any[] = new Array(0), i: any;
+    let request: any[] = new Array(0), i: any, val: any;
     if(this.logic.requests.length > 0){
       for(i=0; i<this.logic.no_years; i++){
         request[i] = this.logic.requests[i];
       }
+      val = {
+        val1: request[0].val1,
+        val2: request[0].val2,
+        val3: request[0].val3
+      };
+      this.getVal(val);
       this.logic.requestHandler();
       console.log('Set');
       console.log(request);
@@ -365,6 +373,7 @@ export class InputComponent implements OnInit {
           let n: any = 0;
           for (i = 0; i < results.length; i++) {
             result = results[i];
+            let info: any[] = new Array(0);
             if (result.status === "1") {
               this.logic.fillRecords(result.html);
               this.logic.fillCodes(result.code);
@@ -373,60 +382,55 @@ export class InputComponent implements OnInit {
               this.invalid[n++] = result.code;
             }
             else if (result.status === "3") {
-              alert('No records!');
+              info[0] = result.name;
+              info[1] = result.year;
+              info[2] = this.statename;
+              info[3] = this.districtname;
+              info[4] = this.courtname;
+              this.logic.fillNo(info);
             }
             else {
-              re_request = {
-                name: result.name,
-                year: result.year,
-                val1: result.val1,
-                val2: result.val2,
-                val3: result.val3
-              };
-              this.secondchance.push(re_request);
+              info[0] = result.name;
+              info[1] = result.year;
+              info[2] = this.statename;
+              info[3] = this.districtname;
+              info[4] = this.courtname;
+              console.log(info);
+              this.logic.fillFails(info);
             }
           }
+
           if (this.invalid.length > 0) {
             alert('Invalid Captcha!');
             console.log(this.invalid);
             this.invalidHandler(this.invalid);
           }
-          else if (this.secondchance.length > 0) {
-            this.timeoutHandler(this.secondchance);
-            /*if(this.secondchances < 2){
-              this.sendMultiple(this.secondchance);
+          else {
+            if (this.secondchance.length > 0) {
+              //Send Again
             }
-            else {
-              alert('No hope!');
-              for(i=0; i<this.secondchance.length; i++){
-                alert('this.secondchance[i].name'+'\n'+'this.secondchance[i].year');
-              }
-            }*/
             this.router.navigateByUrl('/eCourt/records');
           }
-          else if (this.hallpass == true) {
-            this.router.navigateByUrl('/eCourt/records');
-          }
-        });
+        }
+      );
   }
 
+  getVal(request: any){
+    this.http.sendVal(request)
+      .subscribe(
+        (result) => {
+          console.log(result);
+          this.statename = result.sname;
+          this.districtname = result.dname;
+          this.courtname = result.cname;
+        }
+      );
+  }
+
+
   timeoutHandler(data: any[]){
-    let i: any, request: any;
+    let i: any, request: any, fail: any[] = new Array(0);
 
-    for(i=0; i<data.length; i++){
-      request = {
-        val1: data[i].val1,
-        val2: data[i].val2,
-        val3: data[i].val3
-      };
-      this.http.sendVal(request)
-        .subscribe(
-          (result) => {
-            console.log(result);
-
-          }
-        );
-    }
   }
 
   invalidHandler(invalid: any[]) {
@@ -434,7 +438,9 @@ export class InputComponent implements OnInit {
       this.getCaptcha(invalid[0]);
     }
     else{
-      console.log(this.secondchance);
+      if (this.secondchance.length > 0) {
+        //Send Again
+      }
       this.router.navigateByUrl('/eCourt/records');
     }
   }
@@ -489,20 +495,12 @@ export class InputComponent implements OnInit {
       this.getCaptcha(data.code);
     }
     else if (data.status === "3") {
-      console.log('No records!');
+      alert('No records!');
       this.invalid.splice(0, 1);
       this.invalidHandler(this.invalid);
     }
     else {
       alert('Timeout!');
-      re_request = {
-        name: data.name,
-        year: data.year,
-        val1: data.val1,
-        val2: data.val2,
-        val3: data.val3
-      };
-      this.secondchance.push(re_request);
       this.invalid.splice(0, 1);
       this.invalidHandler(this.invalid);
     }
