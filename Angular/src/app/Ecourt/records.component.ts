@@ -11,6 +11,7 @@ import {Router} from "@angular/router";
 
 export class RecordsComponent implements OnInit{
   records: any[][][];
+  fails: any[];
   codes: any[];
   disable: boolean = false;
 
@@ -22,6 +23,7 @@ export class RecordsComponent implements OnInit{
 
   ngOnInit() {
     this.records = this.logic.getRecords();
+    this.fails = this.logic.getFails();
     this.codes = this.logic.getCodes();
     this.logic.recordFlag = true;
     let codes: any[];
@@ -57,6 +59,7 @@ export class RecordsComponent implements OnInit{
       code: this.codes[n],
       x: data
     };
+    console.log(request);
     this.http.sendViewData(request)
       .subscribe(
         (data) => {

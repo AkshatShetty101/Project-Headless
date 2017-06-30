@@ -72,11 +72,12 @@ export class InputComponent implements OnInit {
 
   ngOnInit() {
     this.logic.initRecords();
-    this.fillState();
     this.returns = this.logic.returns;
     if(this.returns){
       this.requestSender();
     }
+    else
+      this.fillState();
   }
 
   //Select List Functions
@@ -391,10 +392,7 @@ export class InputComponent implements OnInit {
             this.invalidHandler(this.invalid);
           }
           else if (this.secondchance.length > 0) {
-            console.log('After captcha timeout(s)');
-            for(i=0; i<this.secondchance.length; i++){
-              alert(this.secondchance[i].name + '\n' + this.secondchance[i].year);
-            }
+            this.timeoutHandler(this.secondchance);
             /*if(this.secondchances < 2){
               this.sendMultiple(this.secondchance);
             }
@@ -410,6 +408,25 @@ export class InputComponent implements OnInit {
             this.router.navigateByUrl('/eCourt/records');
           }
         });
+  }
+
+  timeoutHandler(data: any[]){
+    let i: any, request: any;
+
+    for(i=0; i<data.length; i++){
+      request = {
+        val1: data[i].val1,
+        val2: data[i].val2,
+        val3: data[i].val3
+      };
+      this.http.sendVal(request)
+        .subscribe(
+          (result) => {
+            console.log(result);
+
+          }
+        );
+    }
   }
 
   invalidHandler(invalid: any[]) {
@@ -442,6 +459,7 @@ export class InputComponent implements OnInit {
 
   testInvalid(data: any) {
     this.hallpass = true;
+    this.myCaptchaInvalid.reset();
     console.log('Inside TestInvalid!');
     let request: any;
     request = {
@@ -462,6 +480,7 @@ export class InputComponent implements OnInit {
 
     if (data.status === "1") {
       this.logic.fillRecords(data.html);
+      this.logic.fillCodes(data.code);
       this.invalid.splice(0, 1);
       this.invalidHandler(this.invalid);
     }
@@ -487,10 +506,6 @@ export class InputComponent implements OnInit {
       this.invalid.splice(0, 1);
       this.invalidHandler(this.invalid);
     }
-  }
-
-  initialise(){
-
   }
 
   stackUpdate() {

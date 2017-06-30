@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class LogicService {
   private records: any[][][];
+  private fails: any;
   private codes: any[];
   private data: any;
   recordFlag: boolean;
@@ -17,6 +18,7 @@ export class LogicService {
   initRecords(){
     this.records = new Array(0);
     this.codes = new Array(0);
+    this.fails = new Array(0);
   }
 
   fillRequests(requests: any[], years: any){
@@ -32,6 +34,10 @@ export class LogicService {
 
   fillRecords(data: any[][]){
     this.records.push(data);
+  }
+
+  fillFails(data: any){
+    this.fails.push(data);
   }
 
   fillCodes(data: any){
@@ -52,5 +58,9 @@ export class LogicService {
 
   getRecords(){
     return this.records;
+  }
+
+  getFails(){
+    return this.fails;
   }
 }
