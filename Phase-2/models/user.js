@@ -1,13 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var passportLocalMongoose = require('passport-local-mongoose');
-var orderHistory = new Schema({
-    orderId :
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref : 'order'
-        }
-});
 var dataSchema = new Schema({
         username: String,
         password: String,
@@ -15,7 +8,16 @@ var dataSchema = new Schema({
             type :Boolean,
             default: false
         },
-        searches: Number
+        searchesNumber: Number,
+        searchType: {
+            type :Boolean,
+            default: false
+        },
+        searchesDuration: String,
+        admin:{
+            type :Boolean,
+            default: false
+        }
     },
     {
         timestamps : true
