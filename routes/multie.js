@@ -218,9 +218,9 @@ router.post('/a',function(request,response){
                 });
                 //noinspection SpellCheckingInspection,JSSuspiciousNameCombination
                 return {
-                    height : x,
-                    height1 : y,
-                    height2 : z,
+                    height : jQuery(selector1).val(),
+                    height1 : jQuery(selector2).val(),
+                    height2 : jQuery(selector3).val(),
                     height3 : jQuery(selector4).val(),
                     height4 : jQuery(selector5).val(),
                     height5 : jQuery(selector6).is(':checked'),
@@ -229,7 +229,6 @@ router.post('/a',function(request,response){
                 }
             }, '#sess_state_code','#court_complex_code','#sess_dist_code',"#petres_name","#rgyearP","#radB",'#captcha','#captcha_container_2')
             .then(function(data){
-                //console.log(data);
             })
             .screenshot('img.png')
             .wait(8000)

@@ -139,6 +139,7 @@ router.post('/getNames',function(request,response){
     });
 });
 
+//noinspection SpellCheckingInspection
 
 router.get('/getState',function(request,response){
     Map.find({},{"name":"1","code":"1"},function (err,data) {
