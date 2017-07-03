@@ -13,13 +13,15 @@ import {AuthService} from "./Shared/auth.service";
 import {LogicService} from "./Shared/logic.service";
 import {DeactivateGuard} from "./Shared/deactivate.guard";
 import {ActivateGuard} from "./Shared/activate.guard";
+import { NavbarComponent } from './navbar/navbar.component';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,

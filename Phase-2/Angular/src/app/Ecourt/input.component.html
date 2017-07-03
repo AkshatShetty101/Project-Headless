@@ -2,10 +2,9 @@
   <div class="loader col-sm-offset-5"></div>
   <div class="row"></div>
   <div class="row"></div>
-  <h1 class="col-sm-offset-4">And Wait For It....</h1>
+  <h1 class="col-sm-offset-4">Please Wait....</h1>
 </div>
 <div class="row" [ngStyle]="{display: display?'block':'none'}">
-  <div class="heading col-sm-offset-5">Data Input Page</div>
   <div class="row">
     <select *ngIf="!returns"  class="col-sm-3" [(ngModel)]="default_state" (ngModelChange)="selectState($event)">
       <option disabled [innerHTML]="default_state" selected></option>

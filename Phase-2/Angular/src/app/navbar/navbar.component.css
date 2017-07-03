@@ -1,0 +1,23 @@
+.nav>li>a:hover {
+  border-bottom: 4px solid white;
+}
+
+.nav>li>a{
+  border-bottom: 4px solid #242424;
+}
+
+.navbar {
+  color: white;
+  background-color: #242424;
+  border: 1px solid black;
+}
+
+.navbar-header{
+  font-family: "Calibri Light";
+  font-style: italic;
+  word-spacing: 0.5vw;
+  margin-left: 4vw;
+}
+
+.navbar-brand{
+}

@@ -1,6 +1,18 @@
-body{
+html,body{
   background-color: white;
+  height: 100%;
+  margin: 0;
 }
+
+.wrapper{
+  padding-bottom: 4.4vw;
+  min-height: 100%;
+}
+
+footer{
+  margin-top: -4.4vw;
+}
+
 .heading{
   font-size: x-large;
 }
@@ -9,6 +21,7 @@ body{
 }
 .inner-content{
   position: static;
+  padding-top: 70px;
 }
 
 a{
@@ -53,4 +66,7 @@ a{
 .form-control{
   display: inline;
   width: auto;
+}
+
+header{
 }

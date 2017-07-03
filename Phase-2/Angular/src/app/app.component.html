@@ -1,2 +1,16 @@
-<a [routerLink]="['./eCourt']">E-Court Interface</a>
-<router-outlet></router-outlet>
+<div class="wrapper">
+  <header>
+    <app-navbar></app-navbar>
+  </header>
+  <router-outlet></router-outlet>
+</div>
+<footer>
+  <nav class="navbar navbar-inverse navbar-fixed-bottom" style="background-color: black; margin-bottom: 0;position:static;">
+      <ul class="nav navbar-nav">
+        <li><a [routerLink]="['./contact_us']">Contact Us</a></li>
+        <li><a ><span class="fa fa-newspaper-o" style="padding-right:5px;"></span>Subscribe</a></li>
+        <li><a [routerLink]="['./privacy']">Privacy</a></li>
+        <li><a [routerLink]="['./tandc']">Terms & Conditions</a></li>
+      </ul>
+  </nav>
+</footer>
