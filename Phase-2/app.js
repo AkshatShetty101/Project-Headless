@@ -5,13 +5,12 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
 var index = require('./routes/index');
-var users = require('./routes/users');
 var ecourt = require('./routes/multie');
 var supreme = require('./routes/supreme');
 var map = require('./routes/map');
 var city = require('./routes/city');
+var user = require('./routes/user');
 var url = 'mongodb://127.0.0.1:27017/Ecourt';
 var mongoose = require('mongoose'),
     assert = require('assert');
@@ -39,7 +38,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 app.use('/', index);
-app.use('/users', users);
+app.use('/user', user);
 app.use('/supreme', ecourt);
 app.use('/supreme1', supreme);
 app.use('/map', map);
