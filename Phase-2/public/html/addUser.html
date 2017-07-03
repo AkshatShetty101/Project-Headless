@@ -1,0 +1,52 @@
+<HTML>
+<HEAD>
+    <TITLE>ADD COURT</TITLE>
+
+    <link rel="stylesheet" href="../../Angular/src/assets/bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="../../Angular/src/assets/bower_components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../Angular/src/assets/bower_components/bootstrap-material-design/dist/css/ripples.min.css">
+    <!--<link rel="stylesheet" href="../../Angular/src/assets/bower_components/bootstrap-material-design/dist/css/bootstrap-material-design.min.css">-->
+</HEAD>
+<BODY>
+<div class="container">
+    <div class="row" style="margin-top: 100px">
+        <h1 class="h1">Add User</h1>
+    </div>
+    <div class="row" style="margin-top: 10px">
+        <div class="">
+            <form  class="form-control-static" method="post" action="/user/register" >
+                <label>Username:
+                    <input name="username" type="text" required ></label><br/>
+                <label>Password :
+                    <input name="password" type="password" required></label><br />
+                <label>Set number of permissible searches :
+                    <input name="searchesNumber" id="searchesNumber" required></label>&nbsp;OR&nbsp;
+                <label>Set infinite searches :
+                    <input  type="radio" id="searchType" name="searchType" value="true"></label><br />
+                <label>Set Duration in months :
+                    <input name="searchesDuration" required></label><br />
+                <input type="submit" class="btn btn-primary">
+            </form>
+        </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $('#searchType').click(function(){
+            console.log("Inside!");
+            $('#searchesNumber').val(0);
+        });
+        $('#searchesNumber').keypress(function(){
+            console.log("Inside!");
+            $('#searchType').prop('checked', false);
+        });
+
+    });
+</script>
+<script src="../../Angular/src/assets/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../../Angular/src/assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="../../Angular/src/assets/bower_components/bootstrap-material-design/dist/js/ripples.min.js"></script>
+<script src="../../Angular/src/assets/bower_components/bootstrap-material-design/dist/js/material.min.js"></script>
+</BODY>
+</HTML>
