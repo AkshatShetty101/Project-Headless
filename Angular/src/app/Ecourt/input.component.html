@@ -1,4 +1,10 @@
-<div class="row">
+<div [ngStyle]="{display: !display?'block':'none'}" class="row">
+  <div class="loader col-sm-offset-5"></div>
+  <div class="row"></div>
+  <div class="row"></div>
+  <h1 class="col-sm-offset-4">And Wait For It....</h1>
+</div>
+<div class="row" [ngStyle]="{display: display?'block':'none'}">
   <div class="heading col-sm-offset-5">Data Input Page</div>
   <div class="row">
     <select *ngIf="!returns"  class="col-sm-3" [(ngModel)]="default_state" (ngModelChange)="selectState($event)">
@@ -28,10 +34,11 @@
         &nbsp;<button type="submit" *ngIf="!submitted" [disabled]="!myForm.valid">Submit</button>
       </div>
     </form>
-    <form *ngIf="flag" [formGroup]="myCaptcha" class="col-sm-12" method="post" (ngSubmit)="collectCaptcha(myCaptcha.value);">
+    <form *ngIf="flag == 1" [formGroup]="myCaptcha" class="col-sm-12" method="post" (ngSubmit)="collectCaptcha(myCaptcha.value);">
       <span class="row">Response Area / Captcha</span>
       <img class="captcha" [src]="'data:image/png;base64,'+captcha[opt]" />&nbsp;
       <input class="form-control" formControlName="captcha_code" placeholder="Enter captcha" name="captcha_code" type="text" size="10" minlength="5" maxlength="5" required/>
+      <button *ngIf="refreshFlag" type="button" class="refresh_btn"><i (click)="refreshCaptcha()" class="glyphicon glyphicon-refresh"></i></button>
       <button type="submit">Submit</button>
     </form>
     <div class="col-sm-12">
@@ -39,6 +46,7 @@
         <span class="row">Response Area / Invalid Captcha</span>
         <img class="captcha" [src]="'data:image/png;base64,'+recaptcha" />&nbsp;
         <input class="form-control" formControlName="captcha_code" placeholder="Enter captcha" name="captcha_code" type="text" size="10" minlength="5" maxlength="5" required/>
+        <button *ngIf="refreshFlag" type="button" class="refresh_btn"><i (click)="refreshCaptcha()" class="glyphicon glyphicon-refresh"></i></button>
         <button type="submit">Submit</button>
       </form>
     </div>

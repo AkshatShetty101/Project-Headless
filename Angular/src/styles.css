@@ -8,10 +8,49 @@ body{
   margin: 2%;
 }
 .inner-content{
-  /*padding: 10%;*/
   position: static;
 }
 
 a{
   cursor: pointer!important;
+}
+
+.loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.refresh_btn{
+  border: 1px solid rgba(0, 0, 0, 0.41);
+  color: black;
+  text-align: center;
+  height: auto;
+  width: 2.5vw;
+  font-size: 1.5vw;
+  display: inline-block;
+}
+
+.refresh_btn i{
+  vertical-align: middle;
+  margin-bottom: 0.3vw;
+}
+
+.form-control{
+  display: inline;
+  width: auto;
 }

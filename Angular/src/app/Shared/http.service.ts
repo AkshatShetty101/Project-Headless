@@ -62,6 +62,14 @@ export class HttpService {
       .map((response: Response) => response.json());
   }
 
+  refreshCaptcha(request: any){
+    const body = request;
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.post('http://localhost:3000/supreme/refreshCaptcha', body, {headers})
+      .map((response: Response) => response.json());
+  }
+
   getCaptcha(request: any){
     const body = request;
     let headers = new Headers();

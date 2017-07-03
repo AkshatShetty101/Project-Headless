@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterContentChecked, Component, OnInit} from '@angular/core';
 import {LogicService} from "../Shared/logic.service";
 import {HttpService} from "../Shared/http.service";
 import {Router} from "@angular/router";
@@ -9,12 +9,13 @@ import {Router} from "@angular/router";
   styleUrls: ['./records.component.css']
 })
 
-export class RecordsComponent implements OnInit{
+export class RecordsComponent implements OnInit, AfterContentChecked{
   records: any[][][];
   fails: any[][];
   norecords: any[][];
   codes: any[];
   disable: boolean = false;
+  display: any = false;
 
   constructor(
     private logic: LogicService,
@@ -52,6 +53,10 @@ export class RecordsComponent implements OnInit{
           }
         );
     };
+  }
+
+  ngAfterContentChecked(){
+    this.display = true;
   }
 
   view(n: any, data: any){

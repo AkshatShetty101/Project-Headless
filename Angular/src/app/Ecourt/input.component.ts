@@ -38,6 +38,8 @@ export class InputComponent implements OnInit {
   statename: any;
   districtname: any;
   courtname: any;
+  refreshFlag: any = true;
+  display: any = true;
 
   states: any[] = new Array(0);
   state_value: any[] = new  Array(0);
@@ -50,7 +52,6 @@ export class InputComponent implements OnInit {
   invalid: any[] = new Array(0);
   secondchance: any[] = new Array(0);
   repeat: any[] = new Array(0);
-  norecords: any[] = new Array(0);
 
   myForm: FormGroup;
   myCaptcha: FormGroup;
@@ -78,6 +79,7 @@ export class InputComponent implements OnInit {
     this.logic.initRecords();
     this.returns = this.logic.returns;
     if(this.returns){
+      this.display = false;
       this.requestSender();
     }
     else
@@ -187,6 +189,7 @@ export class InputComponent implements OnInit {
   }
 
   push(data: any) {
+    this.display = false;
     this.submitted = true;
     this.stackname = data.name;
     this.stackupper = data.year_upper;
@@ -260,8 +263,8 @@ export class InputComponent implements OnInit {
     }
     else{
       this.logic.returns = false;
-      this.router.navigateByUrl('/eCourt/input');
-      alert('All Done!Refresh Page.');
+      this.router.navigateByUrl('/eCourt');
+      alert('All Done!');
     }
   }
 
@@ -275,6 +278,7 @@ export class InputComponent implements OnInit {
       .subscribe(
         results => {
           console.log(results);
+          this.display = true;
           for (i = 0; i < results.length; i++) {
             result = results[i];
             if (result.status === "-5") {
@@ -301,6 +305,7 @@ export class InputComponent implements OnInit {
             if (this.crashcount < 2) {
               alert('Timeout!Please be patient.');
               this.crashcount++;
+              this.display = false;
               this.sendMultiple(this.repeat);
             }
             else {
@@ -327,6 +332,22 @@ export class InputComponent implements OnInit {
 
   /**************************/
   //Captcha Functions
+  refreshCaptcha(){
+    let request: any;
+
+    this.refreshFlag = false;
+    request = {
+      code: this.auth.getId(this.opt)
+    };
+    this.http.refreshCaptcha(request)
+      .subscribe(
+        (result) => {
+          console.log(result);
+          this.captcha[this.opt] = result.img;
+          this.refreshFlag = true;
+        }
+      )
+  }
 
   pushCaptcha(data: any) {
     this.captcha[this.count] = data;
@@ -349,6 +370,7 @@ export class InputComponent implements OnInit {
     if (this.count != 0)
       this.setCaptcha();
     else {
+      this.display = false;
       this.testCaptcha(this.captcha_response);
     }
 
@@ -364,7 +386,7 @@ export class InputComponent implements OnInit {
       }
     }
 
-    let obj: any[], result: any, re_request: any;
+    let obj: any[], result: any;
     obj = this.http.sendMCaptcha(request);
     Observable.forkJoin(obj)
       .subscribe(
@@ -399,7 +421,7 @@ export class InputComponent implements OnInit {
               this.logic.fillFails(info);
             }
           }
-
+          this.display = true;
           if (this.invalid.length > 0) {
             alert('Invalid Captcha!');
             console.log(this.invalid);
@@ -435,6 +457,7 @@ export class InputComponent implements OnInit {
 
   invalidHandler(invalid: any[]) {
     if (this.invalid.length !== 0){
+      this.display = false;
       this.getCaptcha(invalid[0]);
     }
     else{
@@ -455,6 +478,7 @@ export class InputComponent implements OnInit {
     this.http.getCaptcha(request)
       .subscribe(
         (data) => {
+          this.display = true;
           console.log(data);
           this.auth.storeId(data.code, 'invalid');
           this.recaptcha = data.img;
@@ -464,6 +488,7 @@ export class InputComponent implements OnInit {
   }
 
   testInvalid(data: any) {
+    this.display = false;
     this.hallpass = true;
     this.myCaptchaInvalid.reset();
     console.log('Inside TestInvalid!');
@@ -482,7 +507,7 @@ export class InputComponent implements OnInit {
   }
 
   resultHandler(data: any) {
-    let re_request: any;
+    let info: any = new Array(5);
 
     if (data.status === "1") {
       this.logic.fillRecords(data.html);
@@ -495,12 +520,23 @@ export class InputComponent implements OnInit {
       this.getCaptcha(data.code);
     }
     else if (data.status === "3") {
-      alert('No records!');
+      info[0] = data.name;
+      info[1] = data.year;
+      info[2] = this.statename;
+      info[3] = this.districtname;
+      info[4] = this.courtname;
+      this.logic.fillNo(info);
       this.invalid.splice(0, 1);
       this.invalidHandler(this.invalid);
     }
     else {
       alert('Timeout!');
+      info[0] = data.name;
+      info[1] = data.year;
+      info[2] = this.statename;
+      info[3] = this.districtname;
+      info[4] = this.courtname;
+      this.logic.fillFails(info);
       this.invalid.splice(0, 1);
       this.invalidHandler(this.invalid);
     }

@@ -1,45 +1,54 @@
-<div class="row">
-  <label class="col-sm-offset-6">Kindly click this button to free resources!
-    <button (click)="done();" class="btn btn-primary">Click when done viewing page</button>
-  </label>
+<div [ngStyle]="{display: !display?'block':'none'}" class="row">
+  <div class="loader col-sm-offset-5"></div>
+  <div class="row"></div>
+  <div class="row"></div>
+  <h1 class="col-sm-offset-4">And Wait For It....</h1>
 </div>
-<div *ngIf="fails.length > 0">
-  <h1 class="col-sm-12">These searche(s) timed out!</h1>
+<div [ngStyle]="{display: display?'block':'none'}" class="row">
+  <div class="row">
+    <label class="col-sm-offset-6">Kindly click this button to free resources!
+      <button (click)="done();" class="btn btn-primary">Click when done viewing page</button>
+    </label>
+  </div>
+  <div *ngIf="fails.length > 0">
+    <h1 class="col-sm-12">These searche(s) timed out!</h1>
+  </div>
+  <div class="row" *ngFor="let fail of fails">
+    <p>Name:&nbsp;<span [innerHTML]="fail[0]"></span></p>
+    <p>Year:&nbsp;<span [innerHTML]="fail[1]"></span></p>
+    <p>State:&nbsp;<span [innerHTML]="fail[2]"></span></p>
+    <p>District:&nbsp;<span [innerHTML]="fail[3]"></span></p>
+    <p>Court:&nbsp;<span [innerHTML]="fail[4]"></span></p>
+  </div>
+  <div *ngIf="norecords.length > 0">
+    <h1 class="col-sm-12">These searche(s) have no records!</h1>
+  </div>
+  <div class="row" *ngFor="let search of norecords">
+    <p>Name:&nbsp;<span [innerHTML]="search[0]"></span></p>
+    <p>Year:&nbsp;<span [innerHTML]="search[1]"></span></p>
+    <p>State:&nbsp;<span [innerHTML]="search[2]"></span></p>
+    <p>District:&nbsp;<span [innerHTML]="search[3]"></span></p>
+    <p>Court:&nbsp;<span [innerHTML]="search[4]"></span></p>
+  </div>
+  <div *ngIf="records.length > 0">
+    <h1 class="col-sm-12">These searche(s) have records!</h1>
+  </div>
+  <div class="row" *ngFor="let record of records; let i = index">
+    <table class="table table-bordered table-responsive" border="1">
+      <tr>
+        <th>Sr.No</th>
+        <th>Case Type / Case Number / Case Year</th>
+        <th>Petitioner Name vs Respondent Name</th>
+        <th>View</th>
+      </tr>
+      <tr *ngFor="let row of record; let j = index ">
+        <td *ngIf="row.length === 1" style="color:rgba(255,46,51,0.99);" colspan="4" [innerHTML]="row[0]"></td>
+        <td *ngIf="row.length !== 1" [innerHTML]="row[0]"></td>
+        <td *ngIf="row.length !== 1" [innerHTML]="row[1]"></td>
+        <td *ngIf="row.length !== 1" [innerHTML]="row[2]"></td>
+        <td *ngIf="row.length !== 1"><a *ngIf="!disable" (click)="view(i,j+1)">View Details</a></td>
+      </tr>
+    </table>
+  </div>
 </div>
-<div class="row" *ngFor="let fail of fails">
-  <p>Name:&nbsp;<span [innerHTML]="fail[0]"></span></p>
-  <p>Year:&nbsp;<span [innerHTML]="fail[1]"></span></p>
-  <p>State:&nbsp;<span [innerHTML]="fail[2]"></span></p>
-  <p>District:&nbsp;<span [innerHTML]="fail[3]"></span></p>
-  <p>Court:&nbsp;<span [innerHTML]="fail[4]"></span></p>
-</div>
-<div *ngIf="norecords.length > 0">
-  <h1 class="col-sm-12">These searche(s) have no records!</h1>
-</div>
-<div class="row" *ngFor="let search of norecords">
-  <p>Name:&nbsp;<span [innerHTML]="search[0]"></span></p>
-  <p>Year:&nbsp;<span [innerHTML]="search[1]"></span></p>
-  <p>State:&nbsp;<span [innerHTML]="search[2]"></span></p>
-  <p>District:&nbsp;<span [innerHTML]="search[3]"></span></p>
-  <p>Court:&nbsp;<span [innerHTML]="search[4]"></span></p>
-</div>
-<div *ngIf="records.length > 0">
-  <h1 class="col-sm-12">These searche(s) have records!</h1>
-</div>
-<div class="row" *ngFor="let record of records; let i = index">
-  <table class="table table-bordered table-responsive" border="1">
-    <tr>
-      <th>Sr.No</th>
-      <th>Case Type / Case Number / Case Year</th>
-      <th>Petitioner Name vs Respondent Name</th>
-      <th>View</th>
-    </tr>
-    <tr *ngFor="let row of record; let j = index ">
-      <td *ngIf="row.length === 1" style="color:rgba(255,46,51,0.99);" colspan="4" [innerHTML]="row[0]"></td>
-      <td *ngIf="row.length !== 1" [innerHTML]="row[0]"></td>
-      <td *ngIf="row.length !== 1" [innerHTML]="row[1]"></td>
-      <td *ngIf="row.length !== 1" [innerHTML]="row[2]"></td>
-      <td *ngIf="row.length !== 1"><a *ngIf="!disable" (click)="view(i,j+1)">View Details</a></td>
-    </tr>
-  </table>
-</div>
+
