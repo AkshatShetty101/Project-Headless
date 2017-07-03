@@ -1,0 +1,54 @@
+<div [ngStyle]="{display: !display?'block':'none'}" class="row">
+  <div class="loader col-sm-offset-5"></div>
+  <div class="row"></div>
+  <div class="row"></div>
+  <h1 class="col-sm-offset-4">And Wait For It....</h1>
+</div>
+<div class="row" [ngStyle]="{display: display?'block':'none'}">
+  <div class="heading col-sm-offset-5">Data Input Page</div>
+  <div class="row">
+    <select *ngIf="!returns"  class="col-sm-3" [(ngModel)]="default_state" (ngModelChange)="selectState($event)">
+      <option disabled [innerHTML]="default_state" selected></option>
+      <option name="state" *ngFor="let state of states;let i =index" [value]="state_value[i]" [innerHTML]="state"></option>
+    </select>
+    <select *ngIf="!returns" class="col-sm-offset-1 col-sm-3" [(ngModel)]="default_district" (ngModelChange)="selectDistrict($event)">
+      <option disabled [innerHTML]="default_district" selected></option>
+      <option name="district" *ngFor="let district of districts;let i =index" [value]="district_value[i]" [innerHTML]="district"></option>
+    </select>
+    <div class="col-sm-offset-1 col-sm-4" *ngIf="!returns">
+      <input class="col-sm-1" type="checkbox" [(ngModel)]="default_check" (ngModelChange)="checkCourt($event)" />
+      <select class="col-sm-11" [(ngModel)]="default_court" (ngModelChange)="selectCourt($event)">
+        <option disabled [innerHTML]="default_court" selected>--Select a court complex--</option>
+        <option name="court" *ngFor="let court of courts;let i =index" [value]="court_value[i]" [innerHTML]="court"></option>
+      </select>
+    </div>
+    <form *ngIf="ready" [formGroup]="myForm" class="col-sm-12" method="post" (ngSubmit)="push(myForm.value);">
+      <div class="row">
+        <span>Enter the name:&nbsp;</span><input class="form-control" formControlName="name" placeholder="Name or Part of Name" name="name" type="text" required/>
+      </div>
+      <div class="row">
+        <span>Enter year:&nbsp;</span>
+        <input class="form-control" formControlName="year_upper" placeholder="upper" name="year_upper" type="text" size="4" maxlength="4" required/>
+        <span>&nbsp;through&nbsp;</span>
+        <input class="form-control" formControlName="year_lower" placeholder="lower" name="year_lower" type="text" size="4" maxlength="4" required/>
+        &nbsp;<button type="submit" *ngIf="!submitted" [disabled]="!myForm.valid">Submit</button>
+      </div>
+    </form>
+    <form *ngIf="flag == 1" [formGroup]="myCaptcha" class="col-sm-12" method="post" (ngSubmit)="collectCaptcha(myCaptcha.value);">
+      <span class="row">Response Area / Captcha</span>
+      <img class="captcha" [src]="'data:image/png;base64,'+captcha[opt]" />&nbsp;
+      <input class="form-control" formControlName="captcha_code" placeholder="Enter captcha" name="captcha_code" type="text" size="10" minlength="5" maxlength="5" required/>
+      <button *ngIf="refreshFlag" type="button" class="refresh_btn"><i (click)="refreshCaptcha()" class="glyphicon glyphicon-refresh"></i></button>
+      <button type="submit">Submit</button>
+    </form>
+    <div class="col-sm-12">
+      <form [formGroup]="myCaptchaInvalid" method="post" class="row" (ngSubmit)="testInvalid(myCaptchaInvalid.value);" *ngIf="hallpass == false">
+        <span class="row">Response Area / Invalid Captcha</span>
+        <img class="captcha" [src]="'data:image/png;base64,'+recaptcha" />&nbsp;
+        <input class="form-control" formControlName="captcha_code" placeholder="Enter captcha" name="captcha_code" type="text" size="10" minlength="5" maxlength="5" required/>
+        <button *ngIf="refreshFlag" type="button" class="refresh_btn"><i (click)="refreshCaptcha()" class="glyphicon glyphicon-refresh"></i></button>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
