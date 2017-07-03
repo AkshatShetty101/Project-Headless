@@ -4,18 +4,21 @@ var passportLocalMongoose = require('passport-local-mongoose');
 var dataSchema = new Schema({
         username: String,
         password: String,
-        logged:{
-            type :Boolean,
+        logged: {
+            type: Boolean,
             default: false
         },
-        searchesNumber: Number,
+        searchesNumber: {
+         type: Number,
+            default: 0
+        },
         searchType: {
-            type :Boolean,
+            type: Boolean,
             default: false
         },
         searchesDuration: String,
-        admin:{
-            type :Boolean,
+        admin: {
+            type: Boolean,
             default: false
         }
     },

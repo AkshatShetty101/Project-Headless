@@ -11,8 +11,8 @@ exports.getToken = function(user) {
 };
 exports.verifyUsername = function(request, response, next) {
     console.log(request.body);
-    User.find({username:request.body.username},function (err, idata) {
-        if(idata[0]===undefined)
+    User.find({username:request.body.username},function (err, data) {
+        if(data[0]===undefined)
             next();
         else {
             response.json("Username is already used");
