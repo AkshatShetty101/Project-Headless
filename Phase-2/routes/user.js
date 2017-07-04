@@ -5,6 +5,7 @@ var path = require('path');
 var fs = require('fs');
 var passport = require('passport');
 var dateformat = require('dateformat');
+var jwt = require('jsonwebtoken');
 var LocalStrategy = require('passport-local').Strategy;
 var User = require('../models/user');
 var Verify = require('./verify');
@@ -47,8 +48,11 @@ router.post('/register',Verify.verifyUsername,function(request, response){
     });
 });
 
-router.post('/changePassword',function(request,response){
-    User.findOne({"username":request.body.username},function(err,data){
+router.post('/changePassword',Verify.verifyLoggedUser,function(request,response){
+    var token = request.body.token || request.query.token || request.headers['x-access-token'];
+    var decoded = jwt.decode(token);
+    console.log(decoded.data.username);
+    User.findOne({"username":decoded.data.username},function(err,data){
         if(!data)
             response.json('Incorrect Username!');
         else
@@ -60,17 +64,44 @@ router.post('/changePassword',function(request,response){
                 {
                     data.save(function(err,user){
                         if(err)
-                            throw err;
+                            response.json(err);
                         else
                         {
-                            //console.log(user);
-                            passport.authenticate('local')(request, response, function () {
-                                response.status(200).json({status: 'Password Change Successful!'});
-                            });
+                            console.log(user);
+                            response.json('success!');
                         }
                     });
                 }
             })
+        }
+    });
+});
+
+router.post('/removeUser',Verify.verifyLoggedUser,function(request,response) {
+    console.log('Here!!');
+    User.findOne({'username': request.body.username}, function (err, data) {
+        if (err)
+            response.json(err);
+        else
+        if (!data)
+            response.json('No such user!!');
+        else
+        {
+            console.log(data);
+            if(data.admin===true)
+            {
+                response.json('Cannot delete admin!');
+            }
+            else
+            {
+                data.remove(function (err,res) {
+                    if (err)
+                        response.json(err);
+                    else {
+                        response.json('success!!');
+                    }
+                });
+            }
         }
     });
 });
