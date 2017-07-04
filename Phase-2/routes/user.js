@@ -106,49 +106,59 @@ router.post('/removeUser',Verify.verifyLoggedUser,function(request,response) {
     });
 });
 
-// router.post('/findStatus',Verify.verifyLoggedUser,function(request,response){
-//     var token = request.body.token || request.query.token || request.headers['x-access-token'];
-//     var decoded = jwt.decode(token);
-//     console.log(decoded.data._id);
-//     var flag=-1;
-//     User.findById(decoded.data._id,function(err,data){
-//         if(err)
-//             response.json(err);
-//         else
-//         {
-//             var date = new Date();
-//             console.log(date);
-//             var x= data.searchesDuration.split(/[:]/);
-//             console.log(date.getFullYear()+"--"+(date.getMonth()+1+"--"+(date.getDate())));
-//             console.log(x[1]);
-//             if(parseInt(x[2])===parseInt(date.getFullYear()))
-//             {
-//                 if(parseInt(x[1])>(parseInt(date.getMonth())+1))
-//                 flag=1;
-//                 else
-//                 if(parseInt(x[1])===(parseInt(date.getMonth())+1)) {
-//                     if (parseInt(x[1]) >(parseInt(date.getDate()) + 1)) {
-//
-//
-//                     }
-//                 }
-//             }
-//             else
-//             if(parseInt(x[2])>parseInt(date.getFullYear()))
-//             {
-//                 flag=1;
-//             }
-//             else
-//             {
-//                 flag=-1;
-//             }
-//
-//         }
-//
-//     }).then(function () {
-//        console.log('here!!!!!!!!!');
-//     });
-// });
+router.post('/findStatus',Verify.verifyLoggedUser,function(request,response){
+    var token = request.body.token || request.query.token || request.headers['x-access-token'];
+    var decoded = jwt.decode(token);
+    console.log(decoded.data._id);
+    var flag=-1;
+    User.findById(decoded.data._id,function(err,data){
+        if(err)
+            response.json(err);
+        else
+        {
+            var date = new Date();
+            console.log(date);
+            var x= data.searchesDuration.split(/[:]/);
+            console.log(date.getFullYear()+"--"+(date.getMonth()+1+"--"+(date.getDate())));
+            console.log(x[1]);
+            if(parseInt(x[2])===parseInt(date.getFullYear()))
+            {
+                if(parseInt(x[1])>(parseInt(date.getMonth())+1))
+                    flag=1;
+                else
+                {
+                    if(parseInt(x[1])===(parseInt(date.getMonth())+1)) {
+                        if (parseInt(x[1]) >=(parseInt(date.getDate()) + 1))
+                            flag=1;
+                    }
+                }
+            }
+            else
+            if(parseInt(x[2])>parseInt(date.getFullYear()))
+            {
+                flag=1;
+            }
+            return data;
+        }
+    }).then(function (data) {
+        console.log(data.logged);
+        console.log('here!!!!!!!!!'+flag);
+        if(flag===1)
+        {
+            if(data.searchType===true)
+            {
+                response.json({status: 2, message: 'Unlimited searches left'});
+            }
+            else
+            {
+                response.json({status: 1, message: 'Limited searches left', amount: data.searchesNumber});
+            }
+        }
+        else {
+            response.json({status: -1, message: 'Time Period expired. Contact Administrator'})
+        }
+    });
+});
 
 router.post('/login',function(request, response,next){
     passport.authenticate("local",function(err,user){
