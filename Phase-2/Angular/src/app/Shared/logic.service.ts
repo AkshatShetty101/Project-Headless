@@ -6,6 +6,7 @@ export class LogicService {
   private fails: any[][] = new Array(0);
   private norecords: any[][] = new Array(0);
   private codes: any[];
+
   data: any;
   recordFlag: boolean;
   requests: any[];

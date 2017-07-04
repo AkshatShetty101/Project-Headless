@@ -1,8 +1,8 @@
 <div class="inner-content row">
   <div class="row">
-    <form [formGroup]="myForm" class="col-sm-offset-3 col-sm-5 form-holder">
+    <form [formGroup]="myForm" class="col-sm-offset-3 col-sm-5 form-holder" (ngSubmit)="onSubmit(myForm.value)">
       <div class="row">
-        <input class="form-control" formControlName="username" name="username" placeholder="Enter Username...." type="text" />
+        <input autocomplete="off" class="form-control" formControlName="username" name="username" placeholder="Enter Username...." type="text" />
       </div>
       <div class="row">
         <input class="form-control" formControlName="password" name="password" placeholder="Enter Password...." type="password" />
@@ -11,7 +11,18 @@
         <a class="col-sm-offset-2">Forgot Username or Password ?</a>
       </div><br>
       <div class="row">
-        <input class="submit-btn" type="submit" value="Log In" />
+        <input class="submit-btn" type="submit" [disabled]="!myForm.valid" value="Log In" />
+      </div>
+      <div  class="row" *ngIf="alt == -1">
+        <div *ngIf="flag == -1" class="error-msg">
+          <div style="line-height: 300%"><span class="glyphicon glyphicon-exclamation-sign"></span>&nbsp;Invalid Username or Password</div>
+        </div>
+        <div *ngIf="flag == -2" class="warning-msg">
+          <div style="line-height: 300%"><span class="glyphicon glyphicon-exclamation-sign"></span>&nbsp;Already Logged In</div>
+        </div>
+        <div *ngIf="flag == 1" class="success-msg">
+          <div style="line-height: 300%"><span class="glyphicon glyphicon-ok"></span>&nbsp;Successfully Logged In</div>
+        </div>
       </div>
     </form>
   </div>

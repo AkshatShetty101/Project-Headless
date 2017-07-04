@@ -1,8 +1,11 @@
 <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container">
     <ul class="nav navbar-nav navbar-left">
-      <li routerLinkActive="active" [routerLink]="['/login']">
-        <a>E-Court</a>
+      <li *ngIf="loggedIn" routerLinkActive="active">
+        <a [routerLink]="['/eCourt']">E-Court</a>
+      </li>
+      <li *ngIf="!loggedIn" routerLinkActive="active">
+        <a [routerLink]="['/login']">E-Court</a>
       </li>
       <li routerLinkActive="active">
         <a>Developers</a>
@@ -12,19 +15,19 @@
       </li>
     </ul>
     <div class="navbar-header">
-      <a class="navbar-brand" [routerLink]="['/home']">Making Searching Easier</a>
+      <a class="navbar-brand" [routerLink]="['/home']">Searching Made Easy For You</a>
     </div>
     <ul class="nav navbar-nav navbar-right">
-      <li>
+      <li *ngIf="!loggedIn" routerLinkActive="active">
         <a [routerLink]="['/login']">Login</a>
       </li>
-      <li>
-        <button class="btn btn-primary">Logout</button>
+      <li *ngIf="loggedIn">
+        <button class="btn btn-primary" (click)="logOut()">Logout</button>
       </li>
-      <li>
+      <li routerLinkActive="active" *ngIf="loggedIn">
         <a>My Account</a>
       </li>
-      <li>
+      <li routerLinkActive="active" *ngIf="loggedIn">
         <a>Admin Facilities</a>
       </li>
     </ul>
