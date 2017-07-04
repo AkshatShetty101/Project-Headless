@@ -303,11 +303,23 @@ router.post('/login',function(request, response,next){
                             console.log(new_data);
                             var t = Verify.getToken(user);
                             console.log("Success!!!!" + user.admin + "   \n" + user);
-                            response.status(200).json({
-                                status: 1,
-                                message:'Login Successful',
-                                token: t
-                            });
+                            if(new_data.admin===true)
+                            {
+                                response.status(200).json({
+                                    status: 2,
+                                    message:'Login Successful',
+                                    token: t
+                                });
+                            }
+                            else
+                            {
+                                response.status(200).json({
+                                    status: 1,
+                                    message:'Login Successful',
+                                    token: t
+                                });
+                            }
+
                         }
                     });
                 }
