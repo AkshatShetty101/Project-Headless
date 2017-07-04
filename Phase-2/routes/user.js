@@ -160,6 +160,10 @@ router.post('/findStatus',Verify.verifyLoggedUser,function(request,response){
     });
 });
 
+router.post('/updateStatus',Verify.verifyLoggedUser,function(request,response){
+
+});
+
 router.post('/login',function(request, response,next){
     passport.authenticate("local",function(err,user){
         console.log(user);
@@ -204,6 +208,25 @@ router.post('/login',function(request, response,next){
             });
         }
     })(request,response,next);
+});
+
+router.get('/logout',Verify.verifyLoggedUser,function(request, response){
+    var token = request.body.token || request.query.token || request.headers['x-access-token'];
+    var decoded = jwt.decode(token);
+    decoded.data.logged = false;
+    console.log(decoded.data);
+    User.findByIdAndUpdate(decoded.data._id,{$set : {logged: decoded.data.logged}},{ new : true},function(error,new_data){
+        if(error)
+            response.json(error);
+        else
+        {
+            console.log(new_data);
+            request.logout();
+            response.status(200).json({
+                status: 'Bye!'
+            });
+        }
+    });
 });
 
 router.post('/d',Verify.verifyLoggedUser,function (request,response) {
