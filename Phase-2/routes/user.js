@@ -34,7 +34,7 @@ router.post('/register',Verify.verifyUsername,function(request, response){
             user.searchType = request.body.searchType;
         else
             user.searchesNumber = request.body.searchesNumber;
-        user.save(function(err,user){
+        user.save(function(err){
             if(err)
                 throw err;
             else
@@ -57,7 +57,7 @@ router.post('/changePassword',Verify.verifyLoggedUser,function(request,response)
             response.json('Incorrect Username!');
         else
         {
-            data.setPassword(request.body.password,function(err,result){
+            data.setPassword(request.body.password,function(err){
                 if(err)
                     response.json(err);
                 else
@@ -94,7 +94,7 @@ router.post('/removeUser',Verify.verifyLoggedUser,function(request,response) {
             }
             else
             {
-                data.remove(function (err,res) {
+                data.remove(function (err) {
                     if (err)
                         response.json(err);
                     else {
@@ -106,6 +106,50 @@ router.post('/removeUser',Verify.verifyLoggedUser,function(request,response) {
     });
 });
 
+// router.post('/findStatus',Verify.verifyLoggedUser,function(request,response){
+//     var token = request.body.token || request.query.token || request.headers['x-access-token'];
+//     var decoded = jwt.decode(token);
+//     console.log(decoded.data._id);
+//     var flag=-1;
+//     User.findById(decoded.data._id,function(err,data){
+//         if(err)
+//             response.json(err);
+//         else
+//         {
+//             var date = new Date();
+//             console.log(date);
+//             var x= data.searchesDuration.split(/[:]/);
+//             console.log(date.getFullYear()+"--"+(date.getMonth()+1+"--"+(date.getDate())));
+//             console.log(x[1]);
+//             if(parseInt(x[2])===parseInt(date.getFullYear()))
+//             {
+//                 if(parseInt(x[1])>(parseInt(date.getMonth())+1))
+//                 flag=1;
+//                 else
+//                 if(parseInt(x[1])===(parseInt(date.getMonth())+1)) {
+//                     if (parseInt(x[1]) >(parseInt(date.getDate()) + 1)) {
+//
+//
+//                     }
+//                 }
+//             }
+//             else
+//             if(parseInt(x[2])>parseInt(date.getFullYear()))
+//             {
+//                 flag=1;
+//             }
+//             else
+//             {
+//                 flag=-1;
+//             }
+//
+//         }
+//
+//     }).then(function () {
+//        console.log('here!!!!!!!!!');
+//     });
+// });
+
 router.post('/login',function(request, response,next){
     passport.authenticate("local",function(err,user){
         console.log(user);
@@ -115,11 +159,11 @@ router.post('/login',function(request, response,next){
         else
         if (!user) {
             console.log("false user");
-            response.json("Unauthorized");
+            response.json({status: -1, message: 'Incorrect username and password combination'});
         }
         else
         if (user.logged===true) {
-            response.json("Already logged in");
+            response.json({status: -2, message: 'Already logged in'});
         }
         else
         {
@@ -140,7 +184,8 @@ router.post('/login',function(request, response,next){
                             var t = Verify.getToken(user);
                             console.log("Success!!!!" + user.admin + "   \n" + user);
                             response.status(200).json({
-                                status: 'Login successful!',
+                                status: '1',
+                                message:'Login Successful',
                                 token: t
                             });
                         }
