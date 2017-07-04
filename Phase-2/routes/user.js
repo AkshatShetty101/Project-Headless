@@ -48,11 +48,23 @@ router.post('/register',Verify.verifyUsername,function(request, response){
     });
 });
 
+router.get('/get',Verify.verifyLoggedUser,Verify.verifyAdmin,function (request,response){
+    User.find({},{_id:0,updatedAt:0,createdAt:0,__v:0,logged:0},function(err,data){
+        if(err)
+            response.json(err);
+        else
+        {
+            response.json(data);
+        }
+
+    });
+});
+
 router.post('/changePassword',Verify.verifyLoggedUser,function(request,response){
     var token = request.body.token || request.query.token || request.headers['x-access-token'];
     var decoded = jwt.decode(token);
     console.log(decoded.data.username);
-    User.findOne({"username":decoded.data.username},function(err,data){
+    User.findById(decoded.data._id,function(err,data){
         if(!data)
             response.json('Incorrect Username!');
         else
@@ -77,7 +89,35 @@ router.post('/changePassword',Verify.verifyLoggedUser,function(request,response)
     });
 });
 
-router.post('/removeUser',Verify.verifyLoggedUser,function(request,response) {
+router.post('/adminChangePassword',Verify.verifyLoggedUser,function(request,response){
+    var username = request.body.username;
+    var password = request.body.password;
+    User.findone({username: username},function(err,data){
+        if(!data)
+            response.json('Incorrect Username!');
+        else
+        {
+            data.setPassword(password,function(err){
+                if(err)
+                    response.json(err);
+                else
+                {
+                    data.save(function(err,user){
+                        if(err)
+                            response.json(err);
+                        else
+                        {
+                            console.log(user);
+                            response.json('success!');
+                        }
+                    });
+                }
+            })
+        }
+    });
+});
+
+router.post('/removeUser',Verify.verifyLoggedUser,Verify.verifyAdmin,function(request,response) {
     console.log('Here!!');
     User.findOne({'username': request.body.username}, function (err, data) {
         if (err)
