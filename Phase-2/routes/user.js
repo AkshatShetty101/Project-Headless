@@ -63,7 +63,6 @@ router.get('/get',Verify.verifyLoggedUser,Verify.verifyAdmin,function (request,r
 router.post('/changePassword',Verify.verifyLoggedUser,function(request,response){
     var token = request.body.token || request.query.token || request.headers['x-access-token'];
     var decoded = jwt.decode(token);
-    console.log(decoded.data.username);
     User.findById(decoded.data._id,function(err,data){
         if(!data)
             response.json('Incorrect Username!');
@@ -89,7 +88,7 @@ router.post('/changePassword',Verify.verifyLoggedUser,function(request,response)
     });
 });
 
-router.post('/adminChangePassword',Verify.verifyLoggedUser,function(request,response){
+router.post('/adminChangePassword',Verify.verifyLoggedUser,Verify.verifyAdmin,function(request,response){
     var username = request.body.username;
     var password = request.body.password;
     User.findone({username: username},function(err,data){
@@ -200,7 +199,40 @@ router.post('/findStatus',Verify.verifyLoggedUser,function(request,response){
     });
 });
 
-router.post('/updateStatus',Verify.verifyLoggedUser,function(request,response){
+router.post('/decreaseSearches',Verify.verifyLoggedUser,function(request,response){
+    var token = request.body.token || request.query.token || request.headers['x-access-token'];
+    var decoded = jwt.decode(token);
+    var num = parseInt(request.body.number);
+    User.findById(decoded.data._id,function(err,data){
+        if(err)
+            response.json(err);
+        else
+        if(!data)
+            response.json({status: -1, message: 'No such user'});
+        else
+        {
+            if(data.searchType===true)
+            {
+                response.json({status:1, message: 'Deducted from infinity'});
+            }
+            else
+            {
+                data.searchesNumber = parseInt(data.searchesNumber)- num;
+            }
+            data.save(function(err,user){
+                if(err)
+                    response.json(err);
+                else
+                {
+                    console.log(user);
+                    response.json({status: 1,message: 'Deducted appropriately'});
+                }
+            });
+        }
+    });
+});
+
+router.post('/updateStatus',Verify.verifyLoggedUser,Verify.verifyAdmin,function(request,response){
     var username = request.body.username;
     var searchType = request.body.searchType;
     var searchesDuration = parseInt(request.body.searchesDuration);
