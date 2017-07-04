@@ -5,6 +5,7 @@ var Horseman = require('node-horseman');
 var Jimp = require("jimp");
 var horseman1 =[];
 var fs = require('fs');
+var path = require('path');
 var async = require('async');
 var buffer = new ArrayBuffer(160);
 var view = new DataView(buffer,0,16);
@@ -45,7 +46,6 @@ router.post('/',function(request,response) {
     try{
 
         var unique = gen().toString();
-        console.log(unique);
         code.push(unique);
         time.push(timestamp('HH'));
         var horseman = new Horseman({timeout:20000,interval:10});
@@ -54,12 +54,12 @@ router.post('/',function(request,response) {
         var z = request.body.val3.toString();
         var name = request.body.name.toString();
         var year = request.body.year.toString();
-        console.log(x);
         //noinspection JSUnresolvedFunction
         horseman
             .viewport(3700,2800)
             .zoom(2);
         console.log(Object.keys(horseman).length);
+        console.log(Object.keys(horseman1).length);
         //noinspection JSUnresolvedFunction,JSUnusedLocalSymbols
         horseman
             .open('http://services.ecourts.gov.in/ecourtindia_v5/')
@@ -539,6 +539,8 @@ function resourceHandler (){
             if(parseInt(now)>=parseInt(y))
             {
                 if (parseInt(now) - parseInt(y) >= 2) {
+                    if(fs.existsSync(path.join(__dirname,'..\\'+code[x]+'.png')))
+                        fs.unlinkSync(code[x]+'.png');
                     j ={code:data};
                     arr.push(j);
                     delete time[x];
