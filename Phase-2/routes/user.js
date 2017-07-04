@@ -161,7 +161,41 @@ router.post('/findStatus',Verify.verifyLoggedUser,function(request,response){
 });
 
 router.post('/updateStatus',Verify.verifyLoggedUser,function(request,response){
-
+    var username = request.body.username;
+    var searchType = request.body.searchType;
+    var searchesDuration = parseInt(request.body.searchesDuration);
+    var searchesNumber = parseInt(request.body.searchesNumber);
+    User.findOne({username: username},function(err,data) {
+        if (err)
+            response.json(err);
+        else
+        {
+            var date = new Date();
+            console.log(date);
+            date.setMonth(date.getMonth()+searchesDuration);
+            console.log(date);
+            data.searchesDuration = dateformat(date,'dd:mm:yyyy');
+            if(searchType==='true')
+            {
+                data.searchType = true;
+                data.searchesNumber = 0;
+            }
+            else
+            {
+                data.searchType = false;
+                data.searchesNumber = searchesNumber;
+            }
+            data.save(function(err,user){
+                if(err)
+                    response.json(err);
+                else
+                {
+                    console.log(user);
+                    response.json({status: 1,message: 'Status reset'});
+                }
+            });
+        }
+    });
 });
 
 router.post('/login',function(request, response,next){
