@@ -1,0 +1,27 @@
+.form-control{
+  border: 1px solid rgba(133, 133, 133, 0.75);
+  background-image: none;
+  background-color: white;
+  border-radius: 5px;
+  text-indent: 2%;
+  width: 25vw;
+}
+
+label{
+  color: white;
+}
+
+.form-holder{
+  padding: 5vw;
+}
+
+.submit-btn{
+  background-color: #00b0ff;
+  color: white;
+  border: solid #00b0ff;
+  border-radius: 5px;
+  width: 25vw;
+  height: 3.5vw;
+  font-size: 150%;
+  vertical-align: middle;
+}

@@ -1,7 +1,7 @@
 <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container">
     <ul class="nav navbar-nav navbar-left">
-      <li routerLinkActive="active" [routerLink]="['/eCourt']">
+      <li routerLinkActive="active" [routerLink]="['/login']">
         <a>E-Court</a>
       </li>
       <li routerLinkActive="active">
@@ -16,7 +16,7 @@
     </div>
     <ul class="nav navbar-nav navbar-right">
       <li>
-        <a>Login</a>
+        <a [routerLink]="['/login']">Login</a>
       </li>
       <li>
         <button class="btn btn-primary">Logout</button>

@@ -14,6 +14,7 @@ import {LogicService} from "./Shared/logic.service";
 import {DeactivateGuard} from "./Shared/deactivate.guard";
 import {ActivateGuard} from "./Shared/activate.guard";
 import { NavbarComponent } from './navbar/navbar.component';
+import { LoginComponent } from './login/login.component';
 
 
 
@@ -21,7 +22,8 @@ import { NavbarComponent } from './navbar/navbar.component';
   declarations: [
     AppComponent,
     HomeComponent,
-    NavbarComponent
+    NavbarComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
