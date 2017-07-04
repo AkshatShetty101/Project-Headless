@@ -9,6 +9,22 @@ export class HttpService {
     private http: Http
   ) { }
 
+  verifyUser(request: any) {
+    console.log('Inside Verify');
+    const body = request;
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.post('http://localhost:3000/user/login', body, {headers})
+      .map((response: Response) => response.json());
+  }
+
+  logOut(token: any){
+    let headers = new Headers();
+    headers.append('x-access-token', token);
+    return this.http.get('http://localhost:3000/user/logout', {headers})
+      .map((response: Response) => response.json());
+  }
+
   getState(){
     return this.http.get('http://localhost:3000/map/getState')
       .map((response: Response) => response.json());

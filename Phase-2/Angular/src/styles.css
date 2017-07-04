@@ -1,16 +1,16 @@
 html,body{
   background-color: white;
-  height: 97.5%;
+  height: 100%;
   margin: 0;
 }
 
 .wrapper{
-  padding-bottom: 55px;
+  padding-bottom: 50px;
   min-height: 100%;
 }
 
 footer{
-  margin-top: -55px;
+  margin-top: -50px;
 }
 
 .heading{

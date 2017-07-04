@@ -9,7 +9,7 @@
 .navbar {
   color: white;
   background-color: #242424;
-  border: 1px solid black;
+  border-bottom: 1px solid black;
 }
 
 .navbar-header{
