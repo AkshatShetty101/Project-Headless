@@ -6,7 +6,6 @@ var User= require('../models/user');
 exports.getToken = function(user) {
     console.log("Success!!!!"+user+"   \n"+user);
     return jwt.sign({data:user},config.secretKey,{
-        expiresIn: 3600
     });
 };
 exports.verifyUsername = function(request, response, next) {
@@ -26,23 +25,14 @@ exports.verifyLoggedUser = function(request, response, next) {
     if (token) {
         jwt.verify(token, config.secretKey, function(err, decoded) {
             if (err) {
-                if (err.name === "TokenExpiredError"){
-                    decoded = jwt.decode(token);
-                    //                console.log(decoded.data);
-                    User.findByIdAndUpdate(decoded.data._id, {$set:{"logged":false}},
-                        {new: true}, function (error, new_data) {
-                            if (error)
-                                throw error;
-                            else
-                            {
-                                console.log(new_data);
-                                response.json('Token Expired');
-                            }
-                        });
-                }
-                else {
-                    response.json(err);
-                }
+                decoded = jwt.decode(token);
+                User.findByIdAndUpdate(decoded.data._id, {$set: {"logged": false}}, {new: true}, function (error, new_data) {
+                    if (error)
+                        throw error;
+                    else {
+                        response.json(err);
+                    }
+                });
             }
             else
             {
@@ -67,8 +57,9 @@ exports.verifyAdmin = function(request, response, next) {
             }
             else
             {
+                console.log(decoded);
                 // if everything is good, save to request for use in other routes
-                if(decoded.admin===false)
+                if(decoded.data.admin===false)
                 {
                     response.json("Not an Administrator");
                 }
