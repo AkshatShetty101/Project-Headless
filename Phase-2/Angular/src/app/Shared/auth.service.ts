@@ -14,13 +14,6 @@ export class AuthService {
     private local: LocalStorageService
   ) {}
 
-  isLoggedIn(){
-    if(this.getId('loggedIn') == 'true')
-      return true;
-    else
-      return false;
-  }
-
   storeId(code: any, count: any) {
     localStorage.setItem(count ,code);
   }

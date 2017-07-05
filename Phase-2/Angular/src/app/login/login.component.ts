@@ -1,8 +1,7 @@
-import {Component, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {HttpService} from "../Shared/http.service";
 import {AuthService} from "../Shared/auth.service";
-import {EventEmitter} from "@angular/common/src/facade/async";
 import {Router} from "@angular/router";
 
 @Component({
@@ -11,7 +10,6 @@ import {Router} from "@angular/router";
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  @Output() onLogged = new EventEmitter<boolean>();
 
   flag: any;
   alt: any = 1;

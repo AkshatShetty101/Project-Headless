@@ -1,4 +1,4 @@
-import {Component, OnChanges, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../Shared/auth.service";
 import {HttpService} from "../Shared/http.service";
 import {Router} from "@angular/router";
@@ -8,7 +8,7 @@ import {Router} from "@angular/router";
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnInit, OnChanges {
+export class NavbarComponent implements OnInit {
 
   loggedIn: boolean;
   admin: boolean;
@@ -20,7 +20,6 @@ export class NavbarComponent implements OnInit, OnChanges {
   ) {
     auth.statusEmitted$.subscribe(
       (status) => {
-        console.log('Inside Subscribed service '+status);
        this.loggedIn = status;
       }
     );
@@ -32,16 +31,20 @@ export class NavbarComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    if(this.auth.getId('loggedIn') == 'true')
-      this.loggedIn = true;
-    else
-      this.loggedIn = false;
+    // if(this.auth.getId('loggedIn') == 'true'){
+    //   this.loggedIn = true;
+    //   if(this.auth.getId('admin') == 'true'){
+    //     this.admin = true;
+    //   }
+    //   else
+    //     this.admin = false;
+    // }
+    // else
+    //   this.loggedIn = false;
+    this.auth.checkStatus();
+    this.auth.checkAdmin();
     console.log(this.loggedIn);
-  }
-
-  ngOnChanges(){
-    this.loggedIn = this.auth.isLoggedIn();
-    console.log(this.loggedIn);
+    console.log(this.admin);
   }
 
   logOut(){
@@ -52,7 +55,9 @@ export class NavbarComponent implements OnInit, OnChanges {
         (result) => {
           console.log(result);
           this.auth.storeId(false, 'loggedIn');
+          this.auth.storeId(false, 'admin');
           this.auth.checkStatus();
+          this.auth.checkAdmin();
           this.router.navigateByUrl('/home');
         }
       );

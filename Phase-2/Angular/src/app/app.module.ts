@@ -12,7 +12,7 @@ import { HomeComponent } from './home.component';
 import {AuthService} from "./Shared/auth.service";
 import {LogicService} from "./Shared/logic.service";
 import {DeactivateGuard} from "./Shared/deactivate.guard";
-import {ActivateGuard} from "./Shared/activate.guard";
+import {ActivateAdmin, ActivateGuard} from "./Shared/activate.guard";
 import { NavbarComponent } from './navbar/navbar.component';
 import { LoginComponent } from './login/login.component';
 
@@ -37,7 +37,7 @@ import { LoginComponent } from './login/login.component';
       storageType: 'localStorage'
     })
   ],
-  providers: [HttpService, AuthService, LogicService, DeactivateGuard, ActivateGuard],
+  providers: [HttpService, AuthService, LogicService, DeactivateGuard, ActivateGuard, ActivateAdmin],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
