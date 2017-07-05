@@ -10,13 +10,21 @@ export class HttpService {
   ) { }
 
   verifyUser(request: any) {
-    console.log('Inside Verify');
     const body = request;
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return this.http.post('http://localhost:3000/user/login', body, {headers})
       .map((response: Response) => response.json());
   }
+
+  getUsers(token: any) {
+    console.log('Inside Get Users');
+    let headers = new Headers();
+    headers.append('x-access-token', token);
+    return this.http.get('http://localhost:3000/user/get', {headers})
+      .map((response: Response) => response.json());
+  }
+
 
   logOut(token: any){
     let headers = new Headers();

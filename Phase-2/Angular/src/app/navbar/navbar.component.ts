@@ -31,16 +31,6 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit() {
-    // if(this.auth.getId('loggedIn') == 'true'){
-    //   this.loggedIn = true;
-    //   if(this.auth.getId('admin') == 'true'){
-    //     this.admin = true;
-    //   }
-    //   else
-    //     this.admin = false;
-    // }
-    // else
-    //   this.loggedIn = false;
     this.auth.checkStatus();
     this.auth.checkAdmin();
     console.log(this.loggedIn);
