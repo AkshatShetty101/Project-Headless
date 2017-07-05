@@ -487,6 +487,23 @@ export class InputComponent implements OnInit {
       );
   }
 
+  refreshInvalid(){
+    let request: any;
+
+    this.refreshFlag = false;
+    request = {
+      code: this.auth.getId('invalid')
+    };
+    this.http.refreshCaptcha(request)
+      .subscribe(
+        (result) => {
+          console.log(result);
+          this.recaptcha = result.img;
+          this.refreshFlag = true;
+        }
+      )
+  }
+
   testInvalid(data: any) {
     this.display = false;
     this.hallpass = true;

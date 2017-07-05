@@ -23,14 +23,14 @@
     </div>
     <form *ngIf="ready" [formGroup]="myForm" class="col-sm-12" method="post" (ngSubmit)="push(myForm.value);">
       <div class="row">
-        <span>Enter the name:&nbsp;</span><input class="form-control" formControlName="name" placeholder="Name or Part of Name" name="name" type="text" required/>
+        <span>Enter the name:&nbsp;</span><input class="form-control" formControlName="name" placeholder="Name or Part of Name" name="name" type="text" minlength="3" required/>
       </div>
       <div class="row">
         <span>Enter year:&nbsp;</span>
         <input class="form-control" formControlName="year_upper" placeholder="upper" name="year_upper" type="text" size="4" maxlength="4" required/>
         <span>&nbsp;through&nbsp;</span>
         <input class="form-control" formControlName="year_lower" placeholder="lower" name="year_lower" type="text" size="4" maxlength="4" required/>
-        &nbsp;<button type="submit" *ngIf="!submitted" [disabled]="!myForm.valid">Submit</button>
+        &nbsp;<button class="btn btn-raised bottom" type="submit" *ngIf="!submitted" [disabled]="!myForm.valid">Submit</button>
       </div>
     </form>
     <form *ngIf="flag == 1" [formGroup]="myCaptcha" class="col-sm-12" method="post" (ngSubmit)="collectCaptcha(myCaptcha.value);">
@@ -38,15 +38,15 @@
       <img class="captcha" [src]="'data:image/png;base64,'+captcha[opt]" />&nbsp;
       <input class="form-control" formControlName="captcha_code" placeholder="Enter captcha" name="captcha_code" type="text" size="10" minlength="5" maxlength="5" required/>
       <button *ngIf="refreshFlag" type="button" class="refresh_btn"><i (click)="refreshCaptcha()" class="glyphicon glyphicon-refresh"></i></button>
-      <button type="submit">Submit</button>
+      <button class="btn btn-raised bottom" type="submit">Submit</button>
     </form>
     <div class="col-sm-12">
       <form [formGroup]="myCaptchaInvalid" method="post" class="row" (ngSubmit)="testInvalid(myCaptchaInvalid.value);" *ngIf="hallpass == false">
         <span class="row">Response Area / Invalid Captcha</span>
         <img class="captcha" [src]="'data:image/png;base64,'+recaptcha" />&nbsp;
         <input class="form-control" formControlName="captcha_code" placeholder="Enter captcha" name="captcha_code" type="text" size="10" minlength="5" maxlength="5" required/>
-        <button *ngIf="refreshFlag" type="button" class="refresh_btn"><i (click)="refreshCaptcha()" class="glyphicon glyphicon-refresh"></i></button>
-        <button type="submit">Submit</button>
+        <button *ngIf="refreshFlag" type="button" class="refresh_btn"><i (click)="refreshInvalid()" class="glyphicon glyphicon-refresh"></i></button>
+        <button class="btn" type="submit">Submit</button>
       </form>
     </div>
   </div>
