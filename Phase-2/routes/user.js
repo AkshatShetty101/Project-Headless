@@ -158,6 +158,7 @@ router.get('/findStatus',Verify.verifyLoggedUser,function(request,response){
             var date = new Date();
             console.log(date);
             var x= data.searchesDuration.split(/[-]/);
+            console.log(x);
             console.log(date.getFullYear()+"--"+(date.getMonth()+1+"--"+(date.getDate())));
             console.log(x[1]);
             if(parseInt(x[2])===parseInt(date.getFullYear()))
