@@ -6,7 +6,9 @@ import {Subject} from "rxjs/Subject";
 export class AuthService {
 
   private status = new Subject<any>();
+  private admin = new Subject<any>();
   statusEmitted$ = this.status.asObservable();
+  adminEmitted$ = this.admin.asObservable();
 
   constructor(
     private local: LocalStorageService
@@ -32,5 +34,12 @@ export class AuthService {
       return this.status.next(true);
     else
       return this.status.next(false);
+  }
+
+  checkAdmin(){
+    if(this.getId('admin') == 'true')
+      return this.admin.next(true);
+    else
+      return this.admin.next(false);
   }
 }

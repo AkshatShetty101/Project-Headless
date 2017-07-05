@@ -47,6 +47,13 @@ export class LoginComponent implements OnInit {
         (result) => {
           console.log(result);
           this.flag = result.status;
+          if(result.status === 2){
+            this.auth.storeId(result.token, 'token');
+            this.auth.storeId(true, 'loggedIn');
+            this.auth.storeId(true, 'admin');
+            this.router.navigateByUrl('/home');
+          }
+          else
           if(result.status === 1){
              this.auth.storeId(result.token, 'token');
              this.auth.storeId(true, 'loggedIn');
@@ -56,9 +63,12 @@ export class LoginComponent implements OnInit {
           if(result.status === -2){
             this.auth.storeId(false, 'loggedIn');
           }
-          else
+          else{
+            this.auth.storeId(false, 'admin');
             this.auth.storeId(false, 'loggedIn');
+          }
           this.auth.checkStatus();
+          this.auth.checkAdmin();
         }
       );
   }

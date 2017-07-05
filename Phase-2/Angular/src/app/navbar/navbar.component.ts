@@ -11,6 +11,7 @@ import {Router} from "@angular/router";
 export class NavbarComponent implements OnInit, OnChanges {
 
   loggedIn: boolean;
+  admin: boolean;
 
   constructor(
     private auth: AuthService,
@@ -21,6 +22,11 @@ export class NavbarComponent implements OnInit, OnChanges {
       (status) => {
         console.log('Inside Subscribed service '+status);
        this.loggedIn = status;
+      }
+    );
+    auth.adminEmitted$.subscribe(
+      (status) => {
+        this.admin = status;
       }
     );
   }
