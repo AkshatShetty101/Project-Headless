@@ -2,7 +2,7 @@
   <div class="loader col-sm-offset-5"></div>
   <div class="row"></div>
   <div class="row"></div>
-  <h1 class="col-sm-offset-4">And Wait For It....</h1>
+  <h1 class="col-sm-offset-4">Please Wait....</h1>
 </div>
 <div [ngStyle]="{display: display?'block':'none'}" class="row">
   <div class="row">
@@ -11,7 +11,7 @@
     </label>
   </div>
   <div *ngIf="fails.length > 0">
-    <h1 class="col-sm-12">These searche(s) timed out!</h1>
+    <h1 class="col-sm-12">These searches timed out!</h1>
   </div>
   <div class="row" *ngFor="let fail of fails">
     <p>Name:&nbsp;<span [innerHTML]="fail[0]"></span></p>
@@ -21,7 +21,7 @@
     <p>Court:&nbsp;<span [innerHTML]="fail[4]"></span></p>
   </div>
   <div *ngIf="norecords.length > 0">
-    <h1 class="col-sm-12">These searche(s) have no records!</h1>
+    <h1 class="col-sm-12">These searches have no records!</h1>
   </div>
   <div class="row" *ngFor="let search of norecords">
     <p>Name:&nbsp;<span [innerHTML]="search[0]"></span></p>
@@ -31,7 +31,7 @@
     <p>Court:&nbsp;<span [innerHTML]="search[4]"></span></p>
   </div>
   <div *ngIf="records.length > 0">
-    <h1 class="col-sm-12">These searche(s) have records!</h1>
+    <h1 class="col-sm-12">These searches have records!</h1>
   </div>
   <div class="row" *ngFor="let record of records; let i = index">
     <table class="table table-bordered table-responsive" border="1">

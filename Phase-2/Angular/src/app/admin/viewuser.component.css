@@ -1,0 +1,16 @@
+.left{
+  border-right: thick solid #ffa300;
+}
+.bottom{
+  width: 100%;
+  margin: 0;
+}
+
+.list-holder{
+  border: 1px solid gray;
+  padding: 10px 0 0 0;
+}
+
+.add:hover{
+  background-color: #ffdc06 !important;
+}
