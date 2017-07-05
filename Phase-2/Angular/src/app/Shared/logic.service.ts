@@ -12,6 +12,7 @@ export class LogicService {
   requests: any[];
   no_years: any;
   returns: any = false;
+  process: boolean;
 
   constructor(
 

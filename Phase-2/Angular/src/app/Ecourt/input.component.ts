@@ -208,13 +208,14 @@ export class InputComponent implements OnInit {
   //User Details
   onSearch() {
     //console.log('Submitted');
-    let i: any, n: any,ct: any=0, limit: number, no_years: any;
+    let i: any, n: any,ct: any=0, limit: number, no_years: any, amount: any;
     let request: any[] = new Array(1);
     //console.log(this.stackname);
     //console.log(this.stackupper);
     //console.log(this.stacklower);
     limit = this.stackupper - this.stacklower;
     if(this.c_code === -1){
+      amount = (limit + 1) * this.court_value.length;
       for(n= 0; n< this.court_value.length; n++){
         for (i= 0; i <= limit; i++) {
           request[ct++] = {
@@ -228,6 +229,7 @@ export class InputComponent implements OnInit {
       }
     }
     else {
+      amount = limit + 1;
       for (i= 0; i <= limit; i++) {
         request[ct++] = {
           name: this.stackname,
@@ -240,11 +242,44 @@ export class InputComponent implements OnInit {
     }
     no_years = limit + 1;
     this.logic.fillRequests(request, no_years);
-    this.requestSender();
+    this.checkSearchesLimit(amount);
+  }
+
+  checkSearchesLimit(amount: any){
+    let token: any;
+    console.log(amount);
+    token = this.auth.getId('token');
+    this.http.checkLimit(token)
+      .subscribe(
+        (result) => {
+          console.log(result);
+          if(result.status == -1){
+            this.display = true;
+            alert(result.message);
+            this.router.navigateByUrl('/eCourt/input');
+          }
+          else
+          if(result.status == 1){
+            let limit: number = parseInt(result.amount);
+            if(amount > limit){
+              this.display = true;
+              alert('You have only '+limit+' searches left!Contact administrator for more.');
+              this.router.navigateByUrl('/eCourt/input');
+            }
+            else{
+              this.requestSender();
+            }
+          }
+          else{
+            this.requestSender();
+          }
+        }
+      );
   }
 
   requestSender(){
     let request: any[] = new Array(0), i: any, val: any;
+    this.logic.process = true;
     if(this.logic.requests.length > 0){
       for(i=0; i<this.logic.no_years; i++){
         request[i] = this.logic.requests[i];
@@ -262,6 +297,7 @@ export class InputComponent implements OnInit {
       this.sendMultiple(request);
     }
     else{
+      this.logic.process = false;
       this.logic.returns = false;
       this.router.navigateByUrl('/eCourt');
       alert('All Done!');
@@ -431,6 +467,7 @@ export class InputComponent implements OnInit {
             if (this.secondchance.length > 0) {
               //Send Again
             }
+            this.logic.process = false;
             this.router.navigateByUrl('/eCourt/records');
           }
         }
@@ -464,6 +501,7 @@ export class InputComponent implements OnInit {
       if (this.secondchance.length > 0) {
         //Send Again
       }
+      this.logic.process = false;
       this.router.navigateByUrl('/eCourt/records');
     }
   }

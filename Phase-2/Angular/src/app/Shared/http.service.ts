@@ -18,18 +18,24 @@ export class HttpService {
   }
 
   getUsers(token: any) {
-    console.log('Inside Get Users');
     let headers = new Headers();
     headers.append('x-access-token', token);
     return this.http.get('http://localhost:3000/user/get', {headers})
       .map((response: Response) => response.json());
   }
 
-
   logOut(token: any){
     let headers = new Headers();
     headers.append('x-access-token', token);
     return this.http.get('http://localhost:3000/user/logout', {headers})
+      .map((response: Response) => response.json());
+  }
+
+  checkLimit(token: any){
+    console.log('Inside Check Limit');
+    let headers = new Headers();
+    headers.append('x-access-token', token);
+    return this.http.get('http://localhost:3000/user/findStatus', {headers})
       .map((response: Response) => response.json());
   }
 
@@ -125,24 +131,4 @@ export class HttpService {
     return this.http.post('http://localhost:3000/supreme/release', body, {headers})
       .map((response: Response) => response.json());
   }
-  /*registerUser(request: any) {
-    console.log("INSIDE");
-    const body = request;
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    return this.http.post('https://localhost:3443/user/register', body, {headers})
-      .map((response: Response) => response.json());
-  }
-
-   let character = this.http.get('https://swapi.co/api/people/1').map(res => res.json());
-   let characterHomeworld = this.http.get('http://swapi.co/api/planets/1').map(res => res.json());
-
-   Observable.forkJoin([character, characterHomeworld]).subscribe(results => {
-   // results[0] is our character
-   // results[1] is our character homeworld
-   results[0].homeworld = results[1];
-   this.loadedCharacter = results[0];
-   });
-  */
-
 }

@@ -1,14 +1,17 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import { CanDeactivate} from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import {RecordsComponent} from "../Ecourt/records.component";
+import {InputComponent} from "../Ecourt/input.component";
+import {LogicService} from "./logic.service";
 
 @Injectable()
-export class DeactivateGuard implements CanDeactivate<RecordsComponent>{
+export class DeactivateGuard implements CanDeactivate<InputComponent>{
 
-  constructor(){}
+  constructor(
+    private logic: LogicService
+  ){}
 
-  canDeactivate(component: RecordsComponent): Observable<boolean> | Promise<boolean> | boolean {
-    return false;
+  canDeactivate(component: InputComponent): Observable<boolean> | Promise<boolean> | boolean {
+    return (!this.logic.process);
   }
 }

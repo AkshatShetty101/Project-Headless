@@ -37,6 +37,10 @@ export class NavbarComponent implements OnInit {
     console.log(this.admin);
   }
 
+  loginItIs(){
+    this.router.navigateByUrl('/login');
+  }
+
   logOut(){
     let token: any;
     token = this.auth.getId('token');

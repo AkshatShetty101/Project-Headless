@@ -5,7 +5,7 @@
         <a [routerLink]="['/eCourt']">E-Court</a>
       </li>
       <li *ngIf="!loggedIn" routerLinkActive="active">
-        <a [routerLink]="['/login']">E-Court</a>
+        <a (click)="loginItIs()">E-Court</a>
       </li>
       <li routerLinkActive="active">
         <a>Developers</a>
