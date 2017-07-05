@@ -164,21 +164,34 @@ router.get('/findStatus',Verify.verifyLoggedUser,function(request,response){
             if(parseInt(x[2])===parseInt(date.getFullYear()))
             {
                 if(parseInt(x[1])>(parseInt(date.getMonth())+1))
-                    flag=1;
-                else
                 {
-                    if(parseInt(x[1])===(parseInt(date.getMonth())+1)) {
-                        if (parseInt(x[1]) >=(parseInt(date.getDate()) + 1))
-                            flag=1;
+                    flag=1;
+                    return data;
+                }
+                else
+                if(parseInt(x[1])===(parseInt(date.getMonth())+1)) {
+                    if (parseInt(x[1]) >= (parseInt(date.getDate()) + 1)) {
+                        flag = 1;
+                        return data;
+                    }
+                    else {
+                        return data;
                     }
                 }
+                else
+                    return data;
             }
             else
             if(parseInt(x[2])>parseInt(date.getFullYear()))
             {
                 flag=1;
+                return data;
             }
-            return data;
+            else
+            {
+                return data;
+            }
+
         }
     }).then(function (data) {
         console.log(data.logged);
