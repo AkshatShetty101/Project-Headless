@@ -21,3 +21,16 @@ export class ActivateGuard implements CanActivate {
       return (false);
   }
 }
+
+export class ActivateAdmin implements CanActivate {
+  constructor(
+    private logic: LogicService,
+    private auth: AuthService
+  ){}
+
+  canActivate(
+    next: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot) : Observable<boolean> | Promise<boolean> | boolean {
+      return true;
+  }
+}

@@ -27,8 +27,8 @@
       <li routerLinkActive="active" *ngIf="loggedIn">
         <a>My Account</a>
       </li>
-      <li routerLinkActive="active" *ngIf="loggedIn">
-        <a>Admin Facilities</a>
+      <li routerLinkActive="active" *ngIf="loggedIn && admin">
+        <a [routerLink]="['/admin']">Admin Facilities</a>
       </li>
     </ul>
   </div>
