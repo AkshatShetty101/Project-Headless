@@ -338,6 +338,7 @@ router.post('/a',function(request,response){
 
 router.post('/refreshCaptcha',function(request,response) {
     var code = request.body.code.toString();
+    console.log(request.body);
     if(horseman1["'"+code+"'"]!==undefined)
     {
         console.log("IN!!!");

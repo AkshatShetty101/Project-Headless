@@ -1,64 +1,94 @@
-18~Regional Language~0~~~
-19
-<option value="1@1,2,6,7">District and Sessions Court Balod, Balod</option><option value="2@3">Civil Court Gunderdehi, Gunderdehi</option><option value="3@5">Civil Court Dondilohara, Dondilohara</option><option value="4@4">Civil Court Dallirajhara, Dallirajhara</option>
-18~Regional Language~0~~~
-23
-<option value="1@1,2,8">District and Sessions Court Balodabazar, Balodabazar</option><option value="2@7">Civil Court Bilaigarh, Bilaigarh</option><option value="3@3">Civil Court Kasdol, Kasdol</option><option value="4@4">Civil Court Simga, Simga</option><option value="5@5,6">Civil Court Bhatapara, Bhatapara</option><option value="6@9">Civil Court Bhatgaon, Bhatgaon</option>
-18~Regional Language~0~~~
-15
-<option value="101@1,2,3,4">Distt. &amp;amp; Session Court-Bastar,Bastar (Jagdalpur)-D</option>
-18~Regional Language~0~~~
-20
-<option value="1@1,2,3,4">District &amp;amp; Sessions Court Bemetara, Bemetara</option><option value="2@5">Civil Court Saja, Saja</option>
-18~Regional Language~0~~~
-2
-<option value="1@1,2,12,13">District and Sessions Court Bilaspur, Bilaspur</option><option value="2@10,11,14">Civil Court Mungeli, Mungeli</option><option value="3@7">Civil Court Bilha, Bilha</option><option value="4@3">Civil Court Kota, Kota</option><option value="5@4">Civil Court Lormi, Lormi</option><option value="6@6">Civil Court Marwahi, Marwahi</option><option value="7@5">Civil Court Takhatpur, Takhatpur</option><option value="8@8,9">Civil Court Pendraroad, Pendraroad</option>
-18~Regional Language~0~~~
-17
-<option value="1@4,8">Civil Court Sukma,Sukma-T</option><option value="3@5">Civil Court Bacheli,Bacheli-T</option><option value="101@1,2,6">Distt. &amp;amp; Session Court Dantewada,Dantewada-D</option><option value="102@3,7">Civil Court Bijapur, Bijapur</option>
-18~Regional Language~0~~~
-5
-<option value="1@4">Civil Court Kurud,Kurud-T</option><option value="2@3">Civil Court Nagri,Nagri-T</option><option value="102@1,2,5,6">Distt. &amp;amp; Session Court  Dhamtari,Dhamtari-D</option>
-18~Regional Language~0~~~
-7
-<option value="4@3">Civil Court Patan,Patan-T</option><option value="101@1,2,5,6">Distt. &amp;amp; Session Court Durg,Durg-D</option><option value="102@4">Bhilai-3</option>
-18~Regional Language~0~~~
-18
-<option value="4@4">Civil Court Champa,Champa-T</option><option value="5@8">Civil Court Pamgarh,Pamgarh-T</option><option value="6@9">Civil Court Jaijaipur,Jaijaipur-T</option><option value="7@11">Civil Court Nawagarh,Nawagarh-T</option><option value="101@1,2">Distt. &amp;amp; Session Court  Janjgir,Janjgir-D</option><option value="102@5,6">Civil Court, Sakti</option><option value="103@3">Civil Court Dabhara, Dabhara</option><option value="104@7">Civil Court Malkharaouda, Malkharouda</option><option value="105@10">Civil Court Akaltara, Akaltara</option>
-18~Regional Language~0~~~
-16
-<option value="101@1,2,7,8">Distt. &amp;amp; Session Court  Jashpur,Jashpur-D</option><option value="102@3,4">Civil Court Kunkuri, Kunkuri</option><option value="103@6">Civil Court Bagicha, Bagicha</option><option value="104@5">Civil Court Patthalgaon, Patthalgaon</option>
-18~Regional Language~0~~~
+17~Regional Language~0~~~
 13
-<option value="1@3,4">Civil Court Bhanupratappur,Bhanupratappur-T</option><option value="2@5">Civil Court Pankhajur,Pankhajur-T</option><option value="101@1,2,6">Distt. and Session Court  Uttar Bastar Kanker,Uttar Bastar Kanker-D</option>
-18~Regional Language~0~~~
-9
-<option value="1@3">Civil Court Pandariya,Pandariya-T</option><option value="101@1,2,4,5">Distt. &amp;amp; Session Court Kawardha,Kawardha-T</option>
-18~Regional Language~0~~~
-22
-<option value="1@1,2,5">District and Sessions Court Kondagaon, Kondagaon</option><option value="2@4">Civil Court Keshkal, Keshkal</option><option value="3@3,6">Civil Court Narayanpur, Narayanpur</option>
-18~Regional Language~0~~~
-1
-<option value="1@3,4,8">Civil Court Katghora,Katghora-T</option><option value="4@5">Civil Court Kartala,Kartala-T</option><option value="101@1,2,7,9">Distt. &amp;amp; Session Court  Korba,Korba-D</option><option value="102@6">Civil Court Pali, Pali</option>
-18~Regional Language~0~~~
-11
-<option value="1@4,5,8">Civil Court Manendragarh,Manendragarh-T</option><option value="2@3">Civil Court Chirmiri, Chirmiri-T</option><option value="102@1,2,7,9">Distt. &amp;amp; Session Court  Koriya,Koriya-D</option><option value="103@6">Civil Court Janakpur, Janakpur</option>
-18~Regional Language~0~~~
-12
-<option value="102@1,2,7,8">Distt. &amp;amp; Session Court  Mahasamund,Mahasamund-T</option><option value="103@4,5,9">Civil Court Saraipali, Saraipali</option><option value="104@3">Civil Court Pithoura, Pithoura</option><option value="105@6">Civil Court Basna, Basna</option>
-18~Regional Language~0~~~
-6
-<option value="1@5,7">Civil Court Saranggarh,Saranggarh-T</option><option value="2@4">Civil Court Dharamjaigarh,Dharamjaigarh-T</option><option value="3@6">Civil Court Gharghora,Gharghora-T</option><option value="4@3">Civil Court Kharsiya,Kharsiya-T</option><option value="101@1,2,8,9">Distt. &amp;amp; Session Court  Raigarh,Raigarh-D</option>
-18~Regional Language~0~~~
-3
-<option value="4@4">Civil Court Rajim, Rajim-T</option><option value="9@5">Civil Court Devbhog, Devbhog-T</option><option value="102@1,2,11,10">Distt. &amp;amp; Session Court  Raipur,Raipur-D</option><option value="103@6">Civil Court Tilda, Tilda</option><option value="105@7,8">Civil Court Gariyaband, Gariyaband</option><option value="106@9">Commercial Court (District Level), Naya Raipur</option>
-18~Regional Language~0~~~
-10
-<option value="1@6,7,11">Civil Court Khairagarh,Khairagarh-T</option><option value="2@4,5">Civil Court Dongargarh,Dongargarh-T</option><option value="3@3">Civil Court Ambagarh Chowki,Ambagarh Chowki-T</option><option value="4@8">Civil Judge Class - II &amp;amp; JMFC Court,  Chhuikhadan</option><option value="101@1,2,9,10">Distt. &amp;amp; Session Court Rajnandgaon,Rajnandgaon-D</option>
-18~Regional Language~0~~~
+<option value="1@8">Dhandhuka</option><option value="2@10">VIRAMGAM,AHMEDABAD.</option><option value="3@9">SANAND,AHMEDABAD.</option><option value="4@7">DHOLKA,AHMEDABAD.</option><option value="5@18">FTC, VIRAMGAM, AHMEDABAD.</option><option value="105@1,5">Mirzapur, Ahmedabad</option><option value="106@3,17,19">Multistoreyed Building, Laldarwaja</option><option value="112@22">CMM COURT COMPLEX</option><option value="113@4,21">Old High Court Complex</option><option value="114@11">BAVLA,  AHMEDABAD</option><option value="115@16">BARWALA, AHMEDABAD</option><option value="116@20">Railway Court, Ahmedabad</option><option value="117@12">Taluka Court , Mandal</option><option value="118@14">Taluka Court, Ranpur</option>
+17~Regional Language~0~~~
+17
+<option value="1@9">LATHI,AMRELI.</option><option value="3@5,14">RAJULA,AMRELI.</option><option value="4@11">BAGASARA,AMRELI.</option><option value="5@12">SAVARKUNDLA,AMRELI.</option><option value="8@3">DHARI, AMRELI</option><option value="9@8">Babara, Amreli</option><option value="10@4">Khambha, Amreli</option><option value="11@13">Labour Court, Amreli</option><option value="101@1,2">District and Civil Court Complex</option><option value="103@6">JAFRABAD, AMRELI</option><option value="104@7">KUNKAVAV VADIA, AMRELI</option><option value="105@10">LILIA, AMRELI</option><option value="106@15">Amreli, FTC</option>
+17~Regional Language~0~~~
+18
+<option value="1@4">BORSAD,ANAND.</option><option value="2@5">KHAMBHAT,ANAND.</option><option value="3@3">PETLAD,ANAND.</option><option value="4@8">UMRETH,ANAND.</option><option value="101@1">JITODIA, ANAND</option><option value="102@2">Civil Court, Anand.</option><option value="103@6">SOJITTRA, ANAND</option><option value="104@7">TARAPUR, ANAND</option><option value="105@9">ANKLAV, ANAND</option><option value="106@11">FAMILY COURT, ANAND</option><option value="107@10">LABOUR COURT, ANAND</option>
+17~Regional Language~0~~~
+38
+<option value="1@6">CIVIL COURT, MODASA</option><option value="2@7">DISTRICT COURT, MODASA</option><option value="3@3">BHILODA, MODASA</option><option value="4@4">MEGHRAJ, MODASA</option><option value="5@5">MALPUR, MODASA</option><option value="6@2">DHANSURA, MODASA</option><option value="7@1">BAYAD, MODASA</option>
+17~Regional Language~0~~~
+19
+<option value="1@4,18">DEESA, BANASKANTHA</option><option value="2@9">DHANERA, BANASKANTHA.</option><option value="3@6,19">DEODAR, BANASKANTHA.</option><option value="4@8">THARAD, BANASKANTHA.</option><option value="5@7">WAV, BANASKANTHA.</option><option value="6@10">DANTA, BANASKANTHA.</option><option value="7@16">SHIHORI, BANASKANTHA.</option><option value="8@12">Amirgadh, Banaskantha</option><option value="101@1">DISTRICT COURT COMPLEX, PALANPUR</option><option value="102@2">District Court No.2, Palanpur, Banaskantha.</option><option value="104@13">DANTIWADA, BANASKANTHA</option><option value="105@3">VADGAM, BANASKANTHA</option><option value="107@14">BHABHAR, BANASKANTHA</option><option value="108@17">LABOUR COURT, PALANPUR</option><option value="109@20">Palanpur, FTC</option><option value="110@21">Taluka Court, Lakhni</option>
+17~Regional Language~0~~~
+20
+<option value="1@6">JAMBUSAR,BHARUCH.</option><option value="2@8">JHAGADIA,BHARUCH.</option><option value="3@9">VALIA,BHARUCH.</option><option value="4@3,11">ANKLESHWAR,BHARUCH</option><option value="5@7">AMOD,BHARUCH</option><option value="6@4">HANSOT,BHARUCH</option><option value="7@5">WAGRA,BHARUCH.</option><option value="101@1,2">District and Civil Court Complex</option><option value="102@10">INDUSTRIAL COURT, BHARUCH</option><option value="103@12">FAMILY COURT, Bharuch</option>
+17~Regional Language~0~~~
 21
-<option value="1@3,4,5">District and Sessions Court Surajpur, Surajpur</option><option value="2@1,2">Civil Court Pratappur, Pratappur</option>
-18~Regional Language~0~~~
-4
-<option value="2@4,5,11">Civil Court Ramanujganj,Ramanujganj-T</option><option value="4@8">Civil Court Wadrafnagar,Wadrafnagar-T</option><option value="5@6">Civil Court Sitapur,Sitapur-T</option><option value="101@1,2,10">Distt. &amp;amp; Session Court  Sarguja,Ambikapur -(Sarguja)-D</option><option value="102@9">Civil Court Balrampur, Balrampur</option><option value="103@7">Civil Court Rajpur, Rajpur</option>
+<option value="1@5">MAHUVA,BHAVNAGAR.</option><option value="2@12">VALLABHIPUR,BHAVNAGAR.</option><option value="3@8">SIHOR,BHAVNAGAR.</option><option value="4@6">GARIADHAR,BHAVNAGAR.</option><option value="5@10">GADHADA,BHAVNAGAR.</option><option value="6@4">TALAJA,BHAVNAGAR.</option><option value="7@9">UMRALA,BHAVNAGAR.</option><option value="8@3">GOGHA,BHAVNAGAR.</option><option value="9@11">BOTAD,BHAVNAGAR.</option><option value="10@7">PALITANA,BHAVNAGAR.</option><option value="11@15">FAST TRACK COURT, MAHUVA.</option><option value="13@17">FTC, BOTAD</option><option value="101@1">District Court Building, Bhavnagar</option><option value="102@2">CIVIL COURT COMPLEX, BHAVNAGAR.</option><option value="107@20">FAMILY COURT, BHAVNAGAR</option><option value="108@14,16">Industrial Court, Bhavnagar</option><option value="109@18">Railway Court, Bhavnagar</option>
+17~Regional Language~0~~~
+41
+<option value="1@1">District Court, Chhota Udepur</option><option value="2@2">Civil Court, Chhota Udepur</option><option value="3@4">Taluka Court, Sankheda</option><option value="4@6">Taluka Court, Naswadi</option><option value="5@5">Taluka Court, JetpurPavi</option><option value="6@7">Taluka Court, Kawant</option><option value="7@3">Taluka Court, Bodeli</option>
+17~Regional Language~0~~~
+22
+<option value="1@3">DEVGADH BARIA, DAHOD</option><option value="2@5">JHALOD, DAHOD</option><option value="3@8">GARBADA, DAHOD</option><option value="6@4">LIMKHEDA, DAHOD</option><option value="101@1,2">DISTRICT AND CIVIL COURT COMPLEX</option><option value="103@10">SANJELI, DAHOD</option><option value="104@7">FATEPURA, DAHOD</option><option value="105@6">DHANPUR, DAHOD</option><option value="106@9">LABOUR COURT, DAHOD</option><option value="107@11">Dahod FTC (Family Court)</option>
+17~Regional Language~0~~~
+40
+<option value="5@5">BHANVAD</option><option value="7@3">DWARKA</option><option value="8@2">KHAMBHALIA</option><option value="9@4">KALYANPUR</option><option value="10@1">District Court, KHAMBHALIA</option><option value="107@6">OKHAMANDAL</option>
+17~Regional Language~0~~~
+11
+<option value="1@5,6,7">Kalol,gandhinagar</option><option value="2@3">DEHGAM,GANDHINAGAR.</option><option value="3@4">MANSA,GANDHINAGAR.</option><option value="101@1,2">District and Civil Court Complex</option><option value="102@8">FAMILY COURT, GANDHINAGAR</option>
+17~Regional Language~0~~~
+37
+<option value="1@3">FTC, UNA, VERAVAL</option><option value="2@2">CIVIL COURT, VERAVAL</option><option value="3@6">KODINAR, VERAVAL</option><option value="4@7">TALALA, VERAVAL</option><option value="5@4">UNA, VERAVAL</option><option value="6@1">DISTRICT COURT, VERAVAL</option><option value="7@5">SUTRAPADA, VERAVAL</option>
+17~Regional Language~0~~~
+23
+<option value="1@11">KALAVAD, JAMNAGAR</option><option value="2@9">JODIYA,JAMNAGAR.</option><option value="3@10">DHROL,JAMANGAR</option><option value="4@3">LALPUR,JAMANGAR</option><option value="6@4">JAMJODHPUR,JAMNAGAR.</option><option value="101@1">District and Civil Court Complex</option><option value="103@2">CIVIL COURT COMPLEX, JAMNAGAR.</option><option value="105@16">FAMILY COURT, JAMNAGAR</option><option value="106@13,15">SEVASADAN-4, JAMNAGAR</option>
+17~Regional Language~0~~~
+24
+<option value="3@8">KESHOD,JUNAGADH.</option><option value="4@7">MANGROL,JUNAGADH.</option><option value="5@9">MANAVADAR,JUNAGADH.</option><option value="6@12,18">VISVADAR,JUNAGADH.</option><option value="9@6">MALIA-HATINA,JUNAGADH.</option><option value="11@11">BHESAN,JUNAGADH</option><option value="101@1">District and Civil Court Complex</option><option value="102@2">FTC, JUNAGADH.</option><option value="103@16">LABOUR COURT, JUNAGADH</option><option value="104@17">FAMILY COURT, JUNAGADH</option><option value="105@3">MENDARDA, JUNAGADH</option><option value="106@10">VANTHALI, JUNAGADH</option>
+17~Regional Language~0~~~
+26
+<option value="1@4">MANDAVI,KACHCHH.</option><option value="3@15">GANDHIDHAM,KACHCHH.</option><option value="4@9">BHACHAU,KACHCHH.</option><option value="5@8">RAHPAR,KACHCHH.</option><option value="6@12">NALIYA,KACHCHH.</option><option value="7@7">NAKHTRANA,KACHCHH.</option><option value="8@3">MUNDRA,KACHCHH.</option><option value="10@11">CIVIL COURT, GANDHIDHAM, KACHCHH</option><option value="101@1">District Court Complex, Bhuj</option><option value="102@2">CIVIL COURT, BHUJ.</option><option value="103@6">LAKHPAT, KUCHCHH</option><option value="104@13">KHAVDA, KUCHCHH</option><option value="105@10,16">ANJAR, KUCHCHH</option><option value="106@14">LABOUR COURT, BHUJ</option>
+17~Regional Language~0~~~
+25
+<option value="1@11">KHEDA.</option><option value="2@4">MATAR,KHEDA.</option><option value="3@5">KAPADWANJ,KHEDA.</option><option value="5@12">DAKOR,KHEDA.</option><option value="6@3">CIVIL COURT, MAHEMDABAD, KHEDA.</option><option value="7@7">CIVIL COURT, THASARA, KHEDA.</option><option value="101@1">DISTRICT COURT COMPLEX, NADIAD</option><option value="103@2">CIVIL COURT COMPLEX, NADIAD</option><option value="106@9">MAUDHA, KHEDA</option><option value="108@13,14">INDUSTRIAL COURT, KHEDA</option><option value="109@8">KATHLAL, KHEDA</option><option value="110@15">Family Court, Nadiad</option><option value="111@16">GALTESHWAR, KHEDA</option>
+17~Regional Language~0~~~
+15
+<option value="2@9">VADNAGAR,MAHESANA.</option><option value="3@5">KHERALU,MAHESANA.</option><option value="4@12">UNJHA,MAHESANA.</option><option value="6@7">VIJAPUR,MAHESANA.</option><option value="8@8">BECHARAJI, MAHESANA.</option><option value="10@6,15">VISNAGAR, MAHESANA.</option><option value="101@1,2">District and Civil Court Complex</option><option value="102@3">KADI, MAHESANA</option><option value="104@11">SATLASANA, MAHESANA</option><option value="105@14">LABOUR COURT, MAHESANA</option><option value="106@16">Family Court, Mahesana</option>
+17~Regional Language~0~~~
+42
+<option value="1@3">District Court, Mahisagar</option><option value="2@1">Civil Court, Lunawada</option><option value="3@2">Taluka Court, Kadana</option><option value="4@4">Taluka Court, Balasinor</option><option value="5@5">Taluka Court, Khanpur</option>
+17~Regional Language~0~~~
+39
+<option value="5@3">MALIYA MIYANA, MORBI</option><option value="6@2">MORBI</option><option value="8@4">WANKANER, MORBI</option><option value="8@6">HALVAD, SURENDRANAGAR</option><option value="10@1">FTC, MORBI</option><option value="115@5">TANKARA, MORBI</option>
+17~Regional Language~0~~~
+33
+<option value="1@4">DEDIPADA,NARMADA.</option><option value="102@1,2">NEAR RAJPIPLA BUS STAND, RAJPIPLA</option><option value="103@5">TILAKWADA, NARMADA</option><option value="104@3">SAGBARA, NARMADA</option>
+17~Regional Language~0~~~
+32
+<option value="1@7,9">AHWA, NAVSARI</option><option value="2@3">GANDEVI, NAVSARI</option><option value="3@4">VANSDA, NAVSARI</option><option value="4@5">Chikhli taluka court, navasari</option><option value="101@1">District and Civil Court Complex</option><option value="102@2,10">FTC, NAVSARI.</option><option value="103@8">LABOUR COURT, NAVSARI</option>
+17~Regional Language~0~~~
+27
+<option value="1@4">HALOL, PANCH MAHALS</option><option value="2@3">KALOL, PANCH MAHALS</option><option value="4@11">SANTRAMPUR, PANCH MAHALS</option><option value="5@5">SAHERA, PANCH MAHALS</option><option value="6@1">GODHRA, PANCH MAHALS</option><option value="10@9">Pr. Civil Judge, Morva (Hadaf)</option><option value="11@7">Pr. Civil &amp;amp; JMFC, Jambhughoda</option><option value="101@2">District and Sessions Court</option><option value="104@16">Railway Court, Godhra</option><option value="105@8">Ghoghamba, Godhra</option><option value="108@13">Labour Court, Godhra</option><option value="109@14">FAMILY COURT, GODHRA</option>
+17~Regional Language~0~~~
+28
+<option value="1@3">CHANASMA, PATAN</option><option value="2@5">HARIJ, PATAN</option><option value="3@7">RADHANPUR, PATAN</option><option value="4@4">SAMI, PATAN</option><option value="5@6">SIDHPUR, PATAN</option><option value="101@1,2,10">District and Civil Court Complex</option><option value="102@9">VARAHI, PATAN</option><option value="103@11">Taluka Court, Shankheshwar</option><option value="104@12">Taluka Court, Saraswati</option>
+17~Regional Language~0~~~
+36
+<option value="1@4">KUTIYANA, PORBANDAR.</option><option value="2@3">RANAVAV, PORBANDAR.</option><option value="101@1,2">DISTRICT AND CIVIL COURT, PORBANDAR</option><option value="102@5">FAMILY COURT, PORBANDAR</option>
+17~Regional Language~0~~~
+16
+<option value="1@6,22">DHORAJI, RAJKOT</option><option value="2@4,19">GONDAL, RAJKOT</option><option value="3@14">JASDAN, RAJKOT</option><option value="4@5,21">JETPUR, RAJKOT</option><option value="7@7,23">UPLETA, RAJKOT</option><option value="102@1">DISTRICT COURT, FTC BUILDING</option><option value="103@24">FAMILY COURT, FTC BUILDING, RAJKOT.</option><option value="110@2,25">CIVIL AND SMALL CAUSES COURT</option><option value="111@10">PADDHARI, RAJKOT</option><option value="112@8">JAMKANDORANA, RAJKOT</option><option value="113@16,18">BAHUMALI BHAVAN, RAJKOT</option><option value="116@3">KOTDA SANGANI, RAJKOT</option>
+17~Regional Language~0~~~
+29
+<option value="4@5">KHEDBRAHMA, SABAR KANTHA</option><option value="6@3">PRANTIJ, SABAR KANTHA</option><option value="11@2">CIVIL COURT COMPLEX, HIMATNAGAR.</option><option value="101@1,20">HIMATNAGAR, SABAR KANTHA</option><option value="102@6">VIJAYNAGAR, SABARKANTHA</option><option value="103@4,18">IDAR, SABARKANTHA</option><option value="104@12">TALOD, SABARKANTHA</option><option value="105@14">VADALI, SABARKANTHA</option><option value="107@15">LABOUR COURT, SABARKANTHA</option><option value="109@19">POSHINA, SABARKANTHA</option>
+17~Regional Language~0~~~
+14
+<option value="2@7,19">BARDOLI, SURAT</option><option value="3@12">KATHOR, SURAT</option><option value="4@3">OLPAD, SURAT</option><option value="5@6">MANDVI, SURAT</option><option value="6@5">MANGROL, SURAT</option><option value="15@8">MAHUVA, SURAT</option><option value="101@1,2,15">District and Civil Court Complex</option><option value="102@17">MUNICIPAL COURT, SURAT.</option><option value="103@16">RAILWAY COURT, SURAT.</option><option value="104@10">UMARPADA, SURAT</option><option value="105@18">FAMILY COURT,NANPURA,SURAT</option><option value="106@13,14">SEVASADAN, SURAT</option><option value="108@9">PALSANA, SURAT</option>
+17~Regional Language~0~~~
+30
+<option value="1@8,15">DHRANGADHRA, SURENDRANAGAR</option><option value="2@3,16">LIMBDI, SURENDRANAGAR</option><option value="3@14">WADHWAN, SURENDRANAGAR</option><option value="4@5">CHOTILA, SURENDRANAGAR</option><option value="5@6">MULI, SURENDRANAGAR</option><option value="6@4">SAYLA, SURENDRANAGAR</option><option value="7@12">PATDI, SURENDRANAGAR</option><option value="9@10">LAKHTAR, SURENDRANAGAR</option><option value="101@1">District  Court Complex</option><option value="102@2">CIVIL COURT and FTC, SURENDRANAGAR.</option><option value="103@17">TALUKA COURT,THANGADH</option><option value="104@11">CHUDA, SURENDRANAGAR</option><option value="106@13">LABOUR COURT, SURENDRANAGAR</option>
+17~Regional Language~0~~~
+34
+<option value="1@1,2">DISTRICT AND CIVIL COURT, TAPI</option><option value="2@4">NIZAR, TAPI</option><option value="3@3">VALOD, TAPI</option><option value="4@5">UCHCHHAL, TAPI</option><option value="5@6">SONGADH, TAPI</option>
+17~Regional Language~0~~~
+31
+<option value="2@4">PADRA, VADODARA</option><option value="3@5">SAVLI, VADODARA</option><option value="4@7">DABHOI, VADODARA</option><option value="5@13">SINOR, VADODARA</option><option value="6@3">KARJAN, VADODARA</option><option value="101@1,17">NyayMandir, VADODARA - 390001</option><option value="102@2">CIVIL COURT COMPLEX, VADODARA.</option><option value="104@14,15">INDUSTRIAL COURT, VADODARA</option><option value="105@19">TALUKA COURT, DESAR</option><option value="106@20">ADDL. COURT, SAVLI</option><option value="109@18">PADMAVATI SHOPPING CENTER, VADODARA</option><option value="112@6">VAGHODIA, VADODARA</option>
+17~Regional Language~0~~~
+35
+<option value="1@5">DHARAMPUR,VALSAD.</option><option value="2@3">PARDI, VALSAD</option><option value="3@4">UMBERGAON, VALSAD</option><option value="4@6">KAPARADA, VALSAD.</option><option value="5@8">VAPI, VALSAD.</option><option value="101@1">DHARAMPUR ROAD, VALSAD</option><option value="102@2">CIVIL COURT COMPLEX, VALSAD</option><option value="104@7">LABOUR COURT, VALSAD</option>
 EOF

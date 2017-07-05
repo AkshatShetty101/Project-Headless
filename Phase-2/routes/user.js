@@ -145,7 +145,7 @@ router.post('/removeUser',Verify.verifyLoggedUser,Verify.verifyAdmin,function(re
     });
 });
 
-router.post('/findStatus',Verify.verifyLoggedUser,function(request,response){
+router.get('/findStatus',Verify.verifyLoggedUser,function(request,response){
     var token = request.body.token || request.query.token || request.headers['x-access-token'];
     var decoded = jwt.decode(token);
     console.log(decoded.data._id);
