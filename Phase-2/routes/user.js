@@ -29,7 +29,7 @@ router.post('/register',Verify.verifyUsername,function(request, response){
     User.register(new User({ username : request.body.username }),request.body.password,function(err, user){
         var date = new Date();
         date.setMonth(date.getMonth()+parseInt(request.body.searchesDuration));
-        user.searchesDuration = dateformat(date,'dd:mm:yyyy');
+        user.searchesDuration = dateformat(date,'dd-mm-yyyy');
         if(request.body.searchType)
             user.searchType = request.body.searchType;
         else
@@ -157,7 +157,7 @@ router.post('/findStatus',Verify.verifyLoggedUser,function(request,response){
         {
             var date = new Date();
             console.log(date);
-            var x= data.searchesDuration.split(/[:]/);
+            var x= data.searchesDuration.split(/[-]/);
             console.log(date.getFullYear()+"--"+(date.getMonth()+1+"--"+(date.getDate())));
             console.log(x[1]);
             if(parseInt(x[2])===parseInt(date.getFullYear()))
@@ -246,7 +246,7 @@ router.post('/updateStatus',Verify.verifyLoggedUser,Verify.verifyAdmin,function(
             console.log(date);
             date.setMonth(date.getMonth()+searchesDuration);
             console.log(date);
-            data.searchesDuration = dateformat(date,'dd:mm:yyyy');
+            data.searchesDuration = dateformat(date,'dd-mm-yyyy');
             if(searchType==='true')
             {
                 data.searchType = true;
