@@ -1,0 +1,73 @@
+<HTML>
+<HEAD>
+    <TITLE>ADD COURT</TITLE>
+
+    <link rel="stylesheet" href="../../Angular/src/assets/bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="../../Angular/src/assets/bower_components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../Angular/src/assets/bower_components/bootstrap-material-design/dist/css/ripples.min.css">
+    <link rel="stylesheet" href="../../Angular/src/assets/bower_components/bootstrap-material-design/dist/css/bootstrap-material-design.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+    <link rel="stylesheet" href="../stylesheets/style.css">
+</HEAD>
+<BODY>
+<div class="wrapper">
+    <header>
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <ul class="nav navbar-nav navbar-left">
+                    <li *ngIf="loggedIn" routerLinkActive="active">
+                        <a [routerLink]="['/eCourt']">E-Court</a>
+                    </li>
+                    <li *ngIf="!loggedIn" routerLinkActive="active">
+                        <a (click)="loginItIs()">E-Court</a>
+                    </li>
+                    <li routerLinkActive="active">
+                        <a>Developers</a>
+                    </li>
+                    <li routerLinkActive="active">
+                        <a>Statistics</a>
+                    </li>
+                </ul>
+                <div >
+                    <a class="navbar-brand logo">Search</a>
+                    </div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li *ngIf="!loggedIn" routerLinkActive="active">
+                        <a [routerLink]="['/login']">Login</a>
+                    </li>
+                    <li *ngIf="loggedIn">
+                        <button class="btn btn-primary" (click)="logOut()">Logout</button>
+                    </li>
+                    <li routerLinkActive="active" *ngIf="loggedIn">
+                        <a>My Account</a>
+                    </li>
+                    <li routerLinkActive="active" *ngIf="loggedIn && admin">
+                        <a [routerLink]="['/admin']">Admin Facilities</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <div class="inner-content row">
+        <div class="row">
+            <h4>About Us</h4>
+            <p>The Website is used to search the Ecourt </p>
+        </div>
+    </div>
+</div>
+<footer>
+    <nav class="navbar navbar-inverse navbar-fixed-bottom" style="background-color: black; margin-bottom: 0;position:static;">
+        <ul class="nav navbar-nav">
+            <li><a [routerLink]="['./contact_us']">Contact Us</a></li>
+            <li><a ><span class="fa fa-newspaper-o" style="padding-right:5px;"></span>Subscribe</a></li>
+            <li><a [routerLink]="['./privacy']">Privacy</a></li>
+            <li><a [routerLink]="['./tandc']">Terms & Conditions</a></li>
+        </ul>
+    </nav>
+</footer>
+<script src="../../Angular/src/assets/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../../Angular/src/assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="../../Angular/src/assets/bower_components/bootstrap-material-design/dist/js/ripples.min.js"></script>
+<script src="../../Angular/src/assets/bower_components/bootstrap-material-design/dist/js/material.min.js"></script>
+</BODY>
+</HTML>
