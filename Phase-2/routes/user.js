@@ -43,7 +43,7 @@ router.post('/register',Verify.verifyUsername,function(request, response){
             {
                 //console.log(user);
                 passport.authenticate('local')(request, response, function () {
-                    response.status(200).json({status: 1 ,message: 'Registration Successful!'});
+                    response.json({status: '1' ,message: 'Registration Successful!'});
                 });
             }
         });
