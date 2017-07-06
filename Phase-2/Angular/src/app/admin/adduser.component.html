@@ -1,0 +1,32 @@
+<div class="row">
+    <button [routerLink]="['/admin/viewUser']" class="btn btn-raised">Back to View Users</button>
+</div>
+<div class="row">
+    <form [formGroup]="myForm" class="col-sm-offset-4 col-sm-6 form-holder" (ngSubmit)="onSubmit(myForm.value)">
+      <div class="row">
+        <input autocomplete="off" class="form-control" formControlName="username" name="username" placeholder="Enter Username...." type="text" />
+      </div>
+      <div class="row">
+        <input class="form-control" formControlName="password" name="password" placeholder="Enter Password...." type="password" />
+      </div>
+      <div class="row">
+        <div class="col-sm-12"><input type="radio" name="option" formControlName="option" value="infinite" (click)="flag = -1" />&nbsp;&nbsp;Infinite Searches</div>
+        <div class="col-sm-12"><input type="radio" name="option" formControlName="option" value="fixed" (click)="flag = 1" />&nbsp;&nbsp;Set Number of Searches</div><br>
+      </div>
+      <div class="row" [ngStyle]="{display: flag == 1?'block':'none'}">
+        <input autocomplete="off" type="text" class="form-control" name="no_searches" formControlName="no_searches" [value]="default_value" placeholder="Enter number of searches...." />
+      </div>
+      <div class="row">
+        <input autocomplete="off" type="text" class="form-control" name="no_months" formControlName="no_months" placeholder="Enter duration in months from today...." />
+      </div>
+      <div class="row">
+        <input class="submit-btn" type="submit" [disabled]="!myForm.valid" value="Add User" />
+      </div>
+      <div *ngIf="flag == 3" class="success-msg row">
+        <div style="line-height: 300%"><span class="glyphicon glyphicon-ok"></span>&nbsp;Successfully Added User</div>
+      </div>
+      <div *ngIf="flag == -2" class="error-msg row">
+        <div style="line-height: 300%"><span class="glyphicon glyphicon-exclamation-sign"></span>&nbsp;Username Already Registered</div>
+      </div>
+    </form>
+</div>
