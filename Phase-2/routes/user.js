@@ -29,9 +29,8 @@ router.get('/addUser',function(request,response){
 router.post('/register',Verify.verifyUsername,function(request, response){
     console.log("in!");
     User.register(new User({ username : request.body.username }),request.body.password,function(err, user){
-        var date = new Date();
-        date.setMonth(date.getMonth()+parseInt(request.body.searchesDuration));
-        user.searchesDuration = dateformat(date,'dd-mm-yyyy');
+        var x = request.body.searchesDuration.split(/[-]/);
+        user.searchesDuration = (x[1]+'-'+x[2]+'-'+x[0]).toString();
         if(request.body.searchType)
             user.searchType = request.body.searchType;
         else
@@ -114,6 +113,19 @@ router.post('/adminChangePassword',Verify.verifyLoggedUser,Verify.verifyAdmin,fu
                     });
                 }
             })
+        }
+    });
+});
+
+router.post('/findUser',Verify.verifyLoggedUser,Verify.verifyAdmin,function(request,response) {
+    console.log('Here!!');
+    User.findOne({'username': request.body.username},{_id:0,updatedAt:0,createdAt:0,__v:0,logged:0}, function (err, data) {
+        if (err)
+            response.json(err);
+        else if (!data)
+            response.json('No such user!!');
+        else {
+            response.json(data);
         }
     });
 });
@@ -262,18 +274,14 @@ router.post('/decreaseSearches',Verify.verifyLoggedUser,function(request,respons
 router.post('/updateStatus',Verify.verifyLoggedUser,Verify.verifyAdmin,function(request,response){
     var username = request.body.username;
     var searchType = request.body.searchType;
-    var searchesDuration = parseInt(request.body.searchesDuration);
     var searchesNumber = parseInt(request.body.searchesNumber);
     User.findOne({username: username},function(err,data) {
         if (err)
             response.json(err);
         else
         {
-            var date = new Date();
-            console.log(date);
-            date.setMonth(date.getMonth()+searchesDuration);
-            console.log(date);
-            data.searchesDuration = dateformat(date,'dd-mm-yyyy');
+            var x = request.body.searchesDuration.split(/[-]/);
+            data.searchesDuration = (x[1]+'-'+x[2]+'-'+x[0]).toString();
             if(searchType==='true')
             {
                 data.searchType = true;
