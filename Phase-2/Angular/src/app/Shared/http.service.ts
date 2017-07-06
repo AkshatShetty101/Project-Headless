@@ -14,7 +14,8 @@ export class HttpService {
     const body = request;
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.post('http://localhost:3000/user/register', body, {headers});
+    return this.http.post('http://localhost:3000/user/register', body, {headers})
+      .map((response: Response) => response.json());
   }
 
   verifyUser(request: any) {
