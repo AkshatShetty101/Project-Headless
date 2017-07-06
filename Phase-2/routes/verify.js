@@ -14,7 +14,7 @@ exports.verifyUsername = function(request, response, next) {
         if(data[0]===undefined)
             next();
         else {
-            response.json("Username is already used");
+            response.json({status:-1, message:"Username is already used"});
         }
     });
 };

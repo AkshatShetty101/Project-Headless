@@ -4,6 +4,7 @@ var bodyParser = require('body-parser');
 var path = require('path');
 var fs = require('fs');
 var passport = require('passport');
+//noinspection SpellCheckingInspection
 var dateformat = require('dateformat');
 var jwt = require('jsonwebtoken');
 var _ = require('underscore');
@@ -42,7 +43,7 @@ router.post('/register',Verify.verifyUsername,function(request, response){
             {
                 //console.log(user);
                 passport.authenticate('local')(request, response, function () {
-                    response.status(200).json({status: 'Registration Successful!'});
+                    response.status(200).json({status: 1 ,message: 'Registration Successful!'});
                 });
             }
         });
@@ -227,7 +228,6 @@ router.get('/findStatus',Verify.verifyLoggedUser,function(request,response){
 router.post('/decreaseSearches',Verify.verifyLoggedUser,function(request,response){
     var token = request.body.token || request.query.token || request.headers['x-access-token'];
     var decoded = jwt.decode(token);
-    var status =0;
     var num = parseInt(request.body.number);
     User.findById(decoded.data._id,function(err,data){
         if(err)
