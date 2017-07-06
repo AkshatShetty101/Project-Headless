@@ -30,7 +30,7 @@ router.post('/register',Verify.verifyUsername,function(request, response){
     console.log("in!");
     User.register(new User({ username : request.body.username }),request.body.password,function(err, user){
         var x = request.body.searchesDuration.split(/[-]/);
-        user.searchesDuration = (x[1]+'-'+x[2]+'-'+x[0]).toString();
+        user.searchesDuration = (x[2]+'-'+x[1]+'-'+x[0]).toString();
         if(request.body.searchType)
             user.searchType = request.body.searchType;
         else
@@ -281,7 +281,7 @@ router.post('/updateStatus',Verify.verifyLoggedUser,Verify.verifyAdmin,function(
         else
         {
             var x = request.body.searchesDuration.split(/[-]/);
-            data.searchesDuration = (x[1]+'-'+x[2]+'-'+x[0]).toString();
+            data.searchesDuration = (x[2]+'-'+x[1]+'-'+x[0]).toString();
             if(searchType==='true')
             {
                 data.searchType = true;
