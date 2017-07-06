@@ -6,6 +6,7 @@ var fs = require('fs');
 var passport = require('passport');
 var dateformat = require('dateformat');
 var jwt = require('jsonwebtoken');
+var _ = require('underscore');
 var LocalStrategy = require('passport-local').Strategy;
 var User = require('../models/user');
 var Verify = require('./verify');
@@ -208,7 +209,17 @@ router.get('/findStatus',Verify.verifyLoggedUser,function(request,response){
             }
         }
         else {
-            response.json({status: -1, message: 'Time Period expired. Contact Administrator'})
+            // data.searchesNumber = 0;
+            // data.searchType = false;
+            // data.save(function(err,user){
+            //     if(err)
+            //         response.json(err);
+            //     else
+            //     {
+            //         console.log(user);
+            //     }
+            // });
+            response.json({status: -1, message: 'Time Period expired. Contact Administrator'});
         }
     });
 });
@@ -216,6 +227,7 @@ router.get('/findStatus',Verify.verifyLoggedUser,function(request,response){
 router.post('/decreaseSearches',Verify.verifyLoggedUser,function(request,response){
     var token = request.body.token || request.query.token || request.headers['x-access-token'];
     var decoded = jwt.decode(token);
+    var status =0;
     var num = parseInt(request.body.number);
     User.findById(decoded.data._id,function(err,data){
         if(err)
@@ -227,10 +239,11 @@ router.post('/decreaseSearches',Verify.verifyLoggedUser,function(request,respons
         {
             if(data.searchType===true)
             {
-                response.json({status:1, message: 'Deducted from infinity'});
+                data.total = parseInt(data.total)+ num;
             }
             else
             {
+                data.total = parseInt(data.total)+ num;
                 data.searchesNumber = parseInt(data.searchesNumber)- num;
             }
             data.save(function(err,user){
@@ -363,5 +376,15 @@ router.get('/logout',Verify.verifyLoggedUser,function(request, response){
 
 router.post('/d',Verify.verifyLoggedUser,function (request,response) {
     response.json('Reached!');
+});
+
+router.get('/total',function (request,response) {
+    User.find({},function (err,data) {
+        console.log(data);
+        var groups = _.pluck(data,'total');
+        var sum = _.reduce(groups, function(memo, num){
+            return memo + num; }, 0);
+        response.json({searches: sum});
+    });
 });
 module.exports = router;
