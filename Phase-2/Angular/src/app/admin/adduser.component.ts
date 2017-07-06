@@ -21,7 +21,7 @@ export class AdduserComponent implements OnInit {
       'username': ['', [Validators.required]],
       'password': ['', [Validators.required]],
       'no_searches': ['', [Validators.pattern('^[0-9]+$')]],
-      'no_months': ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
+      'no_months': ['', [Validators.required]],
       'option': ['', [Validators.required]]
     });
   }

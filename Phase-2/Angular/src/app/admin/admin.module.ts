@@ -5,6 +5,7 @@ import { AdminlandingComponent } from './adminlanding.component';
 import { ViewuserComponent } from './viewuser.component';
 import { AdduserComponent } from './adduser.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { UserdetailsComponent } from './userdetails.component';
 
 @NgModule({
   imports: [
@@ -13,6 +14,6 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     ReactiveFormsModule,
     adminRouting
   ],
-  declarations: [AdminlandingComponent, ViewuserComponent, AdduserComponent]
+  declarations: [AdminlandingComponent, ViewuserComponent, AdduserComponent, UserdetailsComponent]
 })
 export class AdminModule { }
