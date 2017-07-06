@@ -9,6 +9,14 @@ export class HttpService {
     private http: Http
   ) { }
 
+  addUser(request){
+    console.log('Inside Add User!');
+    const body = request;
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.post('http://localhost:3000/user/register', body, {headers});
+  }
+
   verifyUser(request: any) {
     const body = request;
     let headers = new Headers();
@@ -32,7 +40,6 @@ export class HttpService {
   }
 
   checkLimit(token: any){
-    console.log('Inside Check Limit');
     let headers = new Headers();
     headers.append('x-access-token', token);
     return this.http.get('http://localhost:3000/user/findStatus', {headers})

@@ -4,6 +4,7 @@
 .bottom{
   width: 100%;
   margin: 0;
+  cursor: auto;
 }
 
 .list-holder{
@@ -13,4 +14,5 @@
 
 .add:hover{
   background-color: #ffdc06 !important;
+  cursor: pointer;
 }
