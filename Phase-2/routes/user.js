@@ -51,7 +51,7 @@ router.post('/register',Verify.verifyUsername,function(request, response){
 });
 
 router.get('/get',Verify.verifyLoggedUser,Verify.verifyAdmin,function (request,response){
-    User.find({},{_id:0,updatedAt:0,createdAt:0,__v:0,logged:0},function(err,data){
+    User.find({},{_id:0,updatedAt:0,createdAt:0,__v:0,logged:0}).collation({locale:'en',strength: 2}).sort({username:1}).then(function (data,err) {
         if(err)
             response.json(err);
         else

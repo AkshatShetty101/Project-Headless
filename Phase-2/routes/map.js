@@ -142,7 +142,7 @@ router.post('/getNames',function(request,response){
 //noinspection SpellCheckingInspection
 
 router.get('/getState',function(request,response){
-    Map.find({},{"name":"1","code":"1"}).collation({locale:'en',strength: 2}).sort({name:1}).then(function (err,data) {
+    Map.find({},{"name":"1","code":"1"}).collation({locale:'en',strength: 2}).sort({name:1}).then(function (data,err) {
         if (err)
             response.json(err);
         else {
