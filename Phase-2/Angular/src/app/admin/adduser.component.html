@@ -10,14 +10,14 @@
         <input class="form-control" formControlName="password" name="password" placeholder="Enter Password...." type="password" />
       </div>
       <div class="row">
+        Search Expiry Date&nbsp;<input autocomplete="off" style="display:inline-block" type="date" name="no_months" formControlName="no_months"  />
+      </div>
+      <div class="row">
         <div class="col-sm-12"><input type="radio" name="option" formControlName="option" value="infinite" (click)="flag = -1" />&nbsp;&nbsp;Infinite Searches</div>
         <div class="col-sm-12"><input type="radio" name="option" formControlName="option" value="fixed" (click)="flag = 1" />&nbsp;&nbsp;Set Number of Searches</div><br>
       </div>
-      <div class="row" [ngStyle]="{display: flag == 1?'block':'none'}">
-        <input autocomplete="off" type="text" class="form-control" name="no_searches" formControlName="no_searches" [value]="default_value" placeholder="Enter number of searches...." />
-      </div>
-      <div class="row">
-        <input autocomplete="off" type="text" class="form-control" name="no_months" formControlName="no_months" placeholder="Enter duration in months from today...." />
+      <div class="row" [ngStyle]="{display: flag == 1?'inline-block':'none'}">
+        <input autocomplete="off" type="text" class="form-control" name="no_searches" formControlName="no_searches"  placeholder="Enter number of searches...." />
       </div>
       <div class="row">
         <input class="submit-btn" type="submit" [disabled]="!myForm.valid" value="Add User" />

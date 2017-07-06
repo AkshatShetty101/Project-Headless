@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpService} from "../Shared/http.service";
 import {AuthService} from "../Shared/auth.service";
+import {LogicService} from "../Shared/logic.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-viewuser',
@@ -16,7 +18,9 @@ export class ViewuserComponent implements OnInit {
 
   constructor(
     private http: HttpService,
-    private auth: AuthService
+    private auth: AuthService,
+    private logic: LogicService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -29,7 +33,6 @@ export class ViewuserComponent implements OnInit {
     this.http.getUsers(token)
       .subscribe(
         (result) => {
-          console.log(result);
           for(i=0; i<result.length; i++) {
             this.adminFlag.push(result[i].admin);
             this.infiFlag.push(result[i].searchType);
@@ -39,5 +42,14 @@ export class ViewuserComponent implements OnInit {
           }
         }
       );
+  }
+
+  openUser(index: any){
+    this.logic.username = this.userName[index];
+    this.logic.admin = this.adminFlag[index];
+    this.logic.searchType = this.infiFlag[index];
+    this.logic.searchesNumber = this.noSearches[index];
+    this.logic.searchesDuration = this.searchLimit[index];
+    this.router.navigateByUrl('/admin/userDetails');
   }
 }
