@@ -20,6 +20,10 @@ var dataSchema = new Schema({
         admin: {
             type: Boolean,
             default: false
+        },
+        total: {
+            type: Number,
+            default: 0
         }
     },
     {
