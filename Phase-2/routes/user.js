@@ -150,27 +150,31 @@ router.get('/findStatus',Verify.verifyLoggedUser,function(request,response){
     var decoded = jwt.decode(token);
     console.log(decoded.data._id);
     var flag=-1;
-    User.findById(decoded.data._id,function(err,data){
+    User.findById(decoded.data._id).then(function(data,err){
         if(err)
             response.json(err);
-        else
-        {
+        else {
+
+
+            console.log(data);
+            console.log('here!');
             var date = new Date();
             console.log(date);
-            var x= data.searchesDuration.split(/[-]/);
+            var x = data.searchesDuration.split(/[-]/);
             console.log(x);
-            console.log(date.getFullYear()+"--"+(date.getMonth()+1+"--"+(date.getDate())));
+            console.log(date.getFullYear() + "--" + (date.getMonth() + 1 + "--" + (date.getDate())));
             console.log(x[1]);
-            if(parseInt(x[2])===parseInt(date.getFullYear()))
-            {
-                if(parseInt(x[1])>(parseInt(date.getMonth())+1))
-                {
-                    flag=1;
+            var y = parseInt(date.getFullYear());
+            var m = parseInt(date.getMonth()) + 1;
+            var d = parseInt(date.getDate());
+            console.log(y + "--" + m + "--" + d);
+            if (parseInt(x[2]) === y) {
+                if (parseInt(x[1]) > m) {
+                    flag = 1;
                     return data;
                 }
-                else
-                if(parseInt(x[1])===(parseInt(date.getMonth())+1)) {
-                    if (parseInt(x[1]) >= (parseInt(date.getDate()) + 1)) {
+                else if (parseInt(x[1]) === m) {
+                    if (parseInt(x[1]) >= d) {
                         flag = 1;
                         return data;
                     }
@@ -181,17 +185,13 @@ router.get('/findStatus',Verify.verifyLoggedUser,function(request,response){
                 else
                     return data;
             }
-            else
-            if(parseInt(x[2])>parseInt(date.getFullYear()))
-            {
-                flag=1;
+            else if (parseInt(x[2]) > y) {
+                flag = 1;
                 return data;
             }
-            else
-            {
+            else {
                 return data;
             }
-
         }
     }).then(function (data) {
         console.log(data.logged);
