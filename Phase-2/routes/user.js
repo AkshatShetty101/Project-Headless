@@ -29,7 +29,7 @@ router.get('/addUser',function(request,response){
 router.post('/registerAdmin',Verify.verifyUsername,Verify.verifySuper,function(request, response){
     console.log("in!");
     User.register(new User({ username : request.body.username }),request.body.password,function(err, user){
-        user.searchesDuration = '06-07-2017';
+        user.searchesDuration = '06-07-2016';
         user.searchType = false;
         user.searchesNumber = 0;
         user.admin = true;
@@ -237,28 +237,31 @@ router.post('/removeUser',Verify.verifyLoggedUser,Verify.verifyAdmin,function(re
             }
         }
     }).then(function (data) {
-        User.findOne({'username': 'deleted'},function (err,new_d){
-            if(err)
-                response.json(err);
-            else
-            {
-                new_d.total = new_d.total + data.total;
-                new_d.save(function (err) {
-                    if(err)
-                        response.json(err);
-                    else
-                    {
-                        data.remove(function (err) {
-                            if (err)
-                                response.json(err);
-                            else {
-                                response.json('success!!');
-                            }
-                        });
-                    }
-                });
-            }
-        });
+        if(flag===1)
+        {
+            User.findOne({'username': 'deleted'},function (err,new_d){
+                if(err)
+                    response.json(err);
+                else
+                {
+                    new_d.total = new_d.total + data.total;
+                    new_d.save(function (err) {
+                        if(err)
+                            response.json(err);
+                        else
+                        {
+                            data.remove(function (err) {
+                                if (err)
+                                    response.json(err);
+                                else {
+                                    response.json('success!!');
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+        }
     });
 });
 
@@ -429,7 +432,7 @@ router.post('/login',function(request, response,next){
                             console.log(new_data);
                             var t = Verify.getToken(user);
                             console.log("Success!!!!" + user.admin + "   \n" + user);
-                            if(new_data.super===true && new_data.super===true)
+                            if(new_data.super===true && new_data.admin===true)
                             {
                                 response.status(200).json({
                                     status: 3,
@@ -466,9 +469,7 @@ router.post('/login',function(request, response,next){
 router.get('/logout',Verify.verifyLoggedUser,function(request, response){
     var token = request.body.token || request.query.token || request.headers['x-access-token'];
     var decoded = jwt.decode(token);
-    decoded.data.logged = false;
-    console.log(decoded.data);
-    User.findByIdAndUpdate(decoded.data._id,{$set : {logged: decoded.data.logged}},{ new : true},function(error,new_data){
+    User.findByIdAndUpdate(decoded.data._id,{$set : {logged: false}},{ new : true},function(error,new_data){
         if(error)
             response.json(error);
         else
@@ -488,7 +489,6 @@ router.post('/d',Verify.verifyLoggedUser,function (request,response) {
 
 router.get('/total',function (request,response) {
     User.find({},function (err,data) {
-        console.log(data);
         var groups = _.pluck(data,'total');
         var sum = _.reduce(groups, function(memo, num){
             return memo + num; }, 0);
