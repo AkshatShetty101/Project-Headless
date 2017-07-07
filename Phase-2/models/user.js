@@ -21,6 +21,10 @@ var dataSchema = new Schema({
             type: Boolean,
             default: false
         },
+        super: {
+            type: Boolean,
+            default: false
+        },
         total: {
             type: Number,
             default: 0
