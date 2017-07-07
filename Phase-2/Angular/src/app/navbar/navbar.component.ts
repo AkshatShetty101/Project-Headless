@@ -50,6 +50,7 @@ export class NavbarComponent implements OnInit {
           console.log(result);
           this.auth.storeId(false, 'loggedIn');
           this.auth.storeId(false, 'admin');
+          this.auth.storeId(false, 'superadmin');
           this.auth.checkStatus();
           this.auth.checkAdmin();
           this.router.navigateByUrl('/home');

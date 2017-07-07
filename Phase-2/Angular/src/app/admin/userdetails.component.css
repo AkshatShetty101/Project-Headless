@@ -1,0 +1,16 @@
+h4{
+  color: rgba(255, 0, 0, 0.63);
+}
+
+h4>span{
+  color: black;
+}
+
+.form-control{
+  border: 1px solid rgba(133, 133, 133, 0.75);
+  background-image: none;
+  background-color: white;
+  border-radius: 5px;
+  text-indent: 2%;
+  width: 25vw;
+}

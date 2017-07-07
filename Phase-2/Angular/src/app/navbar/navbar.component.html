@@ -22,7 +22,7 @@
         <button class="btn btn-primary" (click)="logOut()">Logout</button>
       </li>
       <li routerLinkActive="active" *ngIf="loggedIn">
-        <a>My Account</a>
+        <a [routerLink]="['/myAccount']">My Account</a>
       </li>
       <li routerLinkActive="active" *ngIf="loggedIn && admin">
         <a [routerLink]="['/admin']">Admin Facilities</a>

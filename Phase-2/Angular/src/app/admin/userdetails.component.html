@@ -1,0 +1,55 @@
+
+  <button [routerLink]="['/admin/viewUser']" class="btn btn-raised">Back to View Users</button>
+<div class="row">
+  <div class="col-sm-4">
+    <div class="row">
+      <h2>Current User Details</h2>
+    </div>
+    <div class="row">
+      <h4>Username:&nbsp;<span [innerHTML]="username"></span></h4>
+    </div>
+    <div class="row">
+      <h4>Administrator:&nbsp;<span [innerHTML]="adminFlag"></span></h4>
+    </div>
+    <div class="row">
+      <h4>Infinite Searches:&nbsp;<span [innerHTML]="infiFlag"></span></h4>
+    </div>
+    <div class="row">
+      <h4>Number of Searches Left:&nbsp;<span [innerHTML]="noSearches"></span></h4>
+    </div>
+    <div class="row">
+      <h4>Searches Expiry Date:&nbsp;<span [innerHTML]="searchesDuration"></span></h4>
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="row">
+      <h2>Click to Alter Details</h2>
+    </div>
+    <div class="row">
+      <button class="btn btn-raised" (click)="choice = 1">Change Password</button><br>
+      <button class="btn btn-raised" *ngIf="!superadmin" (click)="choice = 2">Change Search Details</button><br *ngIf="!superadmin">
+      <button class="btn btn-raised" (click)="delete()">Delete Account From Database</button>
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="row">
+      <h2>Form</h2>
+    </div>
+    <div class="row">
+      <form *ngIf="choice == 1" [formGroup]="myForm1" (ngSubmit)="changePassword(this.myForm1.value)">
+        <input type="text" class="form-control" formControlName="password" placeholder="Enter new password...." required/>
+        <input class="submit-btn" type="submit" value="Change" [disabled]="!myForm1.valid"/>
+      </form>
+      <form *ngIf="choice == 2" [formGroup]="myForm2" (ngSubmit)="changeSearches(this.myForm2.value)">
+        Search Expiry Date:<br><input class="form-control" autocomplete="off" style="display:inline-block" type="date" name="no_months" formControlName="no_months"  />
+        <div class="col-sm-12"><input type="radio" name="option" formControlName="option" value="infinite" (click)="flag = -1" />&nbsp;&nbsp;Infinite Searches</div>
+        <div class="col-sm-12"><input type="radio" name="option" formControlName="option" value="fixed" (click)="flag = 1" />&nbsp;&nbsp;Set Number of Searches</div><br>
+        <input [ngStyle]="{display: flag == 1?'inline-block':'none'}" autocomplete="off" type="text" class="form-control" name="no_searches" formControlName="no_searches"  placeholder="Enter number of searches...." />
+        <input class="submit-btn" type="submit" [disabled]="!myForm2.valid" value="Change"/>
+      </form>
+    </div>
+    <div *ngIf="flag == 4" class="success-msg row">
+      <div style="line-height: 300%"><span class="glyphicon glyphicon-ok"></span>&nbsp;Successfully Altered</div>
+    </div>
+  </div>
+</div>

@@ -17,6 +17,14 @@ export class HttpService {
       .map((response: Response) => response.json());
   }
 
+  deleteUser(request: any, token: any){
+    const body = request;
+    let headers = new Headers();
+    headers.append('x-access-token', token);
+    return this.http.post('http://localhost:3000/user/removeUser', body, {headers})
+      .map((response: Response) => response.json());
+  }
+
   verifyUser(request: any) {
     const body = request;
     let headers = new Headers();
@@ -32,22 +40,40 @@ export class HttpService {
       .map((response: Response) => response.json());
   }
 
+  getUserDetails(token: any) {
+    let headers = new Headers();
+    headers.append('x-access-token', token);
+    return this.http.get('http://localhost:3000/user/findMe', {headers})
+      .map((response: Response) => response.json());
+  }
+
   changeSearches(request: any, token: any){
     console.log('Inside changeSearches!');
     const body = request;
     let headers = new Headers();
     headers.append('x-access-token', token);
-    return this.http.post('http://localhost:3000/user/login', body, {headers})
+    return this.http.post('http://localhost:3000/user/updateStatus', body, {headers})
       .map((response: Response) => response.json());
   }
 
-  changePassword(request: any, token: any){
+  changePassword(request: any, token: any, flag: any){
     console.log('Inside changeSearches!');
     const body = request;
     let headers = new Headers();
     headers.append('x-access-token', token);
-    return this.http.post('http://localhost:3000/user/login', body, {headers})
-      .map((response: Response) => response.json());
+    if(flag == 1){
+      return this.http.post('http://localhost:3000/user/changePassword', body, {headers})
+        .map((response: Response) => response.json());
+    }
+    else
+    if(flag == 2){
+      return this.http.post('http://localhost:3000/user/adminChangePassword', body, {headers})
+        .map((response: Response) => response.json());
+    }
+    else{
+      return this.http.post('http://localhost:3000/user/superChangePassword', body, {headers})
+        .map((response: Response) => response.json());
+    }
   }
 
   logOut(token: any){

@@ -1,0 +1,129 @@
+import { Component, OnInit } from '@angular/core';
+import {LogicService} from "../Shared/logic.service";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {HttpService} from "../Shared/http.service";
+import {AuthService} from "../Shared/auth.service";
+
+@Component({
+  selector: 'app-userdetails',
+  templateUrl: './userdetails.component.html',
+  styleUrls: ['./userdetails.component.css']
+})
+export class UserdetailsComponent implements OnInit {
+
+  username: any;
+  adminFlag: any;
+  infiFlag: any;
+  noSearches: any;
+  searchesDuration: any;
+  flag: any = 1;
+  choice: any = 0;
+  superadmin: any;
+
+  myForm1: FormGroup;
+  myForm2: FormGroup;
+
+  constructor(
+    private logic: LogicService,
+    private formBuilder: FormBuilder,
+    private http: HttpService,
+    private auth: AuthService
+  ) {
+    this.myForm1 = formBuilder.group({
+      'password': ['', [Validators.required]],
+    });
+
+    this.myForm2 = formBuilder.group({
+      'no_searches': ['', [Validators.pattern('^[0-9]+$')]],
+      'no_months': ['', [Validators.required]],
+      'option': ['', [Validators.required]]
+    });
+  }
+
+  ngOnInit() {
+    this.username = this.logic.username;
+    this.adminFlag = this.logic.admin;
+    this.infiFlag = this.logic.searchType;
+    this.searchesDuration = this.logic.searchesDuration;
+    this.noSearches = this.logic.searchesNumber;
+    if(this.auth.getId('superadmin') === 'true')
+      this.superadmin = true;
+    else
+      this.superadmin = false;
+  }
+
+  changePassword(data: any){
+    let request: any, token: any;
+    request = {
+      username: this.username,
+      password: data.password
+    };
+    token = this.auth.getId('token');
+    console.log(request);
+    if(this.superadmin == true){
+      this.http.changePassword(request, token, 3)
+        .subscribe(
+          (result) => {
+            console.log(result);
+          }
+        );
+    }
+    else{
+      this.http.changePassword(request, token, 2)
+        .subscribe(
+          (result) => {
+            console.log(result);
+            this.myForm1.reset();
+            this.flag = 4;
+          }
+        );
+    }
+
+  }
+
+  changeSearches(data: any){
+    let request: any, token: any;
+    if(data.option ==  'infinite'){
+      data.no_searches = 0;
+      data.option = true;
+    }
+    else{
+      data.option = false;
+      if(data.no_searches === ""){
+        data.no_searches = 0;
+      }
+    }
+    request = {
+      username: this.username,
+      searchType: data.option,
+      searchesNumber: data.no_searches,
+      searchesDuration: data.no_months
+    };
+    token = this.auth.getId('token');
+    console.log(request);
+    this.http.changeSearches(request, token)
+      .subscribe(
+        (result) => {
+          console.log(result);
+          this.myForm2.reset();
+          this.flag = 4;
+        }
+      );
+  }
+
+  delete(){
+    let request: any, token: any;
+    token = this.auth.getId('token');
+    request = {
+      username: this.username
+    };
+    this.http.deleteUser(request, token)
+      .subscribe(
+        (result) => {
+          console.log(result);
+          this.flag = 4;
+        }
+      );
+
+  }
+}
