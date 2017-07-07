@@ -76,3 +76,33 @@ exports.verifyAdmin = function(request, response, next) {
         response.json(err);
     }
 };
+
+exports.verifySuper = function(request, response, next) {
+
+    var token = request.body.token || request.query.token || request.headers['x-access-token'];
+    if (token) {
+        jwt.verify(token, config.secretKey, function(err, decoded) {
+            if (err) {
+                response.json(err);
+            }
+            else
+            {
+                console.log(decoded);
+                // if everything is good, save to request for use in other routes
+                if(decoded.data.super===false)
+                {
+                    response.json("Not an Super Administrator");
+                }
+                else
+                    next();
+            }
+        });
+    }
+    else
+    {
+        // if there is no token
+        // return an error
+        var err = new Error('No token provided!');
+        response.json(err);
+    }
+};
