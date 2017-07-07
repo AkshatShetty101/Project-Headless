@@ -7,8 +7,10 @@ export class AuthService {
 
   private status = new Subject<any>();
   private admin = new Subject<any>();
+  private backg = new Subject<any>();
   statusEmitted$ = this.status.asObservable();
   adminEmitted$ = this.admin.asObservable();
+  backgroundEmitted$ = this.backg.asObservable();
 
   constructor(
     private local: LocalStorageService
@@ -34,5 +36,9 @@ export class AuthService {
       return this.admin.next(true);
     else
       return this.admin.next(false);
+  }
+
+  checkBackg(){
+    return this.backg.next;
   }
 }

@@ -1,6 +1,4 @@
-<div class="row">
-    <button [routerLink]="['/admin/viewUser']" class="btn btn-raised">Back to View Users</button>
-</div>
+<button [routerLink]="['/admin/viewUser']" class="btn btn-raised">Back to View Users</button>
 <div class="row">
     <form [formGroup]="myForm" class="col-sm-offset-4 col-sm-6 form-holder" (ngSubmit)="onSubmit(myForm.value)">
       <div class="row">
@@ -10,7 +8,7 @@
         <input class="form-control" formControlName="password" name="password" placeholder="Enter Password...." type="password" />
       </div>
       <div class="row">
-        Search Expiry Date&nbsp;<input autocomplete="off" style="display:inline-block" type="date" name="no_months" formControlName="no_months"  />
+        Search Expiry Date:<br><input class="form-control" autocomplete="off" style="display:inline-block" type="date" name="no_months" formControlName="no_months"  />
       </div>
       <div class="row">
         <div class="col-sm-12"><input type="radio" name="option" formControlName="option" value="infinite" (click)="flag = -1" />&nbsp;&nbsp;Infinite Searches</div>

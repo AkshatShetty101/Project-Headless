@@ -39,6 +39,9 @@ export class AdduserComponent implements OnInit {
     }
     else{
       data.option = false;
+      if(data.no_searches === ""){
+        data.no_searches = 0;
+      }
     }
     request = {
       username: data.username,

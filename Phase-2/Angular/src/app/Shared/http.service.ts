@@ -10,7 +10,6 @@ export class HttpService {
   ) { }
 
   addUser(request){
-    console.log('Inside Add User!');
     const body = request;
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
@@ -30,6 +29,24 @@ export class HttpService {
     let headers = new Headers();
     headers.append('x-access-token', token);
     return this.http.get('http://localhost:3000/user/get', {headers})
+      .map((response: Response) => response.json());
+  }
+
+  changeSearches(request: any, token: any){
+    console.log('Inside changeSearches!');
+    const body = request;
+    let headers = new Headers();
+    headers.append('x-access-token', token);
+    return this.http.post('http://localhost:3000/user/login', body, {headers})
+      .map((response: Response) => response.json());
+  }
+
+  changePassword(request: any, token: any){
+    console.log('Inside changeSearches!');
+    const body = request;
+    let headers = new Headers();
+    headers.append('x-access-token', token);
+    return this.http.post('http://localhost:3000/user/login', body, {headers})
       .map((response: Response) => response.json());
   }
 
