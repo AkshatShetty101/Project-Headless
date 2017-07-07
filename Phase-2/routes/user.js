@@ -94,7 +94,7 @@ router.post('/register',Verify.verifyUsername,function(request, response){
 });
 
 router.get('/get',Verify.verifyLoggedUser,Verify.verifyAdmin,function (request,response){
-    User.find({admin:{$ne: true}, super:{$ne: true}},{_id:0,updatedAt:0,createdAt:0,__v:0,logged:0}).collation({locale:'en',strength: 2}).sort({username:1}).then(function (data,err) {
+    User.find({admin:{$ne: true}, super:{$ne: true} ,username:{$ne: 'deleted'}},{_id:0,updatedAt:0,createdAt:0,__v:0,logged:0}).collation({locale:'en',strength: 2}).sort({username:1}).then(function (data,err) {
         if(err)
             response.json(err);
         else
@@ -215,30 +215,50 @@ router.get('/findMe',Verify.verifyLoggedUser,function(request,response){
 
 router.post('/removeUser',Verify.verifyLoggedUser,Verify.verifyAdmin,function(request,response) {
     console.log('Here!!');
-    User.findOne({'username': request.body.username}, function (err, data) {
-        if (err)
+    var flag= -1;
+    User.findOne({'username': request.body.username}).then(function (data, err) {
+        if (err) {
             response.json(err);
-        else
-        if (!data)
+            return data;
+        }
+        else if (!data) {
             response.json('No such user!!');
-        else
-        {
+            return data;
+        }
+        else {
             console.log(data);
-            if(data.admin===true)
-            {
+            if (data.admin === true) {
                 response.json('Cannot delete admin!');
+                return data;
             }
+            else {
+                flag = 1;
+                return data;
+            }
+        }
+    }).then(function (data) {
+        User.findOne({'username': 'deleted'},function (err,new_d){
+            if(err)
+                response.json(err);
             else
             {
-                data.remove(function (err) {
-                    if (err)
+                new_d.total = new_d.total + data.total;
+                new_d.save(function (err) {
+                    if(err)
                         response.json(err);
-                    else {
-                        response.json('success!!');
+                    else
+                    {
+                        data.remove(function (err) {
+                            if (err)
+                                response.json(err);
+                            else {
+                                response.json('success!!');
+                            }
+                        });
                     }
                 });
             }
-        }
+        });
     });
 });
 
@@ -409,19 +429,19 @@ router.post('/login',function(request, response,next){
                             console.log(new_data);
                             var t = Verify.getToken(user);
                             console.log("Success!!!!" + user.admin + "   \n" + user);
-                            if(new_data.admin===true)
+                            if(new_data.super===true && new_data.super===true)
                             {
                                 response.status(200).json({
-                                    status: 2,
+                                    status: 3,
                                     message:'Login Successful',
                                     token: t
                                 });
                             }
                             else
-                            if(new_data.super===true)
+                            if(new_data.admin===true)
                             {
                                 response.status(200).json({
-                                    status: 3,
+                                    status: 2,
                                     message:'Login Successful',
                                     token: t
                                 });
