@@ -6,38 +6,3 @@
   text-indent: 2%;
   width: 25vw;
 }
-
-.submit-btn{
-  background-color: #00b0ff;
-  color: white;
-  border: solid #00b0ff;
-  border-radius: 5px;
-  width: 25vw;
-  height: 3.5vw;
-  font-size: 150%;
-  vertical-align: middle;
-}
-
-.success-msg{
-  background-color: rgba(21, 180, 21, 0.96);
-  border-radius: 5px;
-  width: 25vw;
-  height: 3.5vw;
-  text-align: center;
-}
-
-.warning-msg{
-  background-color: orange;
-  border-radius: 5px;
-  width: 25vw;
-  height: 3.5vw;
-  text-align: center;
-}
-
-.error-msg{
-  background-color: rgba(255, 0, 0, 0.66);
-  border-radius: 5px;
-  width: 25vw;
-  height: 3.5vw;
-  text-align: center;
-}
