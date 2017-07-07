@@ -113,3 +113,15 @@ h4{
 hr{
   border-top: 1px solid #797979;
 }
+
+div.wpcf7-text{
+  background-color: #2D2F2F;
+  border: medium none;
+  text-align: center;
+  font-size: 23px;
+  color: #c2c7bd;
+  padding: 10px;
+  text-transform: uppercase;
+  width: 462px;
+  margin-bottom: 1px;
+}

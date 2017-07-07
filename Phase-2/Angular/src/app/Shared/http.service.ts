@@ -9,6 +9,13 @@ export class HttpService {
     private http: Http
   ) { }
 
+  getStats(){
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.get('http://localhost:3000/user/total', {headers})
+      .map((response: Response) => response.json());
+  }
+
   addUser(request){
     const body = request;
     let headers = new Headers();
