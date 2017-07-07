@@ -147,7 +147,7 @@ router.post('/changePassword',Verify.verifyLoggedUser,function(request,response)
 router.post('/superChangePassword',Verify.verifyLoggedUser,Verify.verifySuper,function(request,response){
     var username = request.body.username;
     var password = request.body.password;
-    User.findone({username: username},function(err,data){
+    User.findOne({username: username},function(err,data){
         if(!data)
             response.json('Incorrect Username!');
         else
@@ -175,7 +175,7 @@ router.post('/superChangePassword',Verify.verifyLoggedUser,Verify.verifySuper,fu
 router.post('/adminChangePassword',Verify.verifyLoggedUser,Verify.verifyAdmin,function(request,response){
     var username = request.body.username;
     var password = request.body.password;
-    User.findone({username: username},function(err,data){
+    User.findOne({username: username},function(err,data){
         if(!data)
             response.json('Incorrect Username!');
         else
