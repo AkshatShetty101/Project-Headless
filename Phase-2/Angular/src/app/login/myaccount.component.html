@@ -1,0 +1,47 @@
+<div class="inner-content row">
+  <div class="col-sm-4">
+    <div class="row">
+      <h2>Current User Details</h2>
+    </div>
+    <div class="row">
+      <h4>Username:&nbsp;<span [innerHTML]="username"></span></h4>
+    </div>
+    <div class="row">
+      <h4>Administrator:&nbsp;<span [innerHTML]="adminFlag"></span></h4>
+    </div>
+    <div class="row">
+      <h4>Super-Administrator :&nbsp;<span [innerHTML]="superadmin"></span></h4>
+    </div>
+    <div class="row">
+      <h4>Infinite Searches:&nbsp;<span [innerHTML]="infiFlag"></span></h4>
+    </div>
+    <div class="row">
+      <h4>Number of Searches Left:&nbsp;<span [innerHTML]="noSearches"></span></h4>
+    </div>
+    <div class="row">
+      <h4>Searches Expiry Date:&nbsp;<span [innerHTML]="searchesDuration"></span></h4>
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="row">
+      <h2>Click to Alter Details</h2>
+    </div>
+    <div class="row">
+      <button class="btn btn-raised" (click)="choice = 1">Change Password</button><br>
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="row">
+      <h2>Form</h2>
+    </div>
+    <div class="row">
+      <form *ngIf="choice == 1" [formGroup]="myForm" (ngSubmit)="onSubmit(this.myForm.value)">
+        <input type="text" class="form-control" formControlName="password" placeholder="Enter new password...." required/>
+        <input class="submit-btn" type="submit" [disabled]="!myForm.valid" value="Change Password"/>
+      </form>
+    </div>
+    <div *ngIf="flag == 1" class="success-msg row">
+      <div style="line-height: 300%"><span class="glyphicon glyphicon-ok"></span>&nbsp;Password Changed</div>
+    </div>
+  </div>
+</div>
