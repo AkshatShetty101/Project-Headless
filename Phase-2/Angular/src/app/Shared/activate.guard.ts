@@ -36,7 +36,7 @@ export class ActivateAdmin implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot) : Observable<boolean> | Promise<boolean> | boolean {
     if(this.auth.getId('loggedIn') == 'true'){
-      if(this.auth.getId('admin') == 'true')
+      if(this.auth.getId('admin') == 'true' || this.auth.getId('superadmin') == 'true')
         return true;
       else{
         this.router.navigateByUrl('/home');
