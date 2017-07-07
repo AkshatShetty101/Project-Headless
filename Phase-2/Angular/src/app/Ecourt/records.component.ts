@@ -2,6 +2,7 @@ import {AfterContentChecked, Component, OnInit} from '@angular/core';
 import {LogicService} from "../Shared/logic.service";
 import {HttpService} from "../Shared/http.service";
 import {Router} from "@angular/router";
+import {AuthService} from "../Shared/auth.service";
 
 @Component({
   selector: 'app-records',
@@ -17,10 +18,13 @@ export class RecordsComponent implements OnInit, AfterContentChecked{
   disable: boolean = false;
   display: any = false;
 
+  private total_searches : any = 0;
+
   constructor(
     private logic: LogicService,
     private http: HttpService,
-    private router: Router
+    private router: Router,
+    private auth: AuthService
   ) {}
 
   ngOnInit() {
@@ -28,6 +32,8 @@ export class RecordsComponent implements OnInit, AfterContentChecked{
     this.fails = this.logic.getFails();
     this.norecords = this.logic.getNo();
     this.codes = this.logic.getCodes();
+    this.total_searches = this.records.length + this.norecords.length;
+    this.sendStats();
     this.logic.recordFlag = true;
     let codes: any[];
     let http: HttpService;
@@ -57,6 +63,20 @@ export class RecordsComponent implements OnInit, AfterContentChecked{
 
   ngAfterContentChecked(){
     this.display = true;
+  }
+
+  sendStats(){
+    let request: any, token:any;
+    token = this.auth.getId('token');
+    request = {
+      number : this.total_searches
+    };
+    this.http.sendStats(request, token)
+      .subscribe(
+        (result) => {
+         console.log(result);
+        }
+      );
   }
 
   view(n: any, data: any){

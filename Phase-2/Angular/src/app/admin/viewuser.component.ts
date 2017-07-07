@@ -34,7 +34,7 @@ export class ViewuserComponent implements OnInit {
       .subscribe(
         (result) => {
           for(i=0; i<result.length; i++) {
-            this.adminFlag.push(result[i].admin);
+            this.adminFlag.push(result[i].total);
             this.infiFlag.push(result[i].searchType);
             this.userName.push(result[i].username);
             this.noSearches.push(result[i].searchesNumber);

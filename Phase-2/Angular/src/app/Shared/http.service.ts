@@ -48,7 +48,6 @@ export class HttpService {
   }
 
   changeSearches(request: any, token: any){
-    console.log('Inside changeSearches!');
     const body = request;
     let headers = new Headers();
     headers.append('x-access-token', token);
@@ -57,7 +56,6 @@ export class HttpService {
   }
 
   changePassword(request: any, token: any, flag: any){
-    console.log('Inside changeSearches!');
     const body = request;
     let headers = new Headers();
     headers.append('x-access-token', token);
@@ -172,6 +170,15 @@ export class HttpService {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return this.http.post('http://localhost:3000/map/getNames', body, {headers})
+      .map((response: Response) => response.json());
+  }
+
+  sendStats(request: any, token: any){
+    console.log('Inside decreaseSearches!');
+    const body = request;
+    let headers = new Headers();
+    headers.append('x-access-token', token);
+    return this.http.post('http://localhost:3000/user/decreaseSearches', body, {headers})
       .map((response: Response) => response.json());
   }
 

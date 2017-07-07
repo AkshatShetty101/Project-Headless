@@ -18,6 +18,8 @@ export class MyaccountComponent implements OnInit {
   superadmin: any;
   choice: any;
   flag: any;
+  total: any;
+
   myForm: FormGroup;
 
   constructor(
@@ -53,6 +55,7 @@ export class MyaccountComponent implements OnInit {
           this.username = result.username;
           this.noSearches = result.searchesNumber;
           this.searchesDuration = result.searchesDuration;
+          this.total = result.total;
         }
       );
   }
