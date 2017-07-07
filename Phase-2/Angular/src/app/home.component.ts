@@ -27,7 +27,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.http.getStats()
       .subscribe(
         (result) => {
-          console.log(result);
           this.total_searches = result.searches;
         }
       );

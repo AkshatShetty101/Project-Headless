@@ -3,6 +3,7 @@ import {LogicService} from "../Shared/logic.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {HttpService} from "../Shared/http.service";
 import {AuthService} from "../Shared/auth.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-userdetails',
@@ -17,6 +18,7 @@ export class UserdetailsComponent implements OnInit {
   noSearches: any;
   searchesDuration: any;
   flag: any = 1;
+  msg: any = 0;
   choice: any = 0;
   superadmin: any;
 
@@ -27,7 +29,8 @@ export class UserdetailsComponent implements OnInit {
     private logic: LogicService,
     private formBuilder: FormBuilder,
     private http: HttpService,
-    private auth: AuthService
+    private auth: AuthService,
+    private router: Router
   ) {
     this.myForm1 = formBuilder.group({
       'password': ['', [Validators.required]],
@@ -65,6 +68,8 @@ export class UserdetailsComponent implements OnInit {
         .subscribe(
           (result) => {
             console.log(result);
+            this.myForm1.reset();
+            this.msg = 1;
           }
         );
     }
@@ -74,7 +79,7 @@ export class UserdetailsComponent implements OnInit {
           (result) => {
             console.log(result);
             this.myForm1.reset();
-            this.flag = 4;
+            this.msg = 1;
           }
         );
     }
@@ -106,7 +111,7 @@ export class UserdetailsComponent implements OnInit {
         (result) => {
           console.log(result);
           this.myForm2.reset();
-          this.flag = 4;
+          this.msg = 1;
         }
       );
   }
@@ -121,7 +126,9 @@ export class UserdetailsComponent implements OnInit {
       .subscribe(
         (result) => {
           console.log(result);
-          this.flag = 4;
+          this.choice = 0;
+          this.msg = 1;
+          this.router.navigateByUrl('/admin/viewUser');
         }
       );
 

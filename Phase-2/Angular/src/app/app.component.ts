@@ -9,11 +9,10 @@ import {LogicService} from "./Shared/logic.service";
 export class AppComponent implements OnInit{
 
   constructor(
-    private logic: LogicService
+    private logic: LogicService,
   ){}
 
   ngOnInit(){
     this.logic.recordFlag = false;
   }
-
 }

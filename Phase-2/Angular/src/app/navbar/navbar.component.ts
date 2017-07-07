@@ -33,8 +33,6 @@ export class NavbarComponent implements OnInit {
   ngOnInit() {
     this.auth.checkStatus();
     this.auth.checkAdmin();
-    console.log(this.loggedIn);
-    console.log(this.admin);
   }
 
   loginItIs(){
@@ -48,14 +46,11 @@ export class NavbarComponent implements OnInit {
       .subscribe(
         (result) => {
           console.log(result);
-          this.auth.storeId(false, 'loggedIn');
-          this.auth.storeId(false, 'admin');
-          this.auth.storeId(false, 'superadmin');
+          this.auth.end();
           this.auth.checkStatus();
           this.auth.checkAdmin();
           this.router.navigateByUrl('/home');
         }
       );
-
   }
 }

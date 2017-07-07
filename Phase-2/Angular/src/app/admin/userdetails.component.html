@@ -9,9 +9,6 @@
       <h4>Username:&nbsp;<span [innerHTML]="username"></span></h4>
     </div>
     <div class="row">
-      <h4>Administrator:&nbsp;<span [innerHTML]="adminFlag"></span></h4>
-    </div>
-    <div class="row">
       <h4>Infinite Searches:&nbsp;<span [innerHTML]="infiFlag"></span></h4>
     </div>
     <div class="row">
@@ -20,15 +17,18 @@
     <div class="row">
       <h4>Searches Expiry Date:&nbsp;<span [innerHTML]="searchesDuration"></span></h4>
     </div>
+    <div class="row">
+      <h4>Total Number of Searches:&nbsp;<span [innerHTML]="adminFlag"></span></h4>
+    </div>
   </div>
   <div class="col-sm-4">
     <div class="row">
       <h2>Click to Alter Details</h2>
     </div>
     <div class="row">
-      <button class="btn btn-raised" (click)="choice = 1">Change Password</button><br>
-      <button class="btn btn-raised" *ngIf="!superadmin" (click)="choice = 2">Change Search Details</button><br *ngIf="!superadmin">
-      <button class="btn btn-raised" (click)="delete()">Delete Account From Database</button>
+      <button class="btn btn-raised" (click)="choice = 1; msg = 0">Change Password</button><br>
+      <button class="btn btn-raised" *ngIf="!superadmin" (click)="choice = 2; msg = 0">Change Search Details</button><br *ngIf="!superadmin">
+      <button class="btn btn-raised" (click)="delete(); msg = 0">Delete Account From Database</button>
     </div>
   </div>
   <div class="col-sm-4">
@@ -48,7 +48,7 @@
         <input class="submit-btn" type="submit" [disabled]="!myForm2.valid" value="Change"/>
       </form>
     </div>
-    <div *ngIf="flag == 4" class="success-msg row">
+    <div *ngIf="msg == 1" class="success-msg row">
       <div style="line-height: 300%"><span class="glyphicon glyphicon-ok"></span>&nbsp;Successfully Altered</div>
     </div>
   </div>

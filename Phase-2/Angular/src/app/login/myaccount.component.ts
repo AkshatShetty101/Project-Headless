@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../Shared/auth.service";
 import {HttpService} from "../Shared/http.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-myaccount',
@@ -25,7 +26,8 @@ export class MyaccountComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private auth: AuthService,
-    private http: HttpService
+    private http: HttpService,
+    private router: Router
   ) {
     this.myForm = formBuilder.group({
       'password' :['',[Validators.required]]
@@ -72,6 +74,7 @@ export class MyaccountComponent implements OnInit {
           console.log(result);
           this.myForm.reset();
           this.flag = 1;
+          this.router.navigateByUrl('/home');
         }
       );
   }

@@ -14,6 +14,11 @@ export class AuthService {
     private local: LocalStorageService
   ) {}
 
+  end(){
+    localStorage.clear();
+    console.log('All clear!');
+  }
+
   storeId(code: any, count: any) {
     localStorage.setItem(count ,code);
   }
