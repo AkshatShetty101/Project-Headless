@@ -204,7 +204,7 @@ router.get('/findMe',Verify.verifyLoggedUser,function(request,response){
     var token = request.body.token || request.query.token || request.headers['x-access-token'];
     var decoded = jwt.decode(token);
     console.log(decoded.data._id);
-    User.findById(decoded.data._id,{_id:0,updatedAt:0,createdAt:0,__v:0,logged:0}).then(function(data,err){
+    User.findById(decoded.data._id,{_id:0,updatedAt:0,createdAt:0,__v:0,logged:0,super:0,admin:0}).then(function(data,err){
         if(err)
             response.json(err);
         else {
