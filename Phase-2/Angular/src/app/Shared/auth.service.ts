@@ -35,7 +35,7 @@ export class AuthService {
   }
 
   checkAdmin(){
-    if(this.getId('admin') == 'true')
+    if(this.getId('admin') == 'true' || this.getId('superadmin') == 'true')
       return this.admin.next(true);
     else
       return this.admin.next(false);

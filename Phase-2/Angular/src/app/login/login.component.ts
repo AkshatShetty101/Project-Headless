@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
               this.auth.storeId(true, 'admin');
             else
             if(result.status === 3)
-              this.auth.storeId(false, 'superadmin');
+              this.auth.storeId(true, 'superadmin');
             this.router.navigateByUrl('/home');
           }
           else
