@@ -26,6 +26,50 @@ router.get('/addUser',function(request,response){
     stream.pipe(response);
 });
 
+router.post('/registerAdmin',Verify.verifyUsername,Verify.verifySuper,function(request, response){
+    console.log("in!");
+    User.register(new User({ username : request.body.username }),request.body.password,function(err, user){
+        user.searchesDuration = '06-07-2017';
+        user.searchType = false;
+        user.searchesNumber = 0;
+        user.admin = true;
+        user.save(function(err){
+            if(err)
+                throw err;
+            else
+            {
+                passport.authenticate('local')(request, response, function () {
+                    response.json({status: '1' ,message: 'Registration Successful!'});
+                });
+            }
+        });
+    });
+});
+
+router.post('/removeAdmin',Verify.verifyLoggedUser,Verify.verifySuper,function(request, response){
+    console.log("in!");
+    console.log('Here!!');
+    User.findOne({'username': request.body.username}, function (err, data) {
+        if (err)
+            response.json(err);
+        else
+        if (!data)
+            response.json('No such admin!!');
+        else
+        {
+            data.remove(function (err) {
+                if (err)
+                    response.json(err);
+                else {
+                    response.json('success!!');
+                }
+            });
+        }
+    });
+});
+
+
+
 router.post('/register',Verify.verifyUsername,function(request, response){
     console.log("in!");
     User.register(new User({ username : request.body.username }),request.body.password,function(err, user){
@@ -50,7 +94,7 @@ router.post('/register',Verify.verifyUsername,function(request, response){
 });
 
 router.get('/get',Verify.verifyLoggedUser,Verify.verifyAdmin,function (request,response){
-    User.find({},{_id:0,updatedAt:0,createdAt:0,__v:0,logged:0}).collation({locale:'en',strength: 2}).sort({username:1}).then(function (data,err) {
+    User.find({admin:{$ne: true}, super:{$ne: true}},{_id:0,updatedAt:0,createdAt:0,__v:0,logged:0}).collation({locale:'en',strength: 2}).sort({username:1}).then(function (data,err) {
         if(err)
             response.json(err);
         else
@@ -58,6 +102,17 @@ router.get('/get',Verify.verifyLoggedUser,Verify.verifyAdmin,function (request,r
             response.json(data);
         }
 
+    });
+});
+
+router.get('/getAdmin',Verify.verifyLoggedUser,Verify.verifySuper,function (request,response){
+    User.find({admin: true, super:{$ne: true}},{_id:0,updatedAt:0,createdAt:0,__v:0,logged:0}).collation({locale:'en',strength: 2}).sort({username:1}).then(function (data,err) {
+        if(err)
+            response.json(err);
+        else
+        {
+            response.json(data);
+        }
     });
 });
 
@@ -70,6 +125,34 @@ router.post('/changePassword',Verify.verifyLoggedUser,function(request,response)
         else
         {
             data.setPassword(request.body.password,function(err){
+                if(err)
+                    response.json(err);
+                else
+                {
+                    data.save(function(err,user){
+                        if(err)
+                            response.json(err);
+                        else
+                        {
+                            console.log(user);
+                            response.json('success!');
+                        }
+                    });
+                }
+            })
+        }
+    });
+});
+
+router.post('/superChangePassword',Verify.verifyLoggedUser,Verify.verifySuper,function(request,response){
+    var username = request.body.username;
+    var password = request.body.password;
+    User.findone({username: username},function(err,data){
+        if(!data)
+            response.json('Incorrect Username!');
+        else
+        {
+            data.setPassword(password,function(err){
                 if(err)
                     response.json(err);
                 else
@@ -117,13 +200,13 @@ router.post('/adminChangePassword',Verify.verifyLoggedUser,Verify.verifyAdmin,fu
     });
 });
 
-router.post('/findUser',Verify.verifyLoggedUser,Verify.verifyAdmin,function(request,response) {
-    console.log('Here!!');
-    User.findOne({'username': request.body.username},{_id:0,updatedAt:0,createdAt:0,__v:0,logged:0}, function (err, data) {
-        if (err)
+router.get('/findMe',Verify.verifyLoggedUser,function(request,response){
+    var token = request.body.token || request.query.token || request.headers['x-access-token'];
+    var decoded = jwt.decode(token);
+    console.log(decoded.data._id);
+    User.findById(decoded.data._id,{_id:0,updatedAt:0,createdAt:0,__v:0,logged:0}).then(function(data,err){
+        if(err)
             response.json(err);
-        else if (!data)
-            response.json('No such user!!');
         else {
             response.json(data);
         }
@@ -168,8 +251,6 @@ router.get('/findStatus',Verify.verifyLoggedUser,function(request,response){
         if(err)
             response.json(err);
         else {
-
-
             console.log(data);
             console.log('here!');
             var date = new Date();
@@ -222,16 +303,6 @@ router.get('/findStatus',Verify.verifyLoggedUser,function(request,response){
             }
         }
         else {
-            // data.searchesNumber = 0;
-            // data.searchType = false;
-            // data.save(function(err,user){
-            //     if(err)
-            //         response.json(err);
-            //     else
-            //     {
-            //         console.log(user);
-            //     }
-            // });
             response.json({status: -1, message: 'Time Period expired. Contact Administrator'});
         }
     });
@@ -342,6 +413,15 @@ router.post('/login',function(request, response,next){
                             {
                                 response.status(200).json({
                                     status: 2,
+                                    message:'Login Successful',
+                                    token: t
+                                });
+                            }
+                            else
+                            if(new_data.super===true)
+                            {
+                                response.status(200).json({
+                                    status: 3,
                                     message:'Login Successful',
                                     token: t
                                 });
