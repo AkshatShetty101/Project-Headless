@@ -1,6 +1,6 @@
 <button [routerLink]="['/admin/viewUser']" class="btn btn-raised">Back to View Users</button>
 <div class="row">
-    <form [formGroup]="myForm" class="col-sm-offset-4 col-sm-6 form-holder" (ngSubmit)="onSubmit(myForm.value)">
+    <form *ngIf="!superadmin" [formGroup]="myForm" class="col-sm-offset-4 col-sm-6 form-holder" (ngSubmit)="onSubmit(myForm.value)">
       <div class="row">
         <input autocomplete="off" class="form-control" formControlName="username" name="username" placeholder="Enter Username...." type="text" />
       </div>
@@ -24,6 +24,23 @@
         <div style="line-height: 300%"><span class="glyphicon glyphicon-ok"></span>&nbsp;Successfully Added User</div>
       </div>
       <div *ngIf="flag == -2" class="error-msg row">
+        <div style="line-height: 300%"><span class="glyphicon glyphicon-exclamation-sign"></span>&nbsp;Username Already Registered</div>
+      </div>
+    </form>
+    <form *ngIf="superadmin" [formGroup]="myForm2" class="col-sm-offset-4 col-sm-6 form-holder" (ngSubmit)="onSubmit(myForm2.value)">
+      <div class="row">
+        <input autocomplete="off" class="form-control" formControlName="username" name="username" placeholder="Enter Username...." type="text" />
+      </div>
+      <div class="row">
+        <input class="form-control" formControlName="password" name="password" placeholder="Enter Password...." type="password" />
+      </div>
+      <div class="row">
+        <input class="submit-btn" type="submit" [disabled]="!myForm2.valid" value="Add User" />
+      </div>
+      <div *ngIf="flag2 == 3" class="success-msg row">
+        <div style="line-height: 300%"><span class="glyphicon glyphicon-ok"></span>&nbsp;Successfully Added User</div>
+      </div>
+      <div *ngIf="flag2 == -2" class="error-msg row">
         <div style="line-height: 300%"><span class="glyphicon glyphicon-exclamation-sign"></span>&nbsp;Username Already Registered</div>
       </div>
     </form>

@@ -122,15 +122,28 @@ export class UserdetailsComponent implements OnInit {
     request = {
       username: this.username
     };
-    this.http.deleteUser(request, token)
-      .subscribe(
-        (result) => {
-          console.log(result);
-          this.choice = 0;
-          this.msg = 1;
-          this.router.navigateByUrl('/admin/viewUser');
-        }
-      );
-
+    if(this.auth.getId('superadmin') == 'true'){
+      this.http.deleteUser(request, token, 3)
+        .subscribe(
+          (result) => {
+            console.log(result);
+            this.choice = 0;
+            this.msg = 1;
+            this.router.navigateByUrl('/admin/viewUser');
+          }
+        );
+    }
+    else
+    if(this.auth.getId('admin') == 'true'){
+      this.http.deleteUser(request, token, 2)
+        .subscribe(
+          (result) => {
+            console.log(result);
+            this.choice = 0;
+            this.msg = 1;
+            this.router.navigateByUrl('/admin/viewUser');
+          }
+        );
+    }
   }
 }
