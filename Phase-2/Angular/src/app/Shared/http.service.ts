@@ -211,6 +211,7 @@ export class HttpService {
   }
 
   terminate(request: any){
+    console.log('Inside terminate!');
     const body = request;
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');

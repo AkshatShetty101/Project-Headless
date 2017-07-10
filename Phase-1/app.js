@@ -38,12 +38,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
-app.use('/', index);
 app.use('/users', users);
 app.use('/supreme', ecourt);
 app.use('/supreme1', supreme);
 app.use('/map', map);
 app.use('/city', city);
+app.use('/', express.static('dist'));
+app.get('*', function (req, res, next) {
+    res.sendFile(path.resolve('dist/index.html'));
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

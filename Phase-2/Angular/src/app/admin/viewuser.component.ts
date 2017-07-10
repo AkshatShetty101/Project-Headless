@@ -41,6 +41,7 @@ export class ViewuserComponent implements OnInit {
               this.noSearches.push(result[i].searchesNumber);
               this.searchLimit.push(result[i].searchesDuration);
             }
+            console.log(this.userName);
           }
         );
     }

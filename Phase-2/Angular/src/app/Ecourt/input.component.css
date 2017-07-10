@@ -12,5 +12,10 @@
   width: 40%;
 }
 
+.court_holder{
+  max-height: 150px;
+  overflow: auto;
+  border: solid 1px black;
+}
 
 

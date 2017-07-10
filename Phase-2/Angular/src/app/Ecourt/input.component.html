@@ -23,7 +23,7 @@
     </div>
     <form *ngIf="ready" [formGroup]="myForm" class="col-sm-12" method="post" (ngSubmit)="push(myForm.value);">
       <div class="row">
-        <span>Enter the name:&nbsp;</span><input class="form-control" formControlName="name" placeholder="Name or Part of Name" name="name" type="text" minlength="3" required/>
+        <span>Enter the name:&nbsp;</span><input autocomplete="off" class="form-control" formControlName="name" placeholder="Name or Part of Name" name="name" type="text" minlength="3" required/>
       </div>
       <div class="row">
         <span>Enter year:&nbsp;</span>

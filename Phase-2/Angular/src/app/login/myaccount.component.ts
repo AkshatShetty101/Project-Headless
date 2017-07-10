@@ -36,8 +36,10 @@ export class MyaccountComponent implements OnInit {
 
   ngOnInit() {
     this.fillUser();
-    if(this.auth.getId('superadmin') === 'true')
+    if(this.auth.getId('superadmin') === 'true'){
       this.superadmin = true;
+      this.adminFlag = false;
+    }
     else{
       this.superadmin = false;
       if(this.auth.getId('admin') === 'true')

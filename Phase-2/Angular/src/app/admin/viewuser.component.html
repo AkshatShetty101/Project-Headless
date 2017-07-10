@@ -17,7 +17,7 @@
         </div>
       </div>
     <div class="col-xs-12 list-holder">
-      <div *ngFor="let name of userName; let i = index" (click)="openUser(i)" class="row btn bottom">
+      <div *ngFor="let name of userName; let i = index" (click)="openUser(i)" class="row btn bottom user">
           <div class="col-xs-3" [innerHTML]="name"></div>
           <div class="col-xs-2" [innerHTML]="adminFlag[i]"></div>
           <div class="col-xs-2" [innerHTML]="infiFlag[i]"></div>

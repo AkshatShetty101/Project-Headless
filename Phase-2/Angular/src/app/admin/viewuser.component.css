@@ -12,6 +12,10 @@
   padding: 10px 0 0 0;
 }
 
+.user{
+  text-transform: none!important;
+}
+
 .add:hover{
   background-color: #ffdc06 !important;
   cursor: pointer;

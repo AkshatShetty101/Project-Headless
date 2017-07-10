@@ -74,7 +74,7 @@ export class RecordsComponent implements OnInit, AfterContentChecked{
     this.http.sendStats(request, token)
       .subscribe(
         (result) => {
-         console.log(result);
+
         }
       );
   }
