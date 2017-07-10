@@ -16,20 +16,34 @@ export class HttpService {
       .map((response: Response) => response.json());
   }
 
-  addUser(request){
+  addUser(request: any, flag: any){
     const body = request;
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.post('http://localhost:3000/user/register', body, {headers})
-      .map((response: Response) => response.json());
+    if(flag == 3){
+      return this.http.post('http://localhost:3000/user/registerAdmin', body, {headers})
+        .map((response: Response) => response.json());
+    }
+    else
+    if(flag == 2){
+      return this.http.post('http://localhost:3000/user/register', body, {headers})
+        .map((response: Response) => response.json());
+    }
   }
 
-  deleteUser(request: any, token: any){
+  deleteUser(request: any, token: any, flag: any){
     const body = request;
     let headers = new Headers();
     headers.append('x-access-token', token);
-    return this.http.post('http://localhost:3000/user/removeUser', body, {headers})
-      .map((response: Response) => response.json());
+    if(flag == 3){
+      return this.http.post('http://localhost:3000/user/removeAdmin', body, {headers})
+        .map((response: Response) => response.json());
+    }
+    else
+    if(flag == 2){
+      return this.http.post('http://localhost:3000/user/removeUser', body, {headers})
+        .map((response: Response) => response.json());
+    }
   }
 
   verifyUser(request: any) {
@@ -40,11 +54,18 @@ export class HttpService {
       .map((response: Response) => response.json());
   }
 
-  getUsers(token: any) {
+  getUsers(token: any, flag: any) {
     let headers = new Headers();
     headers.append('x-access-token', token);
-    return this.http.get('http://localhost:3000/user/get', {headers})
-      .map((response: Response) => response.json());
+    if(flag == 3){
+      return this.http.get('http://localhost:3000/user/getAdmin', {headers})
+        .map((response: Response) => response.json());
+    }
+    else
+    if(flag == 2){
+      return this.http.get('http://localhost:3000/user/get',{headers})
+        .map((response: Response) => response.json());
+    }
   }
 
   getUserDetails(token: any) {

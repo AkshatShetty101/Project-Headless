@@ -30,18 +30,35 @@ export class ViewuserComponent implements OnInit {
   fillUserList(){
     let token: any, i: any;
     token = this.auth.getId('token');
-    this.http.getUsers(token)
-      .subscribe(
-        (result) => {
-          for(i=0; i<result.length; i++) {
-            this.adminFlag.push(result[i].total);
-            this.infiFlag.push(result[i].searchType);
-            this.userName.push(result[i].username);
-            this.noSearches.push(result[i].searchesNumber);
-            this.searchLimit.push(result[i].searchesDuration);
+    if(this.auth.getId('superadmin') == 'true'){
+      this.http.getUsers(token, 3)
+        .subscribe(
+          (result) => {
+            for(i=0; i<result.length; i++) {
+              this.adminFlag.push(result[i].total);
+              this.infiFlag.push(result[i].searchType);
+              this.userName.push(result[i].username);
+              this.noSearches.push(result[i].searchesNumber);
+              this.searchLimit.push(result[i].searchesDuration);
+            }
           }
-        }
-      );
+        );
+    }
+    else
+    if(this.auth.getId('admin') == 'true'){
+      this.http.getUsers(token, 2)
+        .subscribe(
+          (result) => {
+            for(i=0; i<result.length; i++) {
+              this.adminFlag.push(result[i].total);
+              this.infiFlag.push(result[i].searchType);
+              this.userName.push(result[i].username);
+              this.noSearches.push(result[i].searchesNumber);
+              this.searchLimit.push(result[i].searchesDuration);
+            }
+          }
+        );
+    }
   }
 
   openUser(index: any){
