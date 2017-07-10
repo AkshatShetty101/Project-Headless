@@ -29,7 +29,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(express.static(path.join(__dirname)));
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -37,12 +37,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
-app.use('/', index);
 app.use('/user', user);
 app.use('/supreme', ecourt);
 app.use('/supreme1', supreme);
 app.use('/map', map);
 app.use('/city', city);
+app.use('/', express.static('dist'));
+app.get('*', function (req, res, next) {
+    res.sendFile(path.resolve('dist/index.html'));
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

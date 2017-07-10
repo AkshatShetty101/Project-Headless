@@ -12,9 +12,10 @@ exports.verifyUsername = function(request, response, next) {
     console.log(request.body);
     User.findOne({username:request.body.username},function (err, data) {
         console.log(data);
-        if(!data)
+        if(data===null)
             next();
         else {
+            console.log("used!");
             response.json({status:'-1', message:"Username is already used"});
         }
     });
@@ -79,9 +80,10 @@ exports.verifyAdmin = function(request, response, next) {
 };
 
 exports.verifySuper = function(request, response, next) {
-
+    console.log('here!');
     var token = request.body.token || request.query.token || request.headers['x-access-token'];
     if (token) {
+        console.log('here!');
         jwt.verify(token, config.secretKey, function(err, decoded) {
             if (err) {
                 response.json(err);

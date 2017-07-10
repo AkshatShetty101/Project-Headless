@@ -10,7 +10,6 @@
   color: white!important;
   background-color: #2D2F2F!important;
   border-bottom: 1px solid black;
-
 }
 
 .logo{
@@ -28,6 +27,10 @@
   word-spacing: 0.5vw;
   margin-left: 1vw;
 }
+.navbar-brand{
+  margin-left: 15%!important;
+}
+
 @media (min-width: 1260px)and (max-width: 1300px) {
   ul.home-work li {
     height: 230px!important;
@@ -43,7 +46,7 @@
 
 @media (min-width: 991px)and (max-width: 1199px){
   .navbar-brand{
-    margin-left: 5%!important;
+    margin-left: 10%!important;
   }
   ul.home-work li {
     height: 230px;
@@ -52,7 +55,7 @@
 }
 @media (max-width: 992px){
   .navbar-brand{
-    margin-left: 5%!important;
+    margin-left: 8%!important;
     font-size: 15px;
   }
   .navbar-left{

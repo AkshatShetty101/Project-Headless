@@ -1,44 +1,100 @@
-22~Regional Language~0~~~
-8
-
-22~Regional Language~0~~~
-16
-22~Regional Language~0~~~
-17
-22~Regional Language~0~~~
-9
-22~Regional Language~0~~~
-4
-22~Regional Language~0~~~
-6
-22~Regional Language~0~~~
-10
-22~Regional Language~0~~~
-18
-22~Regional Language~0~~~
-2
-22~Regional Language~0~~~
-11
-22~Regional Language~0~~~
-1
-22~Regional Language~0~~~
+10~Regional Language~0~~~
+30
+<option value="1@4,5,6,7">Combined Courts, Ariyalur</option><option value="2@8">Munsif Court, Jayankondam</option><option value="3@2">Magistrate Court, Jayankondam</option><option value="4@1">Special Courts, Jayankondam</option>
+10~Regional Language~0~~~
 13
-22~Regional Language~0~~~
-12
-22~Regional Language~0~~~
+<option value="101@8">Bomb Blast Court, Poonamallee</option><option value="102@1,3,4,5,9,14,15,16">City Civil Court Complex, Chennai</option><option value="103@10,11,12">Singaravelar Maaligai Complex</option><option value="104@2">Court of Small Causes, Chennai</option><option value="106@6">M M Courts, Saidapet</option><option value="107@7">M M Courts, George Town</option><option value="116@13">JJB Court, Kellys, Chennai</option>
+10~Regional Language~0~~~
+18
+<option value="3@2">Sub Court, Pollachi</option><option value="101@3,4,5,6,7,8,9,10,11,12,13,14,16,17">Combined Courts, Coimbatore</option>
+10~Regional Language~0~~~
+20
+<option value="1@12,13,14">Combined Courts, Panruti</option><option value="2@7,15,16,17">Combined Courts, Virudhachalam</option><option value="3@11,18,19,20">Combined Courts, Chidambaram</option><option value="4@8">Combined Courts, Tittagudi</option><option value="5@6">DM cum JM Court, Parangipettai</option><option value="6@9,21">Combined Courts, Neyveli</option><option value="8@10">I Magistrate Court, Chidambaram</option><option value="104@1,24">District Court Complex, Cuddalore</option><option value="105@2,4,22,23,25">New Combined Courts, Cuddalore</option>
+10~Regional Language~0~~~
+1
+<option value="3@4">Magistrate Court, Harur</option><option value="5@5">Magistrate Court, Palacode</option><option value="6@2">DM cum JM Court, Pennagaram</option><option value="7@3">DM cum JM Court, Pappireddipatti</option><option value="101@6,7,8,9">Combined Courts, Dharmapuri</option>
+10~Regional Language~0~~~
+27
+<option value="1@11,12,13,18,19">Combined Courts, Palani</option><option value="2@10">DM cum JM Court, Kodaikanal</option><option value="3@6">Munsif Court, Nilakkottai</option><option value="4@7">Magistrate Court, Nilakkottai</option><option value="5@14,15">Combined Courts, Vedasandur</option><option value="6@8">DM cum JM Court, Natham</option><option value="7@9">Munsif Court, Oddanchatram</option><option value="101@2,3,4,5,16,17">Combined Courts, Dindigul</option>
+10~Regional Language~0~~~
 24
-22~Regional Language~0~~~
-21
-22~Regional Language~0~~~
-5
-22~Regional Language~0~~~
-3
-22~Regional Language~0~~~
+<option value="4@2,10,11">Sub Court Complex, Sathyamangalam</option><option value="5@19">DM cum JM Court, Perundurai</option><option value="6@12">DM cum JM Court, Kodumudi</option><option value="7@24">Munisf Court Complex, Bhavani</option><option value="8@20,21,22,23">Combined Courts, Bhavani</option><option value="9@13,14,15,16,17">Combined Courts, Gobichettipalayam</option><option value="11@18">Sub Court Complex, Perundurai</option><option value="101@3,5,6">Combined Courts, Erode</option><option value="102@4">New Combined Court Building, Erode</option>
+10~Regional Language~0~~~
+31
+<option value="1@4,12,13,14">Combined Courts, Kancheepuram</option><option value="2@6">Single Court Complex, Kancheepuram</option><option value="3@5,18">Combined Courts, Maduranthakam</option><option value="5@2,15,16">Combined Courts, Tambaram</option><option value="6@3">DM cum JM Court, Thirukalukundram</option><option value="7@7,17">Combined Courts, Alandur</option><option value="8@20">DM cum JM Court, Uthiramerur</option><option value="9@19">DM cum JM Court, Sriperumbudur</option><option value="101@8,9,10,11,21">Combined Courts, Chengalpet</option>
+10~Regional Language~0~~~
+7
+<option value="1@6,13,14">Combined Courts, Kuzhithurai</option><option value="3@10,11,12">Sub Court Complex, Padmanabhapuram</option><option value="4@3">DM cum JM Court, Boothapandy</option><option value="6@4">PDM cum JM Court Complex, Eraniel</option><option value="101@5,7,8,9">Combined Courts, Nagercoil</option><option value="102@2">Forest Court, Nagercoil</option>
+10~Regional Language~0~~~
 19
-22~Regional Language~0~~~
+<option value="101@2,3,4,5">Combined Courts, Karur</option>
+10~Regional Language~0~~~
+26
+<option value="1@9">Combined Courts, Uthangarai</option><option value="2@5,6">Combined Courts, Hosur</option><option value="5@10">DM cum JM Court, Pochampalli</option><option value="101@2,3,4,7">Combined Courts, Krishnagiri</option>
+10~Regional Language~0~~~
 15
-22~Regional Language~0~~~
-14
-22~Regional Language~0~~~
+<option value="1@14">Munsif Court, Thirumangalam</option><option value="2@2">Magistrate Court, Thirumangalam</option><option value="3@15">Munsif Court, Melur</option><option value="4@16">Magistrate Court, Melur</option><option value="5@17,18">Combined Courts, Usilampatti</option><option value="6@19">DM cum JM Court, Vadipatti</option><option value="101@3,4,5,6,7,8,9,10,11,12,13,20,21,22,23,24,25">Combined Courts, Madurai</option>
+10~Regional Language~0~~~
+6
+<option value="3@3">Munsif Court, Sirkali</option><option value="4@2">Magistrate Court, Sirkali</option><option value="7@4">DM cum JM Court, Vedaranyam</option><option value="101@5,6,7,8">Combined Courts, Nagapattinam</option>
+10~Regional Language~0~~~
+5
+<option value="1@10,11,12">Combined Courts, Tiruchengode</option><option value="2@2,8,9">Combined Courts, Rasipuram</option><option value="3@3">DM cum JM Court, Paramathy</option><option value="101@4,5,6,7,13">Combined Courts, Namakkal</option>
+10~Regional Language~0~~~
 23
+<option value="101@2,3,4,5,6">Combined Courts, Perambalur</option>
+10~Regional Language~0~~~
+28
+<option value="1@10,14">Sub Court Complex, Mahe</option><option value="2@11">Sub Court Complex, Yanam</option><option value="3@7,8,9,12,13">Combined Courts, Karaikal</option><option value="101@2,3,4,5,6">Integrated Courts, Puducherry</option>
+10~Regional Language~0~~~
+2
+<option value="3@3">DM cum JM Court, Keeranur</option><option value="4@4">Magistrate Court, Alangudi</option><option value="101@5,6,7,8">Principal District Court Complex, Pudukkottai</option>
+10~Regional Language~0~~~
+21
+<option value="2@14,12,13">Combined Courts, Paramakudi</option><option value="3@3">DM cum JM Court, Thiruvadanai</option><option value="4@5,11">Combined Courts, Mudukulathur</option><option value="5@4">DM cum JM Court, Kamudhi</option><option value="6@2">DM cum JM Court, Rameswaram</option><option value="101@6,7,8,9,10">Combined Courts, Ramanathapuram</option>
+10~Regional Language~0~~~
+12
+<option value="1@8,9,10">Combined Courts, Sankari</option><option value="101@2,3,4,5,6,7">Combined Courts, Salem</option>
+10~Regional Language~0~~~
+29
+<option value="1@3,4,5">Sub Court Complex, Devakottai</option><option value="2@8">PDM cum JM Courts, Karaikudi</option><option value="3@6">DM cum JM Court, Ilayangudi</option><option value="4@7">DM cum JM Court, Tiruppathur</option><option value="5@9,10">Munsif Courts, Manamadurai</option><option value="101@1,2,11,12">New Combined Courts, Sivagangai</option>
+10~Regional Language~0~~~
+17
+<option value="3@4,7,8,9,10">Combined Courts, Pattukkottai</option><option value="5@6">DM cum JM Courts, Papanasam</option><option value="6@5">DM cum JM Courts, Orathanadu</option><option value="104@3">PCR Court, Thanjavur</option><option value="105@16">III Magistrate Court, Thanjavur</option><option value="106@1,11,2,12,13,14,15">Combined Courts, Thanjavur</option>
+10~Regional Language~0~~~
+4
+<option value="1@4,13,14,15">Combined Courts, Periyakulam</option><option value="2@6">DM cum JM Court,  Bodinayakanur</option><option value="3@5">DM cum JM Court,  Aundipatti</option><option value="4@2,16,17,18">Combined Courts, Uthamapalayam</option><option value="101@7,8,9,10,11,12,19">Combined Courts, Theni</option>
+10~Regional Language~0~~~
+16
+<option value="1@4">Magistrate Court, Coonoor</option><option value="2@6">PDM cum JM Court, Gudalur</option><option value="3@7">DM cum JM Court, Kotagiri</option><option value="101@2">Munsif Court, The Nilgiris</option><option value="102@3">Magistrate Court, The Nilgiris</option><option value="103@1,5">DJ cum CJM Court, The Nilgiris</option>
+10~Regional Language~0~~~
+9
+<option value="2@3,13">Munsif Court, Srivaikuntam</option><option value="3@2">DM cum JM Court, Vilathikulam</option><option value="4@4,11,12">Sub Court Complex, Kovilpatti</option><option value="101@5,6,7,8">Combined Courts, Thoothukudi</option>
+10~Regional Language~0~~~
+8
+<option value="1@2,13">Combined Courts, Thuraiyur</option><option value="2@4">Munsif Court, Manapparai</option><option value="3@3">Combined Courts, Lalgudi</option><option value="4@6">Magistrate Court, Musiri</option><option value="5@7">Magistrate Court, Manapparai</option><option value="6@5">Munsif Court, Musiri</option><option value="101@9,10,11,12,14,15,16">Combined Courts, Tiruchirappalli</option>
+10~Regional Language~0~~~
+3
+<option value="1@3">DM cum JM Court, Cheranmahadevi</option><option value="2@8,17">Sub Court Complex, Ambasamaduram</option><option value="3@10,21">Additional Court Complex, Tenkasi</option><option value="4@5">DM cum JM Court, Shengottah</option><option value="6@9">DM cum JM Courts, Sivagiri</option><option value="8@18,19,20">Combined Courts, Valliyoor</option><option value="9@7">Magistrate Court, Ambasamaduram</option><option value="10@2,22">Principal Court Complex, Tenkasi</option><option value="11@4">Magistrate Court, Tenkasi</option><option value="15@6">PDM cum JM Courts, Nanguneri</option><option value="101@11,12,13,14,15,16">Combined Courts, Tirunelveli</option>
+10~Regional Language~0~~~
+33
+<option value="1@11,12,13,14,15,16">Sub Court Complex, Tiruppur</option><option value="2@5,6,7">Sub Court Complex, Udumalpet</option><option value="3@1,4">Combined Courts, Avinashi</option><option value="4@2,3">Combined Courts, Palladam</option><option value="5@17,18,19">Sub Court Complex, Dharapuram</option><option value="6@8">Magistrate Court, Dharapuram</option><option value="7@9,10">Combined Courts, Kangeyam</option>
+10~Regional Language~0~~~
+32
+<option value="1@21,22,23,24,25,26">Combined Courts, Poonamallee</option><option value="2@3,4">Sub Court Complex, Ponneri</option><option value="3@5">Munsif Court, Ponneri</option><option value="5@6">II Magistrate Court, Ponneri</option><option value="6@12,13">Munsif Court, Ambattur</option><option value="7@10,11">Munsif Court, Tiruvottiyur</option><option value="8@15">DM cum JM Court, Uthukottai</option><option value="9@8">Combined Courts, Tiruttani</option><option value="10@14">Munsif Court, Pallipattu</option><option value="102@1,2,16,17,18,19,20">Combined Courts, Tiruvallur</option>
+10~Regional Language~0~~~
+22
+<option value="1@14">Magistrate Court, Polur</option><option value="2@5,9,10">Sub Court Complex, Cheyyar</option><option value="3@15">Munsif Court, Polur</option><option value="5@7">PDM cum JM Court, Chengam</option><option value="6@8">Additional Munsif Court, Chengam</option><option value="7@13">PDM cum JM Court, Vandavasi</option><option value="9@2,11,12">Combined Courts, Arni</option><option value="101@1,3,16,17">Combined Courts, Tiruvannamalai</option>
+10~Regional Language~0~~~
+25
+<option value="1@6">Munsif Court, Mannargudi</option><option value="2@1">Sub Court Complex, Mannargudi</option><option value="4@13,14">DM cum JM Court, Thiruthuraipondi</option><option value="5@2">DM cum JM Court, Nannilam</option><option value="6@7">DM cum JM Court, Valangaiman</option><option value="7@5">Magistrate Court, Mannargudi</option><option value="101@9,10,11,12,15">Combined Courts, Tiruvarur</option>
+10~Regional Language~0~~~
+11
+<option value="1@4,26,27">Combined Courts, Ranipet</option><option value="2@6,22,23,24,25,33">Combined Courts, Tirupathur</option><option value="4@9,19,20">Combined Courts, Gudiyatham</option><option value="5@21,10">Combined Courts, Sholinghur</option><option value="6@7,29">Combined Courts, Walajah</option><option value="7@3">DM cum JM Court, Arcot</option><option value="8@2">PDM cum JM Court, Vaniyambadi</option><option value="9@5,30">Combined Courts, Ambur</option><option value="10@11,28">Combined Courts, Arakkonam</option><option value="13@8">Addl Munsif Court, Vaniyambadi</option><option value="101@12,13,14,15,16,17,18,31,32">Combined Courts, Vellore</option>
+10~Regional Language~0~~~
+10
+<option value="1@6,7,15,27,28,29">Combined Courts, Tindivanam</option><option value="3@2,3,8">Combined Courts, Gingee</option><option value="4@4,26">Combined Courts, Ulundurpet</option><option value="5@11">Munsif Court, Tirukkoyilur</option><option value="6@5,10,13,31">Combined Courts, Kallakurichi</option><option value="7@12">DM cum JM Court, Vanur</option><option value="9@14">Magistrate Court, Tirukkoyilur</option><option value="16@16,30">Combined Courts, Sankarapuram</option><option value="101@17,18,19,20,21,22,23,24,25,32,33">Combined Courts, Viluppuram</option>
+10~Regional Language~0~~~
+14
+<option value="1@3">II Magistrate Court, Sattur</option><option value="2@4">DM cum JM I Court, Sattur</option><option value="3@2">Magistrate Court, Rajapalayam</option><option value="4@5,12,13,14">Combined Courts, Virudhunagar</option><option value="5@6,15,16">Combined Courts, Sivakasi</option><option value="101@8,9,10,11">Combined Courts, Srivilliputtur</option>
 EOF

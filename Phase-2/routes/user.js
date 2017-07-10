@@ -39,6 +39,7 @@ router.post('/registerAdmin',Verify.verifyUsername,Verify.verifySuper,function(r
                 throw err;
             else
             {
+                console.log("Admin!");
                 passport.authenticate('local')(request, response, function () {
                     response.json({status: '1' ,message: 'Registration Successful!'});
                 });
