@@ -37,7 +37,6 @@ router.get('/',function(request,response) {
                 response.send({"status":"-1"});
             else
                 response.send({"status":"1"});
-            console.log(horseman);
             horseman.close();
         })
 });
@@ -58,8 +57,6 @@ router.post('/',function(request,response) {
         horseman
             .viewport(3700,2800)
             .zoom(2);
-        console.log(Object.keys(horseman).length);
-        console.log(Object.keys(horseman1).length);
         //noinspection JSUnresolvedFunction,JSUnusedLocalSymbols
         horseman
             .open('http://services.ecourts.gov.in/ecourtindia_v5/')

@@ -71,7 +71,7 @@ router.post('/removeAdmin',Verify.verifyLoggedUser,Verify.verifySuper,function(r
 
 
 
-router.post('/register',Verify.verifyUsername,function(request, response){
+router.post('/register',Verify.verifyUsername,Verify.verifyLoggedUser,function(request, response){
     console.log("in!");
     User.register(new User({ username : request.body.username }),request.body.password,function(err, user){
         var x = request.body.searchesDuration.split(/[-]/);
