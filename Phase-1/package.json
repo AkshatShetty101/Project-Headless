@@ -17,11 +17,14 @@
     "mongodb": "^2.2.29",
     "mongoose": "^4.11.0",
     "morgan": "~1.8.1",
+    "node-gyp": "^3.6.2",
     "node-horseman": "^3.3.0",
     "phantomjs-prebuilt": "^2.1.14",
     "random-number": "0.0.7",
+    "rebuild": "^0.1.2",
     "request": "^2.81.0",
     "serve-favicon": "~2.4.2",
+    "sizeof": "^1.0.0",
     "time-stamp": "^2.0.0",
     "underscore": "^1.8.3"
   }

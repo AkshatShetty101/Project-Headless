@@ -11,6 +11,7 @@ var _ = require('underscore');
 var LocalStrategy = require('passport-local').Strategy;
 var User = require('../models/user');
 var Verify = require('./verify');
+var moment = require('moment');
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({extended : true}));
 router.use(passport.initialize());
@@ -270,6 +271,7 @@ router.get('/findStatus',Verify.verifyLoggedUser,function(request,response){
     var decoded = jwt.decode(token);
     console.log(decoded.data._id);
     var flag=-1;
+    var y = -1.5;
     User.findById(decoded.data._id).then(function(data,err){
         if(err)
             response.json(err);
@@ -281,52 +283,30 @@ router.get('/findStatus',Verify.verifyLoggedUser,function(request,response){
             var x = data.searchesDuration.split(/[-]/);
             console.log(x);
             console.log(date.getFullYear() + "--" + (date.getMonth() + 1 + "--" + (date.getDate())));
-            console.log(x[1]);
-            var y = parseInt(date.getFullYear());
-            var m = parseInt(date.getMonth()) + 1;
-            var d = parseInt(date.getDate());
-            console.log(y + "--" + m + "--" + d);
-            if (parseInt(x[2]) === y) {
-                if (parseInt(x[1]) > m) {
-                    flag = 1;
-                    return data;
-                }
-                else if (parseInt(x[1]) === m) {
-                    if (parseInt(x[1]) >= d) {
-                        flag = 1;
-                        return data;
-                    }
-                    else {
-                        return data;
-                    }
-                }
-                else
-                    return data;
-            }
-            else if (parseInt(x[2]) > y) {
-                flag = 1;
+            console.log("sadasdas"+y);
+            var a = moment([parseInt(x[2]),(parseInt(x[1])-1),parseInt(x[0])]);
+            console.log(a);
+            var b = moment([date.getFullYear(),(date.getMonth()),date.getDate()]);
+            console.log(b);
+            y =a.diff(b, 'days');
+            console.log("y:"+y);
+            if(y>=0){
                 return data;
             }
             else {
-                return data;
+                response.json({status: -1, message: 'Time Period expired. Contact Administrator'});
             }
         }
     }).then(function (data) {
         console.log(data.logged);
-        console.log('here!!!!!!!!!'+flag);
-        if(flag===1)
+        console.log('here!!!!!!!!!');
+        if(data.searchType===true)
         {
-            if(data.searchType===true)
-            {
-                response.json({status: 2, message: 'Unlimited searches left'});
-            }
-            else
-            {
-                response.json({status: 1, message: 'Limited searches left', amount: data.searchesNumber});
-            }
+            response.json({status: 2, message: 'Unlimited searches left'});
         }
-        else {
-            response.json({status: -1, message: 'Time Period expired. Contact Administrator'});
+        else
+        {
+            response.json({status: 1, message: 'Limited searches left', amount: data.searchesNumber});
         }
     });
 });

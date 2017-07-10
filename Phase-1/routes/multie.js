@@ -18,7 +18,13 @@ var timestamp = require('time-stamp');
 var time =[];
 var code = [];
 var req = require('request');
+var sizeof = require('sizeof');
 
+router.get('/a',function(request,response) {
+    horseman1[horseman1.length] = new Horseman({timeout: 3000, interval: 20});
+    response.json(sizeof.sizeof(horseman1,true));
+
+});
 
 
 router.get('/',function(request,response) {
