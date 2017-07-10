@@ -47,7 +47,8 @@ export class AdduserComponent implements OnInit {
   }
 
   onSubmit(data: any){
-    let request: any, type: any;
+    let request: any, type: any, token: any;
+    token = this.auth.getId('token');
     if(this.superadmin == false){
       type = 2;
       if(data.option ==  'infinite'){
@@ -78,7 +79,7 @@ export class AdduserComponent implements OnInit {
       console.log(request);
     }
 
-    this.http.addUser(request, type)
+    this.http.addUser(request, type, token)
       .subscribe(
         (result) => {
           console.log(result);

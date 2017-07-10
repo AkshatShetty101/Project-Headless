@@ -16,10 +16,10 @@ export class HttpService {
       .map((response: Response) => response.json());
   }
 
-  addUser(request: any, flag: any){
+  addUser(request: any, flag: any, token: any){
     const body = request;
     let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
+    headers.append('x-access-token', token);
     if(flag == 3){
       return this.http.post('http://localhost:3000/user/registerAdmin', body, {headers})
         .map((response: Response) => response.json());
