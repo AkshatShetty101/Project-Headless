@@ -132,9 +132,18 @@ router.post('/getNames',function(request,response){
             var dname = data[0].district[0].name;
             console.log(dname);
              //noinspection SpellCheckingInspection
-            var cname =  _.findWhere(data[0].district[0].court,{code : ccode}).name;
-             //noinspection SpellCheckingInspection
-            response.json({'sname':sname,'dname':dname,'cname':cname});
+            //var cname;
+            async.each(data[0].district[0].court,function(data,callback){
+                if(data.code === ccode){
+                    callback(data.name);
+                }
+            },function (data){
+                console.log({'sname':sname,'dname':dname,'cname':data});
+                response.json({'sname':sname,'dname':dname,'cname':data});
+            });
+  //          var d =  _.findWhere(data[0].district[0].court,{code : ccode});
+
+            //noinspection SpellCheckingInspection
         }
     });
 });
