@@ -49,10 +49,10 @@ router.get('/',function(request,response) {
 
 router.post('/',function(request,response) {
     try{
-
         var unique = gen().toString();
         code.push(unique);
         time.push(timestamp('HH'));
+        console.log("started!"+unique);
         var horseman = new Horseman({timeout:150000,interval:10});
         var x = request.body.val1.toString();
         var y = request.body.val2.toString();
@@ -119,9 +119,6 @@ router.post('/',function(request,response) {
                     height : jQuery(selector1).attr('src')
                 }
             }, '#captcha_image')
-            .then(function(data){
-                console.log(data);
-            })
             .screenshot(unique+'.png')
             .evaluate( function(selector1,selector2,selector3,selector4,selector5,selector6,unique){
                 var x="";
@@ -487,14 +484,17 @@ router.post('/release',function(request,response){
     var code;
     for(var i=0;i<arr.length;i++)
     {
-        code = arr[i].code.toString();
-        console.log(code);
-        if(horseman1["'"+code+"'"]!==undefined)
-        {
-            console.log(code+'is released');
-            horseman1["'" + code + "'"].close();
-            delete horseman1["'" + code + "'"];
+        if(arr[i].code!==undefined){
+            code = arr[i].code.toString();
+            console.log(code);
+            if(horseman1["'"+code+"'"]!==undefined)
+            {
+                console.log(code+'is released');
+                horseman1["'" + code + "'"].close();
+                delete horseman1["'" + code + "'"];
+            }
         }
+
     }
     response.json("Resources released");
 });
