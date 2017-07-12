@@ -4,14 +4,14 @@ var express = require('express');
 var User= require('../models/user');
 
 exports.getToken = function(user) {
-    console.log("Success!!!!"+user+"   \n"+user);
+    console.log("Success!!!!"+user.username);
     return jwt.sign({data:user},config.secretKey,{
     });
 };
 exports.verifyUsername = function(request, response, next) {
     console.log(request.body);
     User.findOne({username:request.body.username},function (err, data) {
-        console.log(data);
+        console.log(data.username);
         if(data===null)
             next();
         else {
@@ -59,7 +59,7 @@ exports.verifyAdmin = function(request, response, next) {
             }
             else
             {
-                console.log(decoded);
+                console.log(decoded.data.username);
                 // if everything is good, save to request for use in other routes
                 if(decoded.data.admin===false)
                 {
@@ -90,7 +90,7 @@ exports.verifySuper = function(request, response, next) {
             }
             else
             {
-                console.log(decoded);
+                console.log(decoded.data.username);
                 // if everything is good, save to request for use in other routes
                 if(decoded.data.super===false)
                 {

@@ -274,11 +274,11 @@ router.get('/findStatus',Verify.verifyLoggedUser,function(request,response){
         if(err)
             response.json(err);
         else {
-            console.log(data);
+           // console.log(data);
             var date = new Date();
-            console.log(date);
+            //console.log(date);
             var x = data.searchesDuration.split(/[-]/);
-            console.log(x);
+            //console.log(x);
             console.log(date.getFullYear() + "--" + (date.getMonth() + 1 + "--" + (date.getDate())));
             console.log("sadasdas"+y);
             var a = moment([parseInt(x[2]),(parseInt(x[1])-1),parseInt(x[0])]);
@@ -378,7 +378,7 @@ router.post('/updateStatus',Verify.verifyLoggedUser,Verify.verifyAdmin,function(
 
 router.post('/login',function(request, response,next){
     passport.authenticate("local",function(err,user){
-        console.log(user);
+        console.log(user.username);
         if (err) {
             response.status(500).json({err: err});
         }
@@ -404,9 +404,8 @@ router.post('/login',function(request, response,next){
                         if (err)
                             response.json(err);
                         else {
-                            console.log(new_data.username);
                             var t = Verify.getToken(user);
-                            console.log("Success!!!!" + user.admin + "   \n" + user);
+                            console.log("Success!!!!");
                             if(new_data.super===true && new_data.admin===true)
                             {
                                 response.status(200).json({
