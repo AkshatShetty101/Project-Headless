@@ -28,7 +28,7 @@ router.get('/addUser',function(request,response){
 });
 
 router.post('/registerAdmin',Verify.verifyUsername,Verify.verifySuper,function(request, response){
-    console.log("in!");
+    //console.log("in!");
     User.register(new User({ username : request.body.username }),request.body.password,function(err, user){
         user.searchesDuration = '06-07-2016';
         user.searchType = false;
@@ -49,8 +49,6 @@ router.post('/registerAdmin',Verify.verifyUsername,Verify.verifySuper,function(r
 });
 
 router.post('/removeAdmin',Verify.verifyLoggedUser,Verify.verifySuper,function(request, response){
-    console.log("in!");
-    console.log('Here!!');
     User.findOne({'username': request.body.username}, function (err, data) {
         if (err)
             response.json(err);
@@ -86,7 +84,6 @@ router.post('/register',Verify.verifyUsername,Verify.verifyLoggedUser,function(r
                 throw err;
             else
             {
-                //console.log(user);
                 passport.authenticate('local')(request, response, function () {
                     response.json({status: '1' ,message: 'Registration Successful!'});
                 });
@@ -136,7 +133,7 @@ router.post('/changePassword',Verify.verifyLoggedUser,function(request,response)
                             response.json(err);
                         else
                         {
-                            console.log(user);
+                            console.log(user.username);
                             response.json('success!');
                         }
                     });
@@ -164,7 +161,7 @@ router.post('/superChangePassword',Verify.verifyLoggedUser,Verify.verifySuper,fu
                             response.json(err);
                         else
                         {
-                            console.log(user);
+                            console.log(user.username);
                             response.json('success!');
                         }
                     });
@@ -192,7 +189,7 @@ router.post('/adminChangePassword',Verify.verifyLoggedUser,Verify.verifyAdmin,fu
                             response.json(err);
                         else
                         {
-                            console.log(user);
+                            console.log(user.username);
                             response.json('success!');
                         }
                     });
@@ -205,7 +202,7 @@ router.post('/adminChangePassword',Verify.verifyLoggedUser,Verify.verifyAdmin,fu
 router.get('/findMe',Verify.verifyLoggedUser,function(request,response){
     var token = request.body.token || request.query.token || request.headers['x-access-token'];
     var decoded = jwt.decode(token);
-    console.log(decoded.data._id);
+//    console.log(decoded.data._id);
     User.findById(decoded.data._id,{_id:0,updatedAt:0,createdAt:0,__v:0,logged:0,super:0,admin:0}).then(function(data,err){
         if(err)
             response.json(err);
@@ -228,7 +225,7 @@ router.post('/removeUser',Verify.verifyLoggedUser,Verify.verifyAdmin,function(re
             return data;
         }
         else {
-            console.log(data);
+  //          console.log(data);
             if (data.admin === true) {
                 response.json('Cannot delete admin!');
                 return data;
@@ -270,7 +267,7 @@ router.post('/removeUser',Verify.verifyLoggedUser,Verify.verifyAdmin,function(re
 router.get('/findStatus',Verify.verifyLoggedUser,function(request,response){
     var token = request.body.token || request.query.token || request.headers['x-access-token'];
     var decoded = jwt.decode(token);
-    console.log(decoded.data._id);
+    //console.log(decoded.data._id);
     var flag=-1;
     var y = -1.5;
     User.findById(decoded.data._id).then(function(data,err){
@@ -278,7 +275,6 @@ router.get('/findStatus',Verify.verifyLoggedUser,function(request,response){
             response.json(err);
         else {
             console.log(data);
-            console.log('here!');
             var date = new Date();
             console.log(date);
             var x = data.searchesDuration.split(/[-]/);
@@ -299,7 +295,7 @@ router.get('/findStatus',Verify.verifyLoggedUser,function(request,response){
             }
         }
     }).then(function (data) {
-        console.log(data.logged);
+      //  console.log(data.logged);
         console.log('here!!!!!!!!!');
         if(data.searchType===true)
         {
@@ -338,7 +334,7 @@ router.post('/decreaseSearches',Verify.verifyLoggedUser,function(request,respons
                     response.json(err);
                 else
                 {
-                    console.log(user);
+                    console.log(user.username);
                     response.json({status: 1,message: 'Deducted appropriately'});
                 }
             });
@@ -372,7 +368,7 @@ router.post('/updateStatus',Verify.verifyLoggedUser,Verify.verifyAdmin,function(
                     response.json(err);
                 else
                 {
-                    console.log(user);
+                    console.log(user.username);
                     response.json({status: 1,message: 'Status reset'});
                 }
             });
@@ -397,8 +393,6 @@ router.post('/login',function(request, response,next){
         }
         else
         {
-
-            console.log("In");
             request.logIn(user, function (err) {
                 if (err) {
                     response.status(500).json({err: 'Could not log in user'});
@@ -410,7 +404,7 @@ router.post('/login',function(request, response,next){
                         if (err)
                             response.json(err);
                         else {
-                            console.log(new_data);
+                            console.log(new_data.username);
                             var t = Verify.getToken(user);
                             console.log("Success!!!!" + user.admin + "   \n" + user);
                             if(new_data.super===true && new_data.admin===true)
@@ -455,7 +449,7 @@ router.get('/logout',Verify.verifyLoggedUser,function(request, response){
             response.json(error);
         else
         {
-            console.log(new_data);
+            console.log(new_data.username);
             request.logout();
             response.status(200).json({
                 status: 'Bye!'
