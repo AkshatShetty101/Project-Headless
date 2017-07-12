@@ -17,7 +17,7 @@
     "jimp": "^0.2.28",
     "jsonwebtoken": "^7.4.1",
     "moment": "^2.18.1",
-    "mongodb": "^2.2.29",
+    "mongodb": "^2.2.30",
     "mongoose": "^4.11.1",
     "morgan": "~1.8.1",
     "node-horseman": "^3.3.0",
@@ -29,6 +29,7 @@
     "random-number": "0.0.7",
     "request": "^2.81.0",
     "serve-favicon": "~2.4.2",
+    "sizeof": "^1.0.0",
     "time-stamp": "^2.0.0",
     "underscore": "^1.8.3"
   }

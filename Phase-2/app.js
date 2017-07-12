@@ -5,11 +5,11 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var index = require('./routes/index');
+//var index = require('./routes/index');
 var ecourt = require('./routes/multie');
 var supreme = require('./routes/supreme');
 var map = require('./routes/map');
-var city = require('./routes/city');
+//var city = require('./routes/city');
 var user = require('./routes/user');
 var url = 'mongodb://127.0.0.1:27017/Ecourt';
 var mongoose = require('mongoose'),
@@ -29,7 +29,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 // uncomment after placing your favicon in /public
-app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(express.static(path.join(__dirname)));
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -41,7 +41,7 @@ app.use('/user', user);
 app.use('/supreme', ecourt);
 app.use('/supreme1', supreme);
 app.use('/map', map);
-app.use('/city', city);
+//app.use('/city', city);
 app.use('/', express.static('dist'));
 app.get('*', function (req, res, next) {
     res.sendFile(path.resolve('dist/index.html'));

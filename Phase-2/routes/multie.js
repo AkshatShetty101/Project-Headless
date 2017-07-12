@@ -9,6 +9,7 @@ var path = require('path');
 var async = require('async');
 var buffer = new ArrayBuffer(160);
 var view = new DataView(buffer,0,16);
+var sizeof = require('sizeof');
 var rn = require('random-number');
 var gen = rn.generator({
     min:  0
@@ -19,6 +20,11 @@ var timestamp = require('time-stamp');
 var time =[];
 var code = [];
 var req = require('request');
+
+router.get('/a',function(request,response) {
+    response.json({"number of instances":Object.keys(horseman1).length,"size":sizeof.sizeof(horseman1,true)});
+});
+
 
 
 
@@ -515,7 +521,7 @@ router.post('/release',function(request,response){
 });
 
 router.get('/clean',function (request,response){
-    setInterval(resourceHandler,3600000);
+    setInterval(resourceHandler,36000000);
     response.json('done!');
 });
 
