@@ -3,6 +3,7 @@ import {LogicService} from "../Shared/logic.service";
 import {HttpService} from "../Shared/http.service";
 import {Router} from "@angular/router";
 import {AuthService} from "../Shared/auth.service";
+import {count} from "rxjs/operator/count";
 
 @Component({
   selector: 'app-records',
@@ -17,6 +18,7 @@ export class RecordsComponent implements OnInit, AfterContentChecked{
   codes: any[];
   disable: boolean = false;
   display: any = false;
+  count: any = 0;
 
   private total_searches : any = 0;
 
@@ -29,6 +31,7 @@ export class RecordsComponent implements OnInit, AfterContentChecked{
 
   ngOnInit() {
     this.records = this.logic.getRecords();
+    this.countCases();
     this.fails = this.logic.getFails();
     this.norecords = this.logic.getNo();
     this.codes = this.logic.getCodes();
@@ -59,6 +62,15 @@ export class RecordsComponent implements OnInit, AfterContentChecked{
           }
         );
     };
+  }
+
+  countCases(){
+    for(let record of this.records){
+      for(let row of record){
+        if(row.length != 1)
+          this.count++;
+      }
+    }
   }
 
   ngAfterContentChecked(){
