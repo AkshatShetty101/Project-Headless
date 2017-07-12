@@ -8,16 +8,16 @@
     <div class="row">
       <h4>Username:&nbsp;<span [innerHTML]="username"></span></h4>
     </div>
-    <div class="row">
+    <div *ngIf="!superadmin" class="row">
       <h4>Infinite Searches:&nbsp;<span [innerHTML]="infiFlag"></span></h4>
     </div>
-    <div class="row">
+    <div *ngIf="!superadmin" class="row">
       <h4>Number of Searches Left:&nbsp;<span [innerHTML]="noSearches"></span></h4>
     </div>
-    <div class="row">
+    <div *ngIf="!superadmin" class="row">
       <h4>Searches Expiry Date:&nbsp;<span [innerHTML]="searchesDuration"></span></h4>
     </div>
-    <div class="row">
+    <div *ngIf="!superadmin" class="row">
       <h4>Total Number of Searches:&nbsp;<span [innerHTML]="adminFlag"></span></h4>
     </div>
   </div>

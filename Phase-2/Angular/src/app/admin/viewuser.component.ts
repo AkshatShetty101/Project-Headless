@@ -35,11 +35,11 @@ export class ViewuserComponent implements OnInit {
         .subscribe(
           (result) => {
             for(i=0; i<result.length; i++) {
-              this.adminFlag.push(result[i].total);
-              this.infiFlag.push(result[i].searchType);
+              this.adminFlag.push("-NA-");
+              this.infiFlag.push("-NA-");
               this.userName.push(result[i].username);
-              this.noSearches.push(result[i].searchesNumber);
-              this.searchLimit.push(result[i].searchesDuration);
+              this.noSearches.push("-NA-");
+              this.searchLimit.push("-NA-");
             }
             console.log(this.userName);
           }

@@ -31,7 +31,7 @@
     <p>Court:&nbsp;<span [innerHTML]="search[4]"></span></p>
   </div>
   <div *ngIf="records.length > 0">
-    <h1 class="col-sm-12">These searches have records!</h1>
+    <h1 class="col-sm-12">Total Number of Case Hits - <span [innerHTML]="count"></span></h1>
   </div>
   <div class="row" *ngFor="let record of records; let i = index">
     <table class="table table-bordered table-responsive" border="1">
@@ -43,7 +43,7 @@
       </tr>
       <tr *ngFor="let row of record; let j = index ">
         <td *ngIf="row.length === 1" style="color:rgba(255,46,51,0.99);" colspan="4" [innerHTML]="row[0]"></td>
-        <td *ngIf="row.length !== 1" [innerHTML]="row[0]"></td>
+        <td *ngIf="row.length !== 1" (load)="count=count+1" [innerHTML]="row[0]"></td>
         <td *ngIf="row.length !== 1" [innerHTML]="row[1]"></td>
         <td *ngIf="row.length !== 1" [innerHTML]="row[2]"></td>
         <td *ngIf="row.length !== 1"><a *ngIf="!disable" (click)="view(i,j+1)">View Details</a></td>
