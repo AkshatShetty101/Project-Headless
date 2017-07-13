@@ -427,47 +427,53 @@ export class InputComponent implements OnInit {
     Observable.forkJoin(obj)
       .subscribe(
         results => {
-          console.log(results);
-          let n: any = 0;
-          for (i = 0; i < results.length; i++) {
-            result = results[i];
-            let info: any[] = new Array(0);
-            if (result.status === "1") {
-              this.logic.fillRecords(result.html);
-              this.logic.fillCodes(result.code);
+          console.log('Received!');
+          if(results == null){
+            console.log('Shite!');
+          }
+          else{
+            console.log(results);
+            let n: any = 0;
+            for (i = 0; i < results.length; i++) {
+              result = results[i];
+              let info: any[] = new Array(0);
+              if (result.status === "1") {
+                this.logic.fillRecords(result.html);
+                this.logic.fillCodes(result.code);
+              }
+              else if (result.status === "2") {
+                this.invalid[n++] = result.code;
+              }
+              else if (result.status === "3") {
+                info[0] = result.name;
+                info[1] = result.year;
+                info[2] = this.statename;
+                info[3] = this.districtname;
+                info[4] = this.courtname;
+                this.logic.fillNo(info);
+              }
+              else {
+                info[0] = result.name;
+                info[1] = result.year;
+                info[2] = this.statename;
+                info[3] = this.districtname;
+                info[4] = this.courtname;
+                this.logic.fillFails(info);
+              }
             }
-            else if (result.status === "2") {
-              this.invalid[n++] = result.code;
-            }
-            else if (result.status === "3") {
-              info[0] = result.name;
-              info[1] = result.year;
-              info[2] = this.statename;
-              info[3] = this.districtname;
-              info[4] = this.courtname;
-              this.logic.fillNo(info);
+            this.display = true;
+            if (this.invalid.length > 0) {
+              alert('Invalid Captcha!');
+              console.log(this.invalid);
+              this.invalidHandler(this.invalid);
             }
             else {
-              info[0] = result.name;
-              info[1] = result.year;
-              info[2] = this.statename;
-              info[3] = this.districtname;
-              info[4] = this.courtname;
-              this.logic.fillFails(info);
+              if (this.secondchance.length > 0) {
+                //Send Again
+              }
+              this.logic.process = false;
+              this.router.navigateByUrl('/eCourt/records');
             }
-          }
-          this.display = true;
-          if (this.invalid.length > 0) {
-            alert('Invalid Captcha!');
-            console.log(this.invalid);
-            this.invalidHandler(this.invalid);
-          }
-          else {
-            if (this.secondchance.length > 0) {
-              //Send Again
-            }
-            this.logic.process = false;
-            this.router.navigateByUrl('/eCourt/records');
           }
         }
       );
