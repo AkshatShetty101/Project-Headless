@@ -9,7 +9,6 @@ var path = require('path');
 var async = require('async');
 var buffer = new ArrayBuffer(160);
 var view = new DataView(buffer,0,16);
-var sizeof = require('sizeof');
 var rn = require('random-number');
 var gen = rn.generator({
     min:  0
@@ -20,11 +19,6 @@ var timestamp = require('time-stamp');
 var time =[];
 var code = [];
 var req = require('request');
-
-router.get('/a',function(request,response) {
-    response.json({"number of instances":Object.keys(horseman1).length,"size":sizeof.sizeof(horseman1,true)});
-});
-
 
 
 
@@ -49,11 +43,11 @@ router.get('/',function(request,response) {
 
 router.post('/',function(request,response) {
     try{
+
         var unique = gen().toString();
         code.push(unique);
         time.push(timestamp('HH'));
-        console.log("started!"+unique);
-        var horseman = new Horseman({timeout:150000,interval:10});
+        var horseman = new Horseman({timeout:20000,interval:10});
         var x = request.body.val1.toString();
         var y = request.body.val2.toString();
         var z = request.body.val3.toString();
@@ -79,6 +73,10 @@ router.post('/',function(request,response) {
                 //noinspection JSUnresolvedFunction
                 fillDistrict();
             },x)
+            .cookies()
+            .then(function(data){
+                console.log(data[0].value);
+            })
             .waitFor(function wait1(selector){
                 return jQuery(selector).children().length>1;
             },'#sess_dist_code',true)
@@ -101,11 +99,17 @@ router.post('/',function(request,response) {
                     height : jQuery(selector1).attr('src')
                 }
             }, '#captcha_image')
+            .then(function(data){
+                console.log(data);
+            })
             .evaluate( function(selector1){
                 return {
                     height : jQuery(selector1).attr('src')
                 }
             }, '#captcha_image')
+            .then(function(data){
+                console.log(data);
+            })
             .evaluate(function(name,year){
                 //noinspection SpellCheckingInspection
                 jQuery('#petres_name').val(name);
@@ -113,12 +117,15 @@ router.post('/',function(request,response) {
                 jQuery('#rgyearP').val(year);
                 jQuery('#radB').click();
             },name,year)
-            .wait(5000)
+            .wait(15000)
             .evaluate( function(selector1){
                 return {
                     height : jQuery(selector1).attr('src')
                 }
             }, '#captcha_image')
+            .then(function(data){
+                console.log(data);
+            })
             .screenshot(unique+'.png')
             .evaluate( function(selector1,selector2,selector3,selector4,selector5,selector6,unique){
                 var x="";
@@ -153,7 +160,7 @@ router.post('/',function(request,response) {
                             var base64Image = buffer.toString('base64');
                             console.log(img.hash());
                             var x = {"img":base64Image,'code':unique};
-                            console.log("Instance:'"+unique+"'");
+                            console.log("'"+unique+"'");
                             horseman1["'"+unique+"'"]=horseman;
                             response.send(x);
                         });
@@ -170,19 +177,27 @@ router.post('/a',function(request,response){
     var code = request.body.code.toString();
     if(horseman1["'"+code+"'"]!==undefined)
     {
+        console.log(Object.keys(horseman1["'"+code+"'"]).length);
+        console.log(Object.keys(horseman1).length);
         var captcha = request.body.captcha.toString();
+        console.log(captcha);
         //noinspection JSUnusedLocalSymbols,SpellCheckingInspection
         horseman1["'"+code+"'"]
             .evaluate( function(captcha){
                 jQuery('#captcha').val(captcha);
             },captcha)
             .click('input[class="Gobtn"]')
+            .cookies()
+            // .log()
             .evaluate( function(selector1){
                 return {
                     height : jQuery(selector1).attr('src')
                     //image : jQuery(selector7).attr('src')
                 }
             }, '#captcha_image')
+            .then(function(data){
+                //console.log(data);
+            })
             .evaluate( function(selector1,selector2,selector3,selector4,selector5,selector6,selector7,selector8){
                 // jQuery('.Gobtn').click();
                 // funShowRecords('CSpartyName');
@@ -212,7 +227,8 @@ router.post('/a',function(request,response){
             }, '#sess_state_code','#court_complex_code','#sess_dist_code',"#petres_name","#rgyearP","#radB",'#captcha','#captcha_container_2')
             .then(function(data){
             })
-            .wait(2000)
+            .screenshot('img.png')
+            .wait(8000)
             .evaluate( function(selector1,selector2){
                 return {
                     height : jQuery(selector1).css("display"),
@@ -222,7 +238,7 @@ router.post('/a',function(request,response){
                 }
             },'#errSpan','#showList')
             .then(function(data){
-        //        console.log(data);
+                console.log(data);
             })
             .waitFor(function wait2(selector1,selector2){
                 if(jQuery(selector1).css("display")==='block')
@@ -319,10 +335,10 @@ router.post('/a',function(request,response){
 
 router.post('/refreshCaptcha',function(request,response) {
     var code = request.body.code.toString();
-    //console.log(request.body);
+    console.log(request.body);
     if(horseman1["'"+code+"'"]!==undefined)
     {
-      //  console.log("IN!!!");
+        console.log("IN!!!");
         horseman1["'"+code+"'"]
             .click('a[title="Refresh Image"]')
             .click('img[src="images/refresh-btn.jpg"]')
@@ -333,7 +349,7 @@ router.post('/refreshCaptcha',function(request,response) {
                 }
             }, '#captcha_image')
             .then(function(data){
-        //        console.log(data);
+                console.log(data);
             })
             .screenshot(code+'.png')
             .evaluate( function(selector1,selector2,selector3,selector4,selector5,selector6,unique){
@@ -367,17 +383,17 @@ router.post('/refreshCaptcha',function(request,response) {
                         .quality(100)
                         .getBuffer(Jimp.MIME_PNG,function(err,buffer){
                             var base64Image = buffer.toString('base64');
-          //                  console.log(img.hash());
+                            console.log(img.hash());
                             var x = {"img":base64Image,'code':code};
-            //                console.log(size);
-                           console.log("Refershed:'"+code+"'");
+                            console.log(size);
+                            console.log("'"+code+"'");
                             response.send(x);
                         });
                 })
             });
     }
     else {
-        //console.log("OUT!!");
+        console.log("OUT!!");
         response.json("Too early");
     }
 });
@@ -394,7 +410,7 @@ router.post('/invalidCaptcha',function(request,response) {
                 }
             }, '#captcha_image')
             .then(function(data){
-           //     console.log(data);
+                console.log(data);
             })
             .screenshot(code+'.png')
             .evaluate( function(selector1,selector2,selector3,selector4,selector5,selector6,unique){
@@ -430,10 +446,10 @@ router.post('/invalidCaptcha',function(request,response) {
                         .quality(100)
                         .getBuffer(Jimp.MIME_PNG,function(err,buffer){
                             var base64Image = buffer.toString('base64');
-               //             console.log(img.hash());
+                            console.log(img.hash());
                             var x = {"img":base64Image,'code':code};
-             //               console.log(size);
-                            console.log("Refreshed:-'"+code+"'");
+                            console.log(size);
+                            console.log("'"+code+"'");
                             response.send(x);
                         });
                 })
@@ -448,7 +464,7 @@ router.post('/invalidCaptcha',function(request,response) {
 router.post('/view',function(request,response){
     var code = request.body.code.toString();
     var x = (parseInt(request.body.x)).toString();
-    //console.log(horseman1);
+    console.log(horseman1);
     if(horseman1["'"+code+"'"]!==undefined)
     {
         //noinspection JSCheckFunctionSignatures,SpellCheckingInspection
@@ -460,6 +476,7 @@ router.post('/view',function(request,response){
             .then(function () {
                 console.log('done');
             })
+            .wait(3000)
             .wait(3000)
             .waitForSelector('#shareSelect')
             .catch(function(){
@@ -473,6 +490,7 @@ router.post('/view',function(request,response){
                 console.log('done');
                 response.json(data);
             })
+
     }
     else {
         response.json("Too early");
@@ -484,23 +502,20 @@ router.post('/release',function(request,response){
     var code;
     for(var i=0;i<arr.length;i++)
     {
-        if(arr[i].code!==undefined){
-            code = arr[i].code.toString();
-            console.log(code);
-            if(horseman1["'"+code+"'"]!==undefined)
-            {
-                console.log(code+'is released');
-                horseman1["'" + code + "'"].close();
-                delete horseman1["'" + code + "'"];
-            }
+        code = arr[i].code.toString();
+        console.log(code);
+        if(horseman1["'"+code+"'"]!==undefined)
+        {
+            console.log(code+'is released');
+            horseman1["'" + code + "'"].close();
+            delete horseman1["'" + code + "'"];
         }
-
     }
     response.json("Resources released");
 });
 
 router.get('/clean',function (request,response){
-    setInterval(resourceHandler,36000000);
+    setInterval(resourceHandler,3600000);
     response.json('done!');
 });
 
@@ -541,13 +556,13 @@ function resourceHandler (){
                     delete code[x]
                 }
             }
-          //  console.log(time.length);
+            console.log(time.length);
             if(parseInt(x)===(parseInt(time.length)-1))
             {
                 callback(arr);
             }
         },function(arr){
-            //console.log(arr);
+            console.log(arr);
             req.post('http://localhost:3000/supreme/release',{json:arr},function (err) {
                 if(err)
                     throw err;

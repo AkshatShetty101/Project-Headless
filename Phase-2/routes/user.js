@@ -41,7 +41,7 @@ router.post('/registerAdmin',Verify.verifyUsername,Verify.verifySuper,function(r
             {
                 console.log("Admin!");
                 passport.authenticate('local')(request, response, function () {
-                    response.json({status: '1' ,message: 'Registration Successful!'});
+                    response.status(200).json({status: '1' ,message: 'Registration Successful!'});
                 });
             }
         });
@@ -51,17 +51,17 @@ router.post('/registerAdmin',Verify.verifyUsername,Verify.verifySuper,function(r
 router.post('/removeAdmin',Verify.verifyLoggedUser,Verify.verifySuper,function(request, response){
     User.findOne({'username': request.body.username}, function (err, data) {
         if (err)
-            response.json(err);
+            response.status(200).json(err);
         else
         if (!data)
-            response.json('No such admin!!');
+            response.status(200).json('No such admin!!');
         else
         {
             data.remove(function (err) {
                 if (err)
-                    response.json(err);
+                    response.status(200).json(err);
                 else {
-                    response.json('success!!');
+                    response.status(200).json('success!!');
                 }
             });
         }
@@ -85,7 +85,7 @@ router.post('/register',Verify.verifyUsername,Verify.verifyLoggedUser,function(r
             else
             {
                 passport.authenticate('local')(request, response, function () {
-                    response.json({status: '1' ,message: 'Registration Successful!'});
+                    response.status(200).json({status: '1' ,message: 'Registration Successful!'});
                 });
             }
         });
@@ -95,10 +95,10 @@ router.post('/register',Verify.verifyUsername,Verify.verifyLoggedUser,function(r
 router.get('/get',Verify.verifyLoggedUser,Verify.verifyAdmin,function (request,response){
     User.find({admin:{$ne: true}, super:{$ne: true} ,username:{$ne: 'deleted'}},{_id:0,updatedAt:0,createdAt:0,__v:0,logged:0}).collation({locale:'en',strength: 2}).sort({username:1}).then(function (data,err) {
         if(err)
-            response.json(err);
+            response.status(200).json(err);
         else
         {
-            response.json(data);
+            response.status(200).json(data);
         }
 
     });
@@ -107,10 +107,10 @@ router.get('/get',Verify.verifyLoggedUser,Verify.verifyAdmin,function (request,r
 router.get('/getAdmin',Verify.verifyLoggedUser,Verify.verifySuper,function (request,response){
     User.find({admin: true, super:{$ne: true}},{_id:0,updatedAt:0,createdAt:0,__v:0,logged:0}).collation({locale:'en',strength: 2}).sort({username:1}).then(function (data,err) {
         if(err)
-            response.json(err);
+            response.status(200).json(err);
         else
         {
-            response.json(data);
+            response.status(200).json(data);
         }
     });
 });
@@ -120,21 +120,21 @@ router.post('/changePassword',Verify.verifyLoggedUser,function(request,response)
     var decoded = jwt.decode(token);
     User.findById(decoded.data._id,function(err,data){
         if(!data)
-            response.json('Incorrect Username!');
+            response.status(200).json('Incorrect Username!');
         else
         {
             data.setPassword(request.body.password,function(err){
                 if(err)
-                    response.json(err);
+                    response.status(200).json(err);
                 else
                 {
                     data.save(function(err,user){
                         if(err)
-                            response.json(err);
+                            response.status(200).json(err);
                         else
                         {
                             console.log(user.username);
-                            response.json('success!');
+                            response.status(200).json('success!');
                         }
                     });
                 }
@@ -148,21 +148,21 @@ router.post('/superChangePassword',Verify.verifyLoggedUser,Verify.verifySuper,fu
     var password = request.body.password;
     User.findOne({username: username},function(err,data){
         if(!data)
-            response.json('Incorrect Username!');
+            response.status(200).json('Incorrect Username!');
         else
         {
             data.setPassword(password,function(err){
                 if(err)
-                    response.json(err);
+                    response.status(200).json(err);
                 else
                 {
                     data.save(function(err,user){
                         if(err)
-                            response.json(err);
+                            response.status(200).json(err);
                         else
                         {
                             console.log(user.username);
-                            response.json('success!');
+                            response.status(200).json('success!');
                         }
                     });
                 }
@@ -176,21 +176,21 @@ router.post('/adminChangePassword',Verify.verifyLoggedUser,Verify.verifyAdmin,fu
     var password = request.body.password;
     User.findOne({username: username},function(err,data){
         if(!data)
-            response.json('Incorrect Username!');
+            response.status(200).json('Incorrect Username!');
         else
         {
             data.setPassword(password,function(err){
                 if(err)
-                    response.json(err);
+                    response.status(200).json(err);
                 else
                 {
                     data.save(function(err,user){
                         if(err)
-                            response.json(err);
+                            response.status(200).json(err);
                         else
                         {
                             console.log(user.username);
-                            response.json('success!');
+                            response.status(200).json('success!');
                         }
                     });
                 }
@@ -205,9 +205,9 @@ router.get('/findMe',Verify.verifyLoggedUser,function(request,response){
 //    console.log(decoded.data._id);
     User.findById(decoded.data._id,{_id:0,updatedAt:0,createdAt:0,__v:0,logged:0,super:0,admin:0}).then(function(data,err){
         if(err)
-            response.json(err);
+            response.status(200).json(err);
         else {
-            response.json(data);
+            response.status(200).json(data);
         }
     });
 });
@@ -217,17 +217,17 @@ router.post('/removeUser',Verify.verifyLoggedUser,Verify.verifyAdmin,function(re
     var flag= -1;
     User.findOne({'username': request.body.username}).then(function (data, err) {
         if (err) {
-            response.json(err);
+            response.status(200).json(err);
             return data;
         }
         else if (!data) {
-            response.json('No such user!!');
+            response.status(200).json('No such user!!');
             return data;
         }
         else {
   //          console.log(data);
             if (data.admin === true) {
-                response.json('Cannot delete admin!');
+                response.status(200).json('Cannot delete admin!');
                 return data;
             }
             else {
@@ -240,20 +240,20 @@ router.post('/removeUser',Verify.verifyLoggedUser,Verify.verifyAdmin,function(re
         {
             User.findOne({'username': 'deleted'},function (err,new_d){
                 if(err)
-                    response.json(err);
+                    response.status(200).json(err);
                 else
                 {
                     new_d.total = new_d.total + data.total;
                     new_d.save(function (err) {
                         if(err)
-                            response.json(err);
+                            response.status(200).json(err);
                         else
                         {
                             data.remove(function (err) {
                                 if (err)
-                                    response.json(err);
+                                    response.status(200).json(err);
                                 else {
-                                    response.json('success!!');
+                                    response.status(200).json('success!!');
                                 }
                             });
                         }
@@ -272,7 +272,7 @@ router.get('/findStatus',Verify.verifyLoggedUser,function(request,response){
     var y = -1.5;
     User.findById(decoded.data._id).then(function(data,err){
         if(err)
-            response.json(err);
+            response.status(200).json(err);
         else {
            // console.log(data);
             var date = new Date();
@@ -291,7 +291,7 @@ router.get('/findStatus',Verify.verifyLoggedUser,function(request,response){
                 return data;
             }
             else {
-                response.json({status: -1, message: 'Time Period expired. Contact Administrator'});
+                response.status(200).json({status: -1, message: 'Time Period expired. Contact Administrator'});
             }
         }
     }).then(function (data) {
@@ -299,11 +299,11 @@ router.get('/findStatus',Verify.verifyLoggedUser,function(request,response){
         console.log('here!!!!!!!!!');
         if(data.searchType===true)
         {
-            response.json({status: 2, message: 'Unlimited searches left'});
+            response.status(200).json({status: 2, message: 'Unlimited searches left'});
         }
         else
         {
-            response.json({status: 1, message: 'Limited searches left', amount: data.searchesNumber});
+            response.status(200).json({status: 1, message: 'Limited searches left', amount: data.searchesNumber});
         }
     });
 });
@@ -314,10 +314,10 @@ router.post('/decreaseSearches',Verify.verifyLoggedUser,function(request,respons
     var num = parseInt(request.body.number);
     User.findById(decoded.data._id,function(err,data){
         if(err)
-            response.json(err);
+            response.status(200).json(err);
         else
         if(!data)
-            response.json({status: -1, message: 'No such user'});
+            response.status(200).json({status: -1, message: 'No such user'});
         else
         {
             if(data.searchType===true)
@@ -331,11 +331,11 @@ router.post('/decreaseSearches',Verify.verifyLoggedUser,function(request,respons
             }
             data.save(function(err,user){
                 if(err)
-                    response.json(err);
+                    response.status(200).json(err);
                 else
                 {
                     console.log(user.username);
-                    response.json({status: 1,message: 'Deducted appropriately'});
+                    response.status(200).json({status: 1,message: 'Deducted appropriately'});
                 }
             });
         }
@@ -348,7 +348,7 @@ router.post('/updateStatus',Verify.verifyLoggedUser,Verify.verifyAdmin,function(
     var searchesNumber = parseInt(request.body.searchesNumber);
     User.findOne({username: username},function(err,data) {
         if (err)
-            response.json(err);
+            response.status(200).json(err);
         else
         {
             var x = request.body.searchesDuration.split(/[-]/);
@@ -365,11 +365,11 @@ router.post('/updateStatus',Verify.verifyLoggedUser,Verify.verifyAdmin,function(
             }
             data.save(function(err,user){
                 if(err)
-                    response.json(err);
+                    response.status(200).json(err);
                 else
                 {
                     console.log(user.username);
-                    response.json({status: 1,message: 'Status reset'});
+                    response.status(200).json({status: 1,message: 'Status reset'});
                 }
             });
         }
@@ -385,11 +385,11 @@ router.post('/login',function(request, response,next){
         else
         if (!user) {
             console.log("false user");
-            response.json({status: -1, message: 'Incorrect username and password combination'});
+            response.status(200).json({status: -1, message: 'Incorrect username and password combination'});
         }
         else
         if (user.logged===true) {
-            response.json({status: -2, message: 'Already logged in'});
+            response.status(200).json({status: -2, message: 'Already logged in'});
         }
         else
         {
@@ -402,7 +402,7 @@ router.post('/login',function(request, response,next){
                     user.logged = true;
                     user.save(function (err, new_data) {
                         if (err)
-                            response.json(err);
+                            response.status(200).json(err);
                         else {
                             var t = Verify.getToken(user);
                             console.log("Success!!!!");
@@ -445,7 +445,7 @@ router.get('/logout',Verify.verifyLoggedUser,function(request, response){
     var decoded = jwt.decode(token);
     User.findByIdAndUpdate(decoded.data._id,{$set : {logged: false}},{ new : true},function(error,new_data){
         if(error)
-            response.json(error);
+            response.status(200).json(error);
         else
         {
             console.log(new_data.username);
@@ -458,7 +458,7 @@ router.get('/logout',Verify.verifyLoggedUser,function(request, response){
 });
 
 router.post('/d',Verify.verifyLoggedUser,function (request,response) {
-    response.json('Reached!');
+    response.status(200).json('Reached!');
 });
 
 router.get('/total',function (request,response) {
@@ -466,7 +466,7 @@ router.get('/total',function (request,response) {
         var groups = _.pluck(data,'total');
         var sum = _.reduce(groups, function(memo, num){
             return memo + num; }, 0);
-        response.json({searches: sum});
+        response.status(200).json({searches: sum});
     });
 });
 module.exports = router;
