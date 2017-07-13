@@ -315,8 +315,10 @@ export class InputComponent implements OnInit {
             result = results[i];
             if (result.status === "-5") {
               flag = -1;
+              console.log('Time-');
               continue;
             }
+            console.log('Before Storing'+result.code);
             this.pushId(result.code);
             this.pushCaptcha(result.img);
             this.count++;
@@ -324,9 +326,8 @@ export class InputComponent implements OnInit {
           if (flag === -1) {
             console.log('Im here'+this.count);
             for(i=0; i<this.count; i++){
-              console.log(this.auth.getId(this.count));
               codes[i] = {
-                code: this.auth.getId(this.count)
+                code: this.auth.getId(i)
               };
               console.log(codes);
               this.http.terminate(codes)
@@ -422,9 +423,11 @@ export class InputComponent implements OnInit {
 
     let obj: any[], result: any;
     obj = this.http.sendMCaptcha(request);
+    console.log('Result-'+obj[0]);
     Observable.forkJoin(obj)
       .subscribe(
         results => {
+          console.log(results);
           let n: any = 0;
           for (i = 0; i < results.length; i++) {
             result = results[i];
