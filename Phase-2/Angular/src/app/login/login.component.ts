@@ -72,4 +72,8 @@ export class LoginComponent implements OnInit {
         }
       );
   }
+
+  dummy(){
+    alert('Contact Administrator!');
+  }
 }

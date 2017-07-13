@@ -5,3 +5,11 @@ table, td, tr{
 label{
   color: black!important;
 }
+
+.case_details_table label{
+  color: black!important;
+}
+
+.case_details_table td{
+  border-top: none!important;
+}

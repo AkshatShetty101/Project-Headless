@@ -162,12 +162,10 @@ export class InputComponent implements OnInit {
       this.c_code = -1;
       this.default_court = '--Select a court--';
     }
-    console.log(this.c_code);
   }
 
   selectCourt(data: any){
     this.c_code = data;
-    console.log(this.c_code);
     this.ready = true;
   }
   /**********************/
@@ -247,12 +245,10 @@ export class InputComponent implements OnInit {
 
   checkSearchesLimit(amount: any){
     let token: any;
-    console.log(amount);
     token = this.auth.getId('token');
     this.http.checkLimit(token)
       .subscribe(
         (result) => {
-          console.log(result);
           if(result.status == -1){
             this.display = true;
             alert(result.message);
@@ -291,9 +287,8 @@ export class InputComponent implements OnInit {
       };
       this.getVal(val);
       this.logic.requestHandler();
-      console.log('Set');
-      console.log(request);
       this.repeat = request;
+      console.log(request);
       this.sendMultiple(request);
     }
     else{
@@ -310,6 +305,7 @@ export class InputComponent implements OnInit {
     this.count = 0;
     this.captcha.splice(0,this.captcha.length);
     obj = this.http.sendMultipleData(request);
+    console.log('Object'+obj[0]);
     Observable.forkJoin(obj)
       .subscribe(
         results => {
@@ -319,14 +315,16 @@ export class InputComponent implements OnInit {
             result = results[i];
             if (result.status === "-5") {
               flag = -1;
-              break;
+              continue;
             }
             this.pushId(result.code);
             this.pushCaptcha(result.img);
             this.count++;
           }
           if (flag === -1) {
+            console.log('Im here'+this.count);
             for(i=0; i<this.count; i++){
+              console.log(this.auth.getId(this.count));
               codes[i] = {
                 code: this.auth.getId(this.count)
               };
@@ -378,7 +376,6 @@ export class InputComponent implements OnInit {
     this.http.refreshCaptcha(request)
       .subscribe(
         (result) => {
-          console.log(result);
           this.captcha[this.opt] = result.img;
           this.refreshFlag = true;
         }
@@ -390,6 +387,7 @@ export class InputComponent implements OnInit {
   }
 
   pushId(data: any) {
+    console.log('push '+this.count);
     this.auth.storeId(data, this.count);
   }
 
@@ -427,7 +425,6 @@ export class InputComponent implements OnInit {
     Observable.forkJoin(obj)
       .subscribe(
         results => {
-          console.log(results);
           let n: any = 0;
           for (i = 0; i < results.length; i++) {
             result = results[i];
@@ -453,7 +450,6 @@ export class InputComponent implements OnInit {
               info[2] = this.statename;
               info[3] = this.districtname;
               info[4] = this.courtname;
-              console.log(info);
               this.logic.fillFails(info);
             }
           }
@@ -478,7 +474,6 @@ export class InputComponent implements OnInit {
     this.http.sendVal(request)
       .subscribe(
         (result) => {
-          console.log(result);
           this.statename = result.sname;
           this.districtname = result.dname;
           this.courtname = result.cname;

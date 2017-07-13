@@ -41,7 +41,6 @@ export class ViewuserComponent implements OnInit {
               this.noSearches.push("-NA-");
               this.searchLimit.push("-NA-");
             }
-            console.log(this.userName);
           }
         );
     }

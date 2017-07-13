@@ -156,8 +156,10 @@ export class HttpService {
   sendMultipleData(requests: any[]){
     let obj:any[] = new Array(1), i: any;
     for(i=0; i<requests.length; i++){
+      console.log('Sending Request'+i);
       obj[i] = this.sendData(requests[i]);
     }
+    console.log('Going back with all responses');
     return obj;
   }
 
@@ -165,6 +167,7 @@ export class HttpService {
     const body = request;
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
+    console.log(request);
     return this.http.post('http://localhost:3000/supreme', body, {headers})
       .map((response: Response) => response.json());
   }

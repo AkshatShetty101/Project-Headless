@@ -62,12 +62,10 @@ export class UserdetailsComponent implements OnInit {
       password: data.password
     };
     token = this.auth.getId('token');
-    console.log(request);
     if(this.superadmin == true){
       this.http.changePassword(request, token, 3)
         .subscribe(
           (result) => {
-            console.log(result);
             this.myForm1.reset();
             this.msg = 1;
           }
@@ -77,7 +75,6 @@ export class UserdetailsComponent implements OnInit {
       this.http.changePassword(request, token, 2)
         .subscribe(
           (result) => {
-            console.log(result);
             this.myForm1.reset();
             this.msg = 1;
           }
@@ -105,11 +102,9 @@ export class UserdetailsComponent implements OnInit {
       searchesDuration: data.no_months
     };
     token = this.auth.getId('token');
-    console.log(request);
     this.http.changeSearches(request, token)
       .subscribe(
         (result) => {
-          console.log(result);
           this.myForm2.reset();
           this.msg = 1;
         }
@@ -126,7 +121,6 @@ export class UserdetailsComponent implements OnInit {
       this.http.deleteUser(request, token, 3)
         .subscribe(
           (result) => {
-            console.log(result);
             this.choice = 0;
             this.msg = 1;
             this.router.navigateByUrl('/admin/viewUser');
@@ -138,7 +132,6 @@ export class UserdetailsComponent implements OnInit {
       this.http.deleteUser(request, token, 2)
         .subscribe(
           (result) => {
-            console.log(result);
             this.choice = 0;
             this.msg = 1;
             this.router.navigateByUrl('/admin/viewUser');

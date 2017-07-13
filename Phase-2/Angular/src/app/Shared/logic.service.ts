@@ -25,7 +25,6 @@ export class LogicService {
   ) { }
 
   initRecords(){
-    console.log('Logic!');
     this.initialise()
   }
 

@@ -98,7 +98,6 @@ export class RecordsComponent implements OnInit, AfterContentChecked{
       code: this.codes[n],
       x: data
     };
-    console.log(request);
     this.http.sendViewData(request)
       .subscribe(
         (data) => {
@@ -119,7 +118,6 @@ export class RecordsComponent implements OnInit, AfterContentChecked{
     this.http.terminate(request)
       .subscribe(
         (data) => {
-          console.log(data);
           this.logic.returns = true;
           this.router.navigateByUrl('/eCourt/input');
         }

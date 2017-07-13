@@ -68,7 +68,6 @@ export class AdduserComponent implements OnInit {
         searchType: data.option,
         searchesDuration: data.no_months
       };
-      console.log(request);
     }
     else{
       type = 3;
@@ -76,13 +75,11 @@ export class AdduserComponent implements OnInit {
         username: data.username,
         password: data.password,
       };
-      console.log(request);
     }
 
     this.http.addUser(request, type, token)
       .subscribe(
         (result) => {
-          console.log(result);
           if(type == 3){
             if(result.status == 1){
               this.flag2 = 3;
