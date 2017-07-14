@@ -12,7 +12,7 @@ export class HttpService {
   getStats(){
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.get('http://localhost:3000/user/total', {headers})
+    return this.http.get('http://139.59.21.56:8000/user/total', {headers})
       .map((response: Response) => response.json());
   }
 
@@ -21,12 +21,12 @@ export class HttpService {
     let headers = new Headers();
     headers.append('x-access-token', token);
     if(flag == 3){
-      return this.http.post('http://localhost:3000/user/registerAdmin', body, {headers})
+      return this.http.post('http://139.59.21.56:8000/user/registerAdmin', body, {headers})
         .map((response: Response) => response.json());
     }
     else
     if(flag == 2){
-      return this.http.post('http://localhost:3000/user/register', body, {headers})
+      return this.http.post('http://139.59.21.56:8000/user/register', body, {headers})
         .map((response: Response) => response.json());
     }
   }
@@ -36,12 +36,12 @@ export class HttpService {
     let headers = new Headers();
     headers.append('x-access-token', token);
     if(flag == 3){
-      return this.http.post('http://localhost:3000/user/removeAdmin', body, {headers})
+      return this.http.post('http://139.59.21.56:8000/user/removeAdmin', body, {headers})
         .map((response: Response) => response.json());
     }
     else
     if(flag == 2){
-      return this.http.post('http://localhost:3000/user/removeUser', body, {headers})
+      return this.http.post('http://139.59.21.56:8000/user/removeUser', body, {headers})
         .map((response: Response) => response.json());
     }
   }
@@ -50,7 +50,7 @@ export class HttpService {
     const body = request;
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.post('http://localhost:3000/user/login', body, {headers})
+    return this.http.post('http://139.59.21.56:8000/user/login', body, {headers})
       .map((response: Response) => response.json());
   }
 
@@ -58,12 +58,12 @@ export class HttpService {
     let headers = new Headers();
     headers.append('x-access-token', token);
     if(flag == 3){
-      return this.http.get('http://localhost:3000/user/getAdmin', {headers})
+      return this.http.get('http://139.59.21.56:8000/user/getAdmin', {headers})
         .map((response: Response) => response.json());
     }
     else
     if(flag == 2){
-      return this.http.get('http://localhost:3000/user/get',{headers})
+      return this.http.get('http://139.59.21.56:8000/user/get', {headers})
         .map((response: Response) => response.json());
     }
   }
@@ -71,7 +71,7 @@ export class HttpService {
   getUserDetails(token: any) {
     let headers = new Headers();
     headers.append('x-access-token', token);
-    return this.http.get('http://localhost:3000/user/findMe', {headers})
+    return this.http.get('http://139.59.21.56:8000/user/findMe', {headers})
       .map((response: Response) => response.json());
   }
 
@@ -79,7 +79,7 @@ export class HttpService {
     const body = request;
     let headers = new Headers();
     headers.append('x-access-token', token);
-    return this.http.post('http://localhost:3000/user/updateStatus', body, {headers})
+    return this.http.post('http://139.59.21.56:8000/user/updateStatus', body, {headers})
       .map((response: Response) => response.json());
   }
 
@@ -88,16 +88,16 @@ export class HttpService {
     let headers = new Headers();
     headers.append('x-access-token', token);
     if(flag == 1){
-      return this.http.post('http://localhost:3000/user/changePassword', body, {headers})
+      return this.http.post('http://139.59.21.56:8000/user/changePassword', body, {headers})
         .map((response: Response) => response.json());
     }
     else
     if(flag == 2){
-      return this.http.post('http://localhost:3000/user/adminChangePassword', body, {headers})
+      return this.http.post('http://139.59.21.56:8000/user/adminChangePassword', body, {headers})
         .map((response: Response) => response.json());
     }
     else{
-      return this.http.post('http://localhost:3000/user/superChangePassword', body, {headers})
+      return this.http.post('http://139.59.21.56:8000/user/superChangePassword', body, {headers})
         .map((response: Response) => response.json());
     }
   }
@@ -105,19 +105,20 @@ export class HttpService {
   logOut(token: any){
     let headers = new Headers();
     headers.append('x-access-token', token);
-    return this.http.get('http://localhost:3000/user/logout', {headers})
+    return this.http.get('http://139.59.21.56:8000/user/logout', {headers})
       .map((response: Response) => response.json());
   }
 
   checkLimit(token: any){
     let headers = new Headers();
     headers.append('x-access-token', token);
-    return this.http.get('http://localhost:3000/user/findStatus', {headers})
+    return this.http.get('http://139.59.21.56:8000/user/findStatus', {headers})
       .map((response: Response) => response.json());
   }
 
   getState(){
-    return this.http.get('http://localhost:3000/map/getState')
+    console.log("Doing it!");
+    return this.http.get('http://139.59.21.56:8000/map/getState')
       .map((response: Response) => response.json());
   }
 
@@ -125,7 +126,7 @@ export class HttpService {
     const body = request;
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.post('http://localhost:3000/map/getDistrict', body, {headers})
+    return this.http.post('http://139.59.21.56:8000/map/getDistrict', body, {headers})
       .map((response: Response) => response.json());
   }
 
@@ -133,7 +134,7 @@ export class HttpService {
     const body = request;
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.post('http://localhost:3000/map/getCourt', body, {headers})
+    return this.http.post('http://139.59.21.56:8000/map/getCourt', body, {headers})
       .map((response: Response) => response.json());
   }
 
@@ -149,7 +150,7 @@ export class HttpService {
     const body = request;
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.post('http://localhost:3000/supreme/a', body, {headers})
+    return this.http.post('http://139.59.21.56:8000/supreme/a', body, {headers})
       .map((response: Response) => response.json());
   }
 
@@ -168,7 +169,7 @@ export class HttpService {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     console.log(request);
-    return this.http.post('http://localhost:3000/supreme', body, {headers})
+    return this.http.post('http://139.59.21.56:8000/supreme', body, {headers})
       .map((response: Response) => response.json());
   }
 
@@ -176,7 +177,7 @@ export class HttpService {
     const body = request;
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.post('http://localhost:3000/supreme/refreshCaptcha', body, {headers})
+    return this.http.post('http://139.59.21.56:8000/supreme/refreshCaptcha', body, {headers})
       .map((response: Response) => response.json());
   }
 
@@ -184,7 +185,7 @@ export class HttpService {
     const body = request;
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.post('http://localhost:3000/supreme/invalidCaptcha', body, {headers})
+    return this.http.post('http://139.59.21.56:8000/supreme/invalidCaptcha', body, {headers})
       .map((response: Response) => response.json());
   }
 
@@ -192,7 +193,7 @@ export class HttpService {
     const body = request;
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.post('http://localhost:3000/supreme/view', body, {headers})
+    return this.http.post('http://139.59.21.56:8000/supreme/view', body, {headers})
       .map((response: Response) => response.json());
   }
 
@@ -200,7 +201,7 @@ export class HttpService {
     const body = request;
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.post('http://localhost:3000/map/getNames', body, {headers})
+    return this.http.post('http://139.59.21.56:8000/map/getNames', body, {headers})
       .map((response: Response) => response.json());
   }
 
@@ -209,7 +210,7 @@ export class HttpService {
     const body = request;
     let headers = new Headers();
     headers.append('x-access-token', token);
-    return this.http.post('http://localhost:3000/user/decreaseSearches', body, {headers})
+    return this.http.post('http://139.59.21.56:8000/user/decreaseSearches', body, {headers})
       .map((response: Response) => response.json());
   }
 
@@ -218,7 +219,7 @@ export class HttpService {
     const body = request;
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.post('http://localhost:3000/supreme/release', body, {headers})
+    return this.http.post('http://139.59.21.56:8000/supreme/release', body, {headers})
       .map((response: Response) => response.json());
   }
 }

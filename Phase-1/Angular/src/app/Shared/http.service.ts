@@ -10,7 +10,7 @@ export class HttpService {
   ) { }
 
   getState(){
-    return this.http.get('http://localhost:3000/map/getState')
+    return this.http.get('http://139.59.56.117:3000/map/getState')
       .map((response: Response) => response.json());
   }
 
@@ -18,7 +18,7 @@ export class HttpService {
     const body = request;
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.post('http://localhost:3000/map/getDistrict', body, {headers})
+    return this.http.post('http://139.59.56.117:3000/map/getDistrict', body, {headers})
       .map((response: Response) => response.json());
   }
 
@@ -26,7 +26,7 @@ export class HttpService {
     const body = request;
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.post('http://localhost:3000/map/getCourt', body, {headers})
+    return this.http.post('http://139.59.56.117:3000/map/getCourt', body, {headers})
       .map((response: Response) => response.json());
   }
 
@@ -42,7 +42,7 @@ export class HttpService {
     const body = request;
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.post('http://localhost:3000/supreme/a', body, {headers})
+    return this.http.post('http://139.59.56.117:3000/supreme/a', body, {headers})
       .map((response: Response) => response.json());
   }
 
@@ -58,7 +58,7 @@ export class HttpService {
     const body = request;
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.post('http://localhost:3000/supreme', body, {headers})
+    return this.http.post('http://139.59.56.117:3000/supreme', body, {headers})
       .map((response: Response) => response.json());
   }
 
@@ -66,7 +66,7 @@ export class HttpService {
     const body = request;
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.post('http://localhost:3000/supreme/refreshCaptcha', body, {headers})
+    return this.http.post('http://139.59.56.117:3000/supreme/refreshCaptcha', body, {headers})
       .map((response: Response) => response.json());
   }
 
@@ -74,7 +74,7 @@ export class HttpService {
     const body = request;
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.post('http://localhost:3000/supreme/invalidCaptcha', body, {headers})
+    return this.http.post('http://139.59.56.117:3000/supreme/invalidCaptcha', body, {headers})
       .map((response: Response) => response.json());
   }
 
@@ -82,7 +82,7 @@ export class HttpService {
     const body = request;
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.post('http://localhost:3000/supreme/view', body, {headers})
+    return this.http.post('http://139.59.56.117:3000/supreme/view', body, {headers})
       .map((response: Response) => response.json());
   }
 
@@ -90,7 +90,7 @@ export class HttpService {
     const body = request;
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.post('http://localhost:3000/map/getNames', body, {headers})
+    return this.http.post('http://139.59.56.117:3000/map/getNames', body, {headers})
       .map((response: Response) => response.json());
   }
 
@@ -98,7 +98,7 @@ export class HttpService {
     const body = request;
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.post('http://localhost:3000/supreme/release', body, {headers})
+    return this.http.post('http://139.59.56.117:3000/supreme/release', body, {headers})
       .map((response: Response) => response.json());
   }
   /*registerUser(request: any) {
@@ -106,7 +106,7 @@ export class HttpService {
     const body = request;
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.post('https://localhost:3443/user/register', body, {headers})
+    return this.http.post('https://139.59.56.117:3443/user/register', body, {headers})
       .map((response: Response) => response.json());
   }
 

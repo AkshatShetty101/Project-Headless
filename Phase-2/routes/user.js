@@ -93,7 +93,7 @@ router.post('/register',Verify.verifyUsername,Verify.verifyLoggedUser,function(r
 });
 
 router.get('/get',Verify.verifyLoggedUser,Verify.verifyAdmin,function (request,response){
-    User.find({admin:{$ne: true}, super:{$ne: true} ,username:{$ne: 'deleted'}},{_id:0,updatedAt:0,createdAt:0,__v:0,logged:0}).collation({locale:'en',strength: 2}).sort({username:1}).then(function (data,err) {
+    User.find({admin:{$ne: true}, super:{$ne: true} ,username:{$ne: 'deleted'}},{_id:0,updatedAt:0,createdAt:0,__v:0,logged:0}).sort({username:1}).then(function (data,err) {
         if(err)
             response.status(200).json(err);
         else
@@ -105,7 +105,7 @@ router.get('/get',Verify.verifyLoggedUser,Verify.verifyAdmin,function (request,r
 });
 
 router.get('/getAdmin',Verify.verifyLoggedUser,Verify.verifySuper,function (request,response){
-    User.find({admin: true, super:{$ne: true}},{_id:0,updatedAt:0,createdAt:0,__v:0,logged:0}).collation({locale:'en',strength: 2}).sort({username:1}).then(function (data,err) {
+    User.find({admin: true, super:{$ne: true}},{_id:0,updatedAt:0,createdAt:0,__v:0,logged:0}).sort({username:1}).then(function (data,err) {
         if(err)
             response.status(200).json(err);
         else
