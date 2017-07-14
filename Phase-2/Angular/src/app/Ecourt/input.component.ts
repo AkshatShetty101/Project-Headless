@@ -64,8 +64,8 @@ export class InputComponent implements OnInit {
               private logic: LogicService) {
     this.myForm = formBuilder.group({
       'name': ['', [Validators.required, Validators.pattern("[^0-9]*")]],
-      'year_upper': ['', Validators.compose([Validators.required, Validators.pattern("^[2-9][0-9]{3}$"), this.yearValid.bind(this)])],
-      'year_lower': ['', [Validators.required, Validators.pattern("^[2-9][0-9]{3}$")]]
+      'year_upper': ['', Validators.compose([Validators.required, Validators.pattern("^[2][0-9]{3}$")])],
+      'year_lower': ['', Validators.compose([Validators.required, Validators.pattern("^[2][0-9]{3}$"), this.yearValid.bind(this)])]
     });
     this.myCaptcha = formBuilder.group({
       'captcha_code': ['', [Validators.required]],
@@ -181,7 +181,7 @@ export class InputComponent implements OnInit {
     if(!this.myForm){
       return {notValid: true};
     }
-    if(control.value < this.myForm.controls['year_lower'].value){
+    if(parseInt(control.value) > parseInt(this.myForm.controls['year_upper'].value)){
       return {notValid: true};
     }
   }
