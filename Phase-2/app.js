@@ -14,6 +14,7 @@ var user = require('./routes/user');
 var url = 'mongodb://127.0.0.1:27017/Ecourt';
 var mongoose = require('mongoose'),
     assert = require('assert');
+mongoose.Promise = global.Promise;
 mongoose.connect(url);
 var db = mongoose.connection;
 
@@ -36,7 +37,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.options('*', cors());
+//app.options('*', cors());
 app.use(cors());
 app.use('/user', user);
 app.use('/supreme', ecourt);
