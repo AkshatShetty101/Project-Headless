@@ -107,3 +107,10 @@ a{
   text-align: center;
 }
 
+.acc_holder{
+  background-color: ghostwhite;
+}
+
+.loader_holder{
+  padding-left: 2vw;
+}
