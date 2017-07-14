@@ -11,7 +11,6 @@ exports.getToken = function(user) {
 exports.verifyUsername = function(request, response, next) {
     console.log(request.body);
     User.findOne({username:request.body.username},function (err, data) {
-        console.log(data.username);
         if(data===null)
             next();
         else {
