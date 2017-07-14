@@ -7,9 +7,12 @@ var horseman1 =[];
 var fs = require('fs');
 var path = require('path');
 var async = require('async');
+// var memwatch = require('memwatch-next');
+//var heapdump = require('heapdump');
 var buffer = new ArrayBuffer(160);
 var view = new DataView(buffer,0,16);
 var rn = require('random-number');
+var util = require('util');
 var gen = rn.generator({
     min:  0
     , max:  9999
@@ -19,7 +22,32 @@ var timestamp = require('time-stamp');
 var time =[];
 var code = [];
 var req = require('request');
+//var snapshotTaken = false,
+ //   hd;
+// memwatch.on('leak', function(info) {
+//     console.log("leak:",info);
+//     var diff = hd.end();
+//     snapshotTaken = false;
+//     console.log(util.inspect(diff, {showHidden:false, depth:4}));
+//     heapdump.writeSnapshot(function(err, filename) {
+//         console.log('dump written to', filename);
+//     });
+// });
+// memwatch.on('stats', function(stats) {
+//     console.log("stats:",stats);
+//     if(snapshotTaken===false){
+//         hd = new memwatch.HeapDiff();
+//         snapshotTaken = true;
+//     } else {
+//         var diff = hd.end();
+//         snapshotTaken = false;
+//         console.log(util.inspect(diff, {showHidden:false, depth:4}));
+//     }
+// });
 
+router.get('/a',function(request,response) {
+    response.json({"number of instances":Object.keys(horseman1).length,"size":sizeof.sizeof(horseman1,true)});
+});
 
 
 router.get('/',function(request,response) {
@@ -563,7 +591,7 @@ function resourceHandler (){
             }
         },function(arr){
             console.log(arr);
-            req.post('http://localhost:3000/supreme/release',{json:arr},function (err) {
+            req.post('http://139.59.21.56:8000/supreme/release',{json:arr},function (err) {
                 if(err)
                     throw err;
             });
