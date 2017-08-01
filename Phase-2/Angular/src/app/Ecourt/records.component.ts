@@ -36,7 +36,8 @@ export class RecordsComponent implements OnInit, AfterContentChecked{
     this.norecords = this.logic.getNo();
     this.codes = this.logic.getCodes();
     this.total_searches = this.records.length + this.norecords.length;
-    this.sendStats();
+    if(!this.logic.sent)
+      this.sendStats();
     this.logic.recordFlag = true;
     let codes: any[];
     let http: HttpService;
@@ -58,6 +59,7 @@ export class RecordsComponent implements OnInit, AfterContentChecked{
           (data) => {
             console.log(data);
             logic.returns = true;
+            logic.sent = false;
             router.navigateByUrl('/eCourt/input');
           }
         );
@@ -86,7 +88,7 @@ export class RecordsComponent implements OnInit, AfterContentChecked{
     this.http.sendStats(request, token)
       .subscribe(
         (result) => {
-
+          this.logic.sent = true;
         }
       );
   }
@@ -119,6 +121,7 @@ export class RecordsComponent implements OnInit, AfterContentChecked{
       .subscribe(
         (data) => {
           this.logic.returns = true;
+          this.logic.sent = false;
           this.router.navigateByUrl('/eCourt/input');
         }
       );

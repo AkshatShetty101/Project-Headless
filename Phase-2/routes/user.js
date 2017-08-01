@@ -346,6 +346,7 @@ router.post('/updateStatus',Verify.verifyLoggedUser,Verify.verifyAdmin,function(
     var username = request.body.username;
     var searchType = request.body.searchType;
     var searchesNumber = parseInt(request.body.searchesNumber);
+    console.log(request.body);
     User.findOne({username: username},function(err,data) {
         if (err)
             response.status(200).json(err);
@@ -353,7 +354,7 @@ router.post('/updateStatus',Verify.verifyLoggedUser,Verify.verifyAdmin,function(
         {
             var x = request.body.searchesDuration.split(/[-]/);
             data.searchesDuration = (x[2]+'-'+x[1]+'-'+x[0]).toString();
-            if(searchType==='true')
+            if(searchType===true)
             {
                 data.searchType = true;
                 data.searchesNumber = 0;

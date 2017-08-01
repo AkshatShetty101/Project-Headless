@@ -7,7 +7,7 @@ export class LogicService {
   private norecords: any[][] = new Array(0);
   private codes: any[];
 
-
+  sent: any = false;
   admin: any;
   searchType: any;
   username: any;
