@@ -39,6 +39,17 @@ export class NavbarComponent implements OnInit {
     this.router.navigateByUrl('/login');
   }
 
+  checkNRoute(url: any){
+    let token: any;
+    token = this.auth.getId('token');
+    this.http.deleteCheck(token)
+      .subscribe(
+        (result) => {
+          console.log(result);
+        }
+      );
+  }
+
   logOut(){
     let token: any;
     token = this.auth.getId('token');

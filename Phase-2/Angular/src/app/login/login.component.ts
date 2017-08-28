@@ -36,9 +36,7 @@ export class LoginComponent implements OnInit {
 
   onSubmit(data: any){
     let request: any;
-
-    this.myForm.reset();
-    this.alt = -1;
+    this.alt = 1;
     request = {
       username: data.username,
       password: data.password
@@ -46,7 +44,9 @@ export class LoginComponent implements OnInit {
     this.http.verifyUser(request)
       .subscribe(
         (result) => {
-          console.log(result);
+          //console.log(result);
+          this.alt = -1;
+          this.myForm.reset();
           this.flag = result.status;
           if(result.status === 1 || result.status === 2 || result.status === 3){
             this.auth.storeId(result.token, 'token');

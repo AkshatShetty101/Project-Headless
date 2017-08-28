@@ -69,4 +69,15 @@ export class ViewuserComponent implements OnInit {
     this.logic.searchesDuration = this.searchLimit[index];
     this.router.navigateByUrl('/admin/userDetails');
   }
+
+  checkNRoute(url: any){
+    let token: any;
+    token = this.auth.getId('token');
+    this.http.deleteCheck(token)
+      .subscribe(
+        (result) => {
+          console.log(result);
+        }
+      );
+  }
 }

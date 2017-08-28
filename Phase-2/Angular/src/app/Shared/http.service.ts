@@ -31,6 +31,13 @@ export class HttpService {
     }
   }
 
+  deleteCheck(token: any){
+    let headers = new Headers();
+    headers.append('x-access-token', token);
+    return this.http.get('http://localhost:3000/user/total', {headers})
+      .map((response: Response) => response.json());
+  }
+
   deleteUser(request: any, token: any, flag: any){
     const body = request;
     let headers = new Headers();
@@ -117,7 +124,6 @@ export class HttpService {
   }
 
   getState(){
-    console.log("Doing it!");
     return this.http.get('http://localhost:3000/map/getState')
       .map((response: Response) => response.json());
   }
