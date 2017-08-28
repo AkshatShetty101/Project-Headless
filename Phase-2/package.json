@@ -31,6 +31,7 @@
     "random-number": "0.0.7",
     "request": "^2.81.0",
     "serve-favicon": "~2.4.2",
+    "sharp": "^0.18.2",
     "sizeof": "^1.0.0",
     "time-stamp": "^2.0.0",
     "underscore": "^1.8.3"
