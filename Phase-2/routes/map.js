@@ -31,6 +31,21 @@ router.get('/addCourtPage',function(request,response){
     stream.pipe(response);
 });
 
+router.get('/change',function(request,response){
+    Map.find({},{"code":1},function (err,data){
+        var values;
+        async.each(data,function(each,callback){
+            console.log(each.code);
+            values=each.code.match(/[^~]*/g);
+            console.log(values[0]);
+            Map.findByIdAndUpdate(each._id,{$set: {"code": values[0]}},{new: true}, function (error, new_data) {
+                if (error)
+                    throw error;
+            });
+        });
+    });
+});
+
 router.post('/addState',function(request,response){
     console.log(request.body);
     var name = request.body.name.toString();
@@ -141,9 +156,6 @@ router.post('/getNames',function(request,response){
                 console.log({'sname':sname,'dname':dname,'cname':data});
                 response.json({'sname':sname,'dname':dname,'cname':data});
             });
-  //          var d =  _.findWhere(data[0].district[0].court,{code : ccode});
-
-            //noinspection SpellCheckingInspection
         }
     });
 });

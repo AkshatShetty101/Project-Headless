@@ -3,10 +3,12 @@ var router = express.Router();
 var Horseman = require('node-horseman');
 //noinspection SpellCheckingInspection
 var Jimp = require("jimp");
+var sharp = require('sharp');
 var horseman1 =[];
 var fs = require('fs');
 var path = require('path');
 var async = require('async');
+var sizeof = require('sizeof');
 // var memwatch = require('memwatch-next');
 //var heapdump = require('heapdump');
 var buffer = new ArrayBuffer(160);
@@ -22,29 +24,6 @@ var timestamp = require('time-stamp');
 var time =[];
 var code = [];
 var req = require('request');
-//var snapshotTaken = false,
- //   hd;
-// memwatch.on('leak', function(info) {
-//     console.log("leak:",info);
-//     var diff = hd.end();
-//     snapshotTaken = false;
-//     console.log(util.inspect(diff, {showHidden:false, depth:4}));
-//     heapdump.writeSnapshot(function(err, filename) {
-//         console.log('dump written to', filename);
-//     });
-// });
-// memwatch.on('stats', function(stats) {
-//     console.log("stats:",stats);
-//     if(snapshotTaken===false){
-//         hd = new memwatch.HeapDiff();
-//         snapshotTaken = true;
-//     } else {
-//         var diff = hd.end();
-//         snapshotTaken = false;
-//         console.log(util.inspect(diff, {showHidden:false, depth:4}));
-//     }
-// });
-
 router.get('/a',function(request,response) {
     response.json({"number of instances":Object.keys(horseman1).length,"size":sizeof.sizeof(horseman1,true)});
 });
@@ -75,7 +54,7 @@ router.post('/',function(request,response) {
         var unique = gen().toString();
         code.push(unique);
         time.push(timestamp('HH'));
-        var horseman = new Horseman({timeout:20000,interval:10});
+        var horseman = new Horseman({timeout:15000,interval:10});
         var x = request.body.val1.toString();
         var y = request.body.val2.toString();
         var z = request.body.val3.toString();
@@ -94,13 +73,14 @@ router.post('/',function(request,response) {
                 return response.send({"status":"-5","html":"Unable to access site","val1" : x,"val2" :y,"val3" :z,"name":name,"year":year});
             })
             .click('div[id="leftPaneMenuCS"]')
-            .wait(1000)
             .evaluate(function(x){
                 //noinspection SpellCheckingInspection
                 jQuery('#sess_state_code').val(x);
                 //noinspection JSUnresolvedFunction
                 fillDistrict();
             },x)
+            .wait(2000)
+            .screenshot("1.jpg")
             .cookies()
             .then(function(data){
                 console.log(data[0].value);
@@ -108,6 +88,7 @@ router.post('/',function(request,response) {
             .waitFor(function wait1(selector){
                 return jQuery(selector).children().length>1;
             },'#sess_dist_code',true)
+            .screenshot("2.jpg")
             .evaluate(function(y){
                 //noinspection SpellCheckingInspection
                 jQuery('#sess_dist_code').val(y);
@@ -145,7 +126,7 @@ router.post('/',function(request,response) {
                 jQuery('#rgyearP').val(year);
                 jQuery('#radB').click();
             },name,year)
-            .wait(15000)
+            .wait(7000)
             .evaluate( function(selector1){
                 return {
                     height : jQuery(selector1).attr('src')
@@ -155,6 +136,7 @@ router.post('/',function(request,response) {
                 console.log(data);
             })
             .screenshot(unique+'.png')
+            .wait(2000)
             .evaluate( function(selector1,selector2,selector3,selector4,selector5,selector6,unique){
                 var x="";
                 jQuery(selector1).find('option').each(function(){
@@ -180,19 +162,39 @@ router.post('/',function(request,response) {
                 }
             }, '#sess_state_code','#court_complex_code','#sess_dist_code',"#petres_name","#rgyearP","#radB",unique)
             .then(function(size){
-                Jimp.read(unique+".png", function (err, img) {
-                    if (err) throw err;
-                    img.crop(780,820,240,80)            // resize
-                        .quality(100)
-                        .getBuffer(Jimp.MIME_PNG,function(err,buffer){
-                            var base64Image = buffer.toString('base64');
-                            console.log(img.hash());
-                            var x = {"img":base64Image,'code':unique};
-                            console.log("'"+unique+"'");
-                            horseman1["'"+unique+"'"]=horseman;
-                            response.send(x);
-                        });
-                })
+                var as = unique+".png";
+                fs.readFile(as.toString(), function(err,data){
+                    if (err) {
+                        console.log('Error reading file ' + fileIn + ' ' + err.toString());
+                    } else {
+                        sharp(data)
+                            .normalise()
+                            .extract({left:780,top:820,width:240,height:80})
+                            .toBuffer(function(err,data,info){
+                                if(err)
+                                    throw err;
+                                var base64Image = data.toString('base64');
+                                console.log(data);
+                                var x = {"img":base64Image,'code':unique};
+                                console.log("'"+unique+"'");
+                                horseman1["'"+unique+"'"]=horseman;
+                                response.send(x);
+                            });
+                    }
+                });
+                //     Jimp.read(unique+".png", function (err, img) {
+                //         if (err) throw err;
+                //         img.crop(780,820,240,80)            // resize
+                //             .quality(100)
+                //             .getBuffer(Jimp.MIME_PNG,function(err,buffer){
+                //                 var base64Image = buffer.toString('base64');
+                //                 console.log(img.hash());
+                //                 var x = {"img":base64Image,'code':unique};
+                //                 console.log("'"+unique+"'");
+                //                 horseman1["'"+unique+"'"]=horseman;
+                //                 response.send(x);
+                //             });
+                //     })
             });
     }
     catch(err)
@@ -256,7 +258,7 @@ router.post('/a',function(request,response){
             .then(function(data){
             })
             .screenshot('img.png')
-            .wait(8000)
+            .wait(2000)
             .evaluate( function(selector1,selector2){
                 return {
                     height : jQuery(selector1).css("display"),
@@ -277,9 +279,9 @@ router.post('/a',function(request,response){
             },'#errSpan','#showList',true)
             .catch(function(err) {
                 console.log("Timeout Occurred");
+                console.log("here!");
             })
             .evaluate( function(selector1,selector2,selector3,selector4,selector5,selector6,name,year){
-                //noinspection SpellCheckingInspection
                 return {
                     errmsg : jQuery(selector1).html(),
                     html : jQuery(selector2).html(),
@@ -293,7 +295,9 @@ router.post('/a',function(request,response){
                 }
             },'#errSpan p','#showList','#errSpan','#sess_state_code','#sess_dist_code','#court_complex_code',"#petres_name","#rgyearP")
             .then(function(data){
+                console.log("there!");
                 var res;
+                console.log(data);
                 fs.unlinkSync(code+'.png');
                 if(data.height==='none' && data.height1==='none')
                 {
@@ -363,14 +367,18 @@ router.post('/a',function(request,response){
 
 router.post('/refreshCaptcha',function(request,response) {
     var code = request.body.code.toString();
+    if(fs.existsSync(code+".png")){
+        fs.unlink(code+".png");
+        console.log("image deleted!!!");
+    }
     console.log(request.body);
     if(horseman1["'"+code+"'"]!==undefined)
     {
         console.log("IN!!!");
         horseman1["'"+code+"'"]
             .click('a[title="Refresh Image"]')
-            .click('img[src="images/refresh-btn.jpg"]')
-            .wait(3000)
+            .click('img[class="refresh-btn"]')
+            .wait(4000)
             .evaluate( function(selector1){
                 return {
                     height : jQuery(selector1).attr('src')
@@ -380,6 +388,7 @@ router.post('/refreshCaptcha',function(request,response) {
                 console.log(data);
             })
             .screenshot(code+'.png')
+            .wait(2000)
             .evaluate( function(selector1,selector2,selector3,selector4,selector5,selector6,unique){
                 var x="";
                 jQuery(selector1).find('option').each(function(){
@@ -405,19 +414,25 @@ router.post('/refreshCaptcha',function(request,response) {
                 }
             }, '#sess_state_code','#court_complex_code','#sess_dist_code',"#petres_name","#rgyearP","#radB",code)
             .then(function(size){
-                Jimp.read(code+".png", function (err, img) {
-                    if (err) throw err;
-                    img.crop(780,820,240,80)
-                        .quality(100)
-                        .getBuffer(Jimp.MIME_PNG,function(err,buffer){
-                            var base64Image = buffer.toString('base64');
-                            console.log(img.hash());
-                            var x = {"img":base64Image,'code':code};
-                            console.log(size);
-                            console.log("'"+code+"'");
-                            response.send(x);
-                        });
-                })
+                var as = code+".png";
+                fs.readFile(as.toString(), function(err,data){
+                    if (err) {
+                        console.log(err.toString());
+                    } else {
+                        sharp(data)
+                            .normalise()
+                            .extract({left:780,top:820,width:240,height:80})
+                            .toBuffer(function(err,data,info){
+                                if(err)
+                                    throw err;
+                                var base64Image = data.toString('base64');
+                                console.log(data);
+                                var x = {"img":base64Image,'code':code};
+                                console.log("'"+code+"'");
+                                response.send(x);
+                            });
+                    }
+                });
             });
     }
     else {
@@ -428,6 +443,10 @@ router.post('/refreshCaptcha',function(request,response) {
 
 router.post('/invalidCaptcha',function(request,response) {
     var code = request.body.code.toString();
+    if(fs.existsSync(code+".png")){
+        fs.unlink(code+".png");
+        console.log("image deleted!!!");
+    }
     if(horseman1["'"+code+"'"]!==undefined)
     {
         horseman1["'"+code+"'"]
@@ -441,6 +460,7 @@ router.post('/invalidCaptcha',function(request,response) {
                 console.log(data);
             })
             .screenshot(code+'.png')
+            .wait(1500)
             .evaluate( function(selector1,selector2,selector3,selector4,selector5,selector6,unique){
                 var x="";
                 jQuery(selector1).find('option').each(function(){
@@ -466,21 +486,25 @@ router.post('/invalidCaptcha',function(request,response) {
                 }
             }, '#sess_state_code','#court_complex_code','#sess_dist_code',"#petres_name","#rgyearP","#radB",code)
             .then(function(size){
-
-                //noinspection JSIgnoredPromiseFromCall
-                Jimp.read(code+".png", function (err, img) {
-                    if (err) throw err;
-                    img.crop(780,820,240,80)
-                        .quality(100)
-                        .getBuffer(Jimp.MIME_PNG,function(err,buffer){
-                            var base64Image = buffer.toString('base64');
-                            console.log(img.hash());
-                            var x = {"img":base64Image,'code':code};
-                            console.log(size);
-                            console.log("'"+code+"'");
-                            response.send(x);
-                        });
-                })
+                var as = code+".png";
+                fs.readFile(as.toString(), function(err,data){
+                    if (err) {
+                        console.log(err.toString());
+                    } else {
+                        sharp(data)
+                            .normalise()
+                            .extract({left:780,top:820,width:240,height:80})
+                            .toBuffer(function(err,data,info){
+                                if(err)
+                                    throw err;
+                                var base64Image = data.toString('base64');
+                                console.log(data);
+                                var x = {"img":base64Image,'code':code};
+                                console.log("'"+code+"'");
+                                response.send(x);
+                            });
+                    }
+                });
             });
     }
     else {
@@ -492,7 +516,6 @@ router.post('/invalidCaptcha',function(request,response) {
 router.post('/view',function(request,response){
     var code = request.body.code.toString();
     var x = (parseInt(request.body.x)).toString();
-    console.log(horseman1);
     if(horseman1["'"+code+"'"]!==undefined)
     {
         //noinspection JSCheckFunctionSignatures,SpellCheckingInspection
@@ -505,7 +528,7 @@ router.post('/view',function(request,response){
                 console.log('done');
             })
             .wait(3000)
-            .wait(3000)
+            // .wait(3000)
             .waitForSelector('#shareSelect')
             .catch(function(){
                 console.log("Unable to access site");
@@ -565,7 +588,7 @@ function resourceHandler (){
             if(parseInt(now)>=parseInt(y))
             {
                 if (parseInt(now) - parseInt(y) >= 2) {
-                    if(fs.existsSync(path.join(__dirname,'..\\'+code[x]+'.png')))
+                    if(fs.existsSync(code[x]+'.png'))
                         fs.unlinkSync(code[x]+'.png');
                     j ={code:data};
                     arr.push(j);

@@ -27,6 +27,10 @@ router.get('/addUser',function(request,response){
     stream.pipe(response);
 });
 
+router.get('/poll',Verify.verifyLoggedUser,function (request,response){
+   response.json({status:"1", messaage:"Valid user"});
+});
+
 router.post('/registerAdmin',Verify.verifyUsername,Verify.verifySuper,function(request, response){
     //console.log("in!");
     User.register(new User({ username : request.body.username }),request.body.password,function(err, user){
@@ -225,7 +229,7 @@ router.post('/removeUser',Verify.verifyLoggedUser,Verify.verifyAdmin,function(re
             return data;
         }
         else {
-  //          console.log(data);
+            //          console.log(data);
             if (data.admin === true) {
                 response.status(200).json('Cannot delete admin!');
                 return data;
@@ -274,7 +278,7 @@ router.get('/findStatus',Verify.verifyLoggedUser,function(request,response){
         if(err)
             response.status(200).json(err);
         else {
-           // console.log(data);
+            // console.log(data);
             var date = new Date();
             //console.log(date);
             var x = data.searchesDuration.split(/[-]/);
@@ -295,7 +299,7 @@ router.get('/findStatus',Verify.verifyLoggedUser,function(request,response){
             }
         }
     }).then(function (data) {
-      //  console.log(data.logged);
+        //  console.log(data.logged);
         console.log('here!!!!!!!!!');
         if(data.searchType===true)
         {
