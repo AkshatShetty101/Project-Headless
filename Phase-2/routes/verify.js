@@ -43,7 +43,7 @@ exports.verifyLoggedUser = function(request, response, next) {
                    else{
                        console.log(data);
                        if(data===null){
-                           response.json({status:'-x', message:"No Such User!"});
+                           response.json({status:'x', message:"No Such User!"});
                        }
                        else
                            next();
@@ -54,8 +54,8 @@ exports.verifyLoggedUser = function(request, response, next) {
     }
     else
     {
-        var err = new Error('No token provided!');
-        response.json(err);
+        console.log("here!");
+        response.json('No token provided!');
     }
 };
 
