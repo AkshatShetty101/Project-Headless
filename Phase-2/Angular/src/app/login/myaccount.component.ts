@@ -74,9 +74,18 @@ export class MyaccountComponent implements OnInit {
       .subscribe(
         (result) => {
           console.log(result);
-          this.myForm.reset();
-          this.flag = 1;
-          this.router.navigateByUrl('/home');
+          if(result.status == 'x'){
+            alert('Your account has been deleted.');
+            this.auth.end();
+            this.auth.checkStatus();
+            this.auth.checkAdmin();
+            this.router.navigateByUrl('/home');
+          }
+          else{
+            this.myForm.reset();
+            this.flag = 1;
+            this.router.navigateByUrl('/home');
+          }
         }
       );
   }

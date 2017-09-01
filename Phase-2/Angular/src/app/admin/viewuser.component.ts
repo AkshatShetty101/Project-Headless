@@ -70,13 +70,26 @@ export class ViewuserComponent implements OnInit {
     this.router.navigateByUrl('/admin/userDetails');
   }
 
-  checkNRoute(url: any){
+  checkNRoute(flag: any, index: any){
     let token: any;
     token = this.auth.getId('token');
     this.http.deleteCheck(token)
       .subscribe(
         (result) => {
           console.log(result);
+          if(result.status == 'x'){
+            alert('Your account has been deleted.');
+            this.auth.end();
+            this.auth.checkStatus();
+            this.auth.checkAdmin();
+            this.router.navigateByUrl('/home');
+          }
+          else{
+            if(flag == 1)
+              this.openUser(index);
+            else
+              this.router.navigateByUrl('/admin/addUser');
+          }
         }
       );
   }

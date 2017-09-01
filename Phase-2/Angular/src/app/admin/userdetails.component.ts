@@ -62,51 +62,80 @@ export class UserdetailsComponent implements OnInit {
       password: data.password
     };
     token = this.auth.getId('token');
-    if(this.superadmin == true){
-      this.http.changePassword(request, token, 3)
-        .subscribe(
-          (result) => {
-            this.myForm1.reset();
-            this.msg = 1;
+    this.http.deleteCheck(token)
+      .subscribe(
+        (result) => {
+          console.log(result);
+          if(result.status == 'x'){
+            alert('Your account has been deleted.');
+            this.auth.end();
+            this.auth.checkStatus();
+            this.auth.checkAdmin();
+            this.router.navigateByUrl('/home');
           }
-        );
-    }
-    else{
-      this.http.changePassword(request, token, 2)
-        .subscribe(
-          (result) => {
-            this.myForm1.reset();
-            this.msg = 1;
+          else{
+            if(this.superadmin == true){
+              this.http.changePassword(request, token, 3)
+                .subscribe(
+                  (result) => {
+                    this.myForm1.reset();
+                    this.msg = 1;
+                  }
+                );
+            }
+            else{
+              this.http.changePassword(request, token, 2)
+                .subscribe(
+                  (result) => {
+                    this.myForm1.reset();
+                    this.msg = 1;
+                  }
+                );
+            }
           }
-        );
-    }
-
+        }
+      );
   }
 
   changeSearches(data: any){
     let request: any, token: any;
-    if(data.option ==  'infinite'){
-      data.no_searches = 0;
-      data.option = true;
-    }
-    else{
-      data.option = false;
-      if(data.no_searches === ""){
-        data.no_searches = 0;
-      }
-    }
-    request = {
-      username: this.username,
-      searchType: data.option,
-      searchesNumber: data.no_searches,
-      searchesDuration: data.no_months
-    };
     token = this.auth.getId('token');
-    this.http.changeSearches(request, token)
+    this.http.deleteCheck(token)
       .subscribe(
         (result) => {
-          this.myForm2.reset();
-          this.msg = 1;
+          console.log(result);
+          if(result.status == 'x'){
+            alert('Your account has been deleted.');
+            this.auth.end();
+            this.auth.checkStatus();
+            this.auth.checkAdmin();
+            this.router.navigateByUrl('/home');
+          }
+          else{
+            if(data.option ==  'infinite'){
+              data.no_searches = 0;
+              data.option = true;
+            }
+            else{
+              data.option = false;
+              if(data.no_searches === ""){
+                data.no_searches = 0;
+              }
+            }
+            request = {
+              username: this.username,
+              searchType: data.option,
+              searchesNumber: data.no_searches,
+              searchesDuration: data.no_months
+            };
+            this.http.changeSearches(request, token)
+              .subscribe(
+                (result) => {
+                  this.myForm2.reset();
+                  this.msg = 1;
+                }
+              );
+          }
         }
       );
   }
@@ -117,26 +146,41 @@ export class UserdetailsComponent implements OnInit {
     request = {
       username: this.username
     };
-    if(this.auth.getId('superadmin') == 'true'){
-      this.http.deleteUser(request, token, 3)
-        .subscribe(
-          (result) => {
-            this.choice = 0;
-            this.msg = 1;
-            this.router.navigateByUrl('/admin/viewUser');
+    this.http.deleteCheck(token)
+      .subscribe(
+        (result) => {
+          console.log(result);
+          if(result.status == 'x'){
+            alert('Your account has been deleted.');
+            this.auth.end();
+            this.auth.checkStatus();
+            this.auth.checkAdmin();
+            this.router.navigateByUrl('/home');
           }
-        );
-    }
-    else
-    if(this.auth.getId('admin') == 'true'){
-      this.http.deleteUser(request, token, 2)
-        .subscribe(
-          (result) => {
-            this.choice = 0;
-            this.msg = 1;
-            this.router.navigateByUrl('/admin/viewUser');
+          else{
+            if(this.auth.getId('superadmin') == 'true'){
+              this.http.deleteUser(request, token, 3)
+                .subscribe(
+                  (result) => {
+                    this.choice = 0;
+                    this.msg = 1;
+                    this.router.navigateByUrl('/admin/viewUser');
+                  }
+                );
+            }
+            else
+            if(this.auth.getId('admin') == 'true'){
+              this.http.deleteUser(request, token, 2)
+                .subscribe(
+                  (result) => {
+                    this.choice = 0;
+                    this.msg = 1;
+                    this.router.navigateByUrl('/admin/viewUser');
+                  }
+                );
+            }
           }
-        );
-    }
+        }
+      );
   }
 }

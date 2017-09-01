@@ -34,7 +34,7 @@ export class HttpService {
   deleteCheck(token: any){
     let headers = new Headers();
     headers.append('x-access-token', token);
-    return this.http.get('http://localhost:3000/user/total', {headers})
+    return this.http.get('http://localhost:3000/user/poll', {headers})
       .map((response: Response) => response.json());
   }
 

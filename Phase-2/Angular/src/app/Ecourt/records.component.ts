@@ -85,10 +85,25 @@ export class RecordsComponent implements OnInit, AfterContentChecked{
     request = {
       number : this.total_searches
     };
-    this.http.sendStats(request, token)
+    this.http.deleteCheck(token)
       .subscribe(
         (result) => {
-          this.logic.sent = true;
+          console.log(result);
+          if(result.status == 'x'){
+            alert('Your account has been deleted.');
+            this.auth.end();
+            this.auth.checkStatus();
+            this.auth.checkAdmin();
+            this.router.navigateByUrl('/home');
+          }
+          else{
+            this.http.sendStats(request, token)
+              .subscribe(
+                (result) => {
+                  this.logic.sent = true;
+                }
+              );
+          }
         }
       );
   }

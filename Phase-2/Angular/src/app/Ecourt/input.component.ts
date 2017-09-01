@@ -249,6 +249,14 @@ export class InputComponent implements OnInit {
     this.http.checkLimit(token)
       .subscribe(
         (result) => {
+          if(result.status == 'x'){
+            alert('Your account has been deleted.');
+            this.auth.end();
+            this.auth.checkStatus();
+            this.auth.checkAdmin();
+            this.router.navigateByUrl('/home');
+          }
+          else
           if(result.status == -1){
             this.display = true;
             alert(result.message);
@@ -490,11 +498,11 @@ export class InputComponent implements OnInit {
       );
   }
 
-
-  timeoutHandler(data: any[]){
-    let i: any, request: any, fail: any[] = new Array(0);
-
-  }
+  //
+  // timeoutHandler(data: any[]){
+  //   let i: any, request: any, fail: any[] = new Array(0);
+  //
+  // }
 
   invalidHandler(invalid: any[]) {
     if (this.invalid.length !== 0){

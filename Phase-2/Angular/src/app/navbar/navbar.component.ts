@@ -46,6 +46,16 @@ export class NavbarComponent implements OnInit {
       .subscribe(
         (result) => {
           console.log(result);
+          if(result.status == 'x'){
+            alert('Your account has been deleted.');
+            this.auth.end();
+            this.auth.checkStatus();
+            this.auth.checkAdmin();
+            this.router.navigateByUrl('/home');
+          }
+          else{
+            this.router.navigateByUrl(url);
+          }
         }
       );
   }
