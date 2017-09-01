@@ -65,7 +65,7 @@ router.post('/removeAdmin',Verify.verifyLoggedUser,Verify.verifySuper,function(r
                 if (err)
                     response.status(200).json(err);
                 else {
-                    response.status(200).json('success!!');
+                    response.status(200).json({status:'1', message:'success!!'});
                 }
             });
         }
@@ -124,7 +124,7 @@ router.post('/changePassword',Verify.verifyLoggedUser,function(request,response)
     var decoded = jwt.decode(token);
     User.findById(decoded.data._id,function(err,data){
         if(!data)
-            response.status(200).json('Incorrect Username!');
+            response.status(200).json({status:'-1', message:'Incorrect Username!'});
         else
         {
             data.setPassword(request.body.password,function(err){
@@ -138,7 +138,7 @@ router.post('/changePassword',Verify.verifyLoggedUser,function(request,response)
                         else
                         {
                             console.log(user.username);
-                            response.status(200).json('success!');
+                            response.status(200).json({status:'1',message:'success!'});
                         }
                     });
                 }
@@ -152,7 +152,7 @@ router.post('/superChangePassword',Verify.verifyLoggedUser,Verify.verifySuper,fu
     var password = request.body.password;
     User.findOne({username: username},function(err,data){
         if(!data)
-            response.status(200).json('Incorrect Username!');
+            response.status(200).json({status:'-1', message:'Incorrect Username!'});
         else
         {
             data.setPassword(password,function(err){
@@ -166,7 +166,7 @@ router.post('/superChangePassword',Verify.verifyLoggedUser,Verify.verifySuper,fu
                         else
                         {
                             console.log(user.username);
-                            response.status(200).json('success!');
+                            response.status(200).json({status:'1', message:'success'});
                         }
                     });
                 }
@@ -180,7 +180,7 @@ router.post('/adminChangePassword',Verify.verifyLoggedUser,Verify.verifyAdmin,fu
     var password = request.body.password;
     User.findOne({username: username},function(err,data){
         if(!data)
-            response.status(200).json('Incorrect Username!');
+            response.status(200).json({status:'-1', message:'Incorrect Username!'});
         else
         {
             data.setPassword(password,function(err){
@@ -194,7 +194,7 @@ router.post('/adminChangePassword',Verify.verifyLoggedUser,Verify.verifyAdmin,fu
                         else
                         {
                             console.log(user.username);
-                            response.status(200).json('success!');
+                            response.status(200).json({status:'1', message:'success'});
                         }
                     });
                 }
@@ -225,13 +225,13 @@ router.post('/removeUser',Verify.verifyLoggedUser,Verify.verifyAdmin,function(re
             return data;
         }
         else if (!data) {
-            response.status(200).json('No such user!!');
+            response.status(200).json({status:'-2', message:'No such user!'});
             return data;
         }
         else {
             //          console.log(data);
             if (data.admin === true) {
-                response.status(200).json('Cannot delete admin!');
+                response.status(200).json({status:'-3', message:'Cannot delete admin!'});
                 return data;
             }
             else {
@@ -257,7 +257,7 @@ router.post('/removeUser',Verify.verifyLoggedUser,Verify.verifyAdmin,function(re
                                 if (err)
                                     response.status(200).json(err);
                                 else {
-                                    response.status(200).json('success!!');
+                                    response.status(200).json({status:'1', message:'success'});
                                 }
                             });
                         }
