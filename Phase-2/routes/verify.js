@@ -43,7 +43,7 @@ exports.verifyLoggedUser = function(request, response, next) {
                    else{
                        console.log(data);
                        if(data===null){
-                           response.json({status:'-x', message:"No Such User!"});
+                           response.json({status:'x', message:"No Such User!"});
                        }
                        else
                            next();
