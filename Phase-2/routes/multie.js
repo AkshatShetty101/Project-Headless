@@ -69,8 +69,9 @@ router.post('/',function(request,response) {
             .open('http://services.ecourts.gov.in/ecourtindia_v5/')
             .catch(function(err){
                 console.log("Unable to access site");
-                horseman.close();
-                return response.send({"status":"-5","html":"Unable to access site","val1" : x,"val2" :y,"val3" :z,"name":name,"year":year});
+                response.send({"status":"-5","html":"Unable to access site","val1" : x,"val2" :y,"val3" :z,"name":name,"year":year});
+                return horseman.close();
+
             })
             .click('div[id="leftPaneMenuCS"]')
             .evaluate(function(x){
@@ -88,6 +89,11 @@ router.post('/',function(request,response) {
             .waitFor(function wait1(selector){
                 return jQuery(selector).children().length>1;
             },'#sess_dist_code',true)
+            .catch(function(err){
+                console.log("Unable to access site1");
+                response.send({"status":"-5","html":"Unable to access site","val1" : x,"val2" :y,"val3" :z,"name":name,"year":year});
+                return horseman.close();
+            })
             .screenshot("2.jpg")
             .evaluate(function(y){
                 //noinspection SpellCheckingInspection
@@ -280,6 +286,7 @@ router.post('/a',function(request,response){
             .catch(function(err) {
                 console.log("Timeout Occurred");
                 console.log("here!");
+                return horseman1["'"+code+"'"].close();
             })
             .evaluate( function(selector1,selector2,selector3,selector4,selector5,selector6,name,year){
                 return {
@@ -533,12 +540,13 @@ router.post('/view',function(request,response){
             .catch(function(){
                 console.log("Unable to access site");
                 //noinspection NodeModulesDependencies
-                horseman1["'"+code+"'"].close();
-                return response.send({"status":"-5","html":"Unable to access site"});
+                response.send({"status":"-5","html":"Unable to access site"});
+                return horseman1["'"+code+"'"].close();
             })
-            .html('#caseHistoryDiv div')
+            .html('form.historyform')
             .then(function(data){
                 console.log('done');
+                console.log(data);
                 response.json(data);
             })
 
