@@ -16,6 +16,7 @@ import {ActivateAdmin, ActivateGuard} from "./Shared/activate.guard";
 import { NavbarComponent } from './navbar/navbar.component';
 import { LoginComponent } from './login/login.component';
 import { MyaccountComponent } from './login/myaccount.component';
+import { DevComponent } from './dev.component';
 
 
 
@@ -25,7 +26,8 @@ import { MyaccountComponent } from './login/myaccount.component';
     HomeComponent,
     NavbarComponent,
     LoginComponent,
-    MyaccountComponent
+    MyaccountComponent,
+    DevComponent
   ],
   imports: [
     BrowserModule,

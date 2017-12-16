@@ -3,9 +3,11 @@ import {HomeComponent} from "./home.component";
 import {LoginComponent} from "./login/login.component";
 import {ActivateAdmin, ActivateGuard} from "./Shared/activate.guard";
 import {MyaccountComponent} from "./login/myaccount.component";
+import {DevComponent} from "./dev.component";
 
 const APP_ROUTES: Routes = [
   { path: 'home', component: HomeComponent},
+  { path: 'dev_page', component: DevComponent},
   { path: 'eCourt', canActivate:[ActivateGuard], loadChildren: 'app/Ecourt/ecourt.module#EcourtModule'},
   { path: 'login', component: LoginComponent},
   { path: 'myAccount', component: MyaccountComponent},

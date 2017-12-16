@@ -5,10 +5,10 @@
         <a [routerLink]="['/home']">Home</a>
       </li>
       <li *ngIf="loggedIn" routerLinkActive="active">
-        <a (click)="checkNRoute('/eCourt')">E-Court</a>
+        <a (click)="checkNRoute('/eCourt')">Digital Court</a>
       </li>
       <li *ngIf="!loggedIn" routerLinkActive="active">
-        <a (click)="loginItIs()">E-Court</a>
+        <a (click)="loginItIs()">Digital Court</a>
       </li>
     </ul>
     <div >
