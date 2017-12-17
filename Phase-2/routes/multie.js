@@ -54,7 +54,7 @@ router.post('/', function (request, response) {
         var unique = gen().toString();
         code.push(unique);
         time.push(timestamp('HH'));
-        var horseman = new Horseman({timeout: 120000, interval: 10});
+        var horseman = new Horseman({timeout: 120000, interval: 0});
         var x = request.body.val1.toString();
         var y = request.body.val2.toString();
         var z = request.body.val3.toString();
@@ -69,15 +69,8 @@ router.post('/', function (request, response) {
             .open('http://services.ecourts.gov.in/ecourtindia_v5/')
             .catch(function (err) {
                 console.log("Unable to access site");
-                response.send({
-                    "status": "-5",
-                    "html": "Unable to access site",
-                    "val1": x,
-                    "val2": y,
-                    "val3": z,
-                    "name": name,
-                    "year": year
-                });
+                response.send({"status": "-5", "html": "Unable to access site", "val1": x, "val2": y, "val3": z, "name": name, "year": year});
+                response.end();
                 return horseman.close();
             })
             .click('div[id="leftPaneMenuCS"]')
@@ -88,7 +81,6 @@ router.post('/', function (request, response) {
                 fillDistrict();
             }, x)
             .wait(2000)
-            .screenshot("1.jpg")
             .cookies()
             .then(function (data) {
                 console.log(data[0].value);
@@ -111,7 +103,6 @@ router.post('/', function (request, response) {
                 }
                 return horseman.close();
             })
-            .screenshot("2.jpg")
             .evaluate(function (y) {
                 //noinspection SpellCheckingInspection
                 jQuery('#sess_dist_code').val(y);
@@ -278,7 +269,6 @@ router.post('/a', function (request, response) {
             }, '#sess_state_code', '#court_complex_code', '#sess_dist_code', "#petres_name", "#rgyearP", "#radB", '#captcha', '#captcha_container_2')
             .then(function (data) {
             })
-            .screenshot('img.png')
             .wait(7000)
             .evaluate(function (selector1, selector2) {
                 console.log('between!');
@@ -301,6 +291,8 @@ router.post('/a', function (request, response) {
             .catch(function (err) {
                 console.log("Timeout Occurred");
                 console.log("here!");
+                response.send({status:"-2",html:"Timeout Occurred"});
+                return response.end();
             })
             .evaluate(function (selector1, selector2, selector3, selector4, selector5, selector6, name, year) {
                 return {
@@ -313,7 +305,7 @@ router.post('/a', function (request, response) {
                     val3: jQuery(selector6).val(),
                     name: jQuery(name).val(),
                     year: jQuery(year).val()
-                }
+                };
             }, '#errSpan p', '#showList', '#errSpan', '#sess_state_code', '#sess_dist_code', '#court_complex_code', "#petres_name", "#rgyearP")
             .then(function (data) {
                 console.log("there!");
@@ -571,7 +563,6 @@ router.post('/more', function (request, response) {
             })
             .click('table[class="history_table table table-responsive"] tbody tr:nth-child(' + x + ') td:nth-child(2) a')
             .wait(2000)
-            .screenshot('im.png')
             .evaluate(function (selector) {
                 return jQuery(selector).css("display")
             },'div[id="caseBusinessDiv"]')

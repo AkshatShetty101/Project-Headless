@@ -118,7 +118,10 @@ export class RecordsComponent implements OnInit, AfterContentChecked{
     this.http.sendViewData(request)
       .subscribe(
         (data) => {
-          this.logic.fillDetails(data);
+          console.log(data);
+          let data1: any, data2: any;
+          data1 = data[0] + data[1];
+          this.logic.fillDetails(data1);
           this.router.navigateByUrl('/eCourt/details');
         }
       );
