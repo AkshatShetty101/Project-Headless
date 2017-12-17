@@ -556,6 +556,42 @@ router.post('/invalidCaptcha', function (request, response) {
     }
 });
 
+router.post('/more', function (request, response) {
+    var code = request.body.code.toString();
+    var x = (parseInt(request.body.x)+1).toString();
+    var out = [];
+    if (horseman1["'" + code + "'"] !== undefined) {
+        //noinspection JSCheckFunctionSignatures,SpellCheckingInspection
+        horseman1["'" + code + "'"]
+            .evaluate(function (selector) {
+                return jQuery(selector).css("display")
+            },'div[id="caseBusinessDiv"]')
+            .then(function (data) {
+                console.log('working!'+data);
+            })
+            .click('table[class="history_table table table-responsive"] tbody tr:nth-child(' + x + ') td:nth-child(2) a')
+            .wait(2000)
+            .screenshot('im.png')
+            .evaluate(function (selector) {
+                return jQuery(selector).css("display")
+            },'div[id="caseBusinessDiv"]')
+            .then(function (data) {
+                console.log('working!'+data);
+            })
+            .waitFor(function waitForSelectorCount(selector) {
+                return jQuery(selector).css("display") === 'block';
+            }, 'div[id="caseBusinessDiv"]',true)
+            .html('div[id="mydiv"]')
+            .then(function (data) {
+                console.log('end!!');
+                response.json(data);
+            });
+    }
+    else {
+        response.json("Too early");
+    }
+});
+
 
 router.post('/view', function (request, response) {
     var code = request.body.code.toString();
@@ -585,7 +621,7 @@ router.post('/view', function (request, response) {
                 console.log('done');
                 console.log(data);
                 // response.json(data);
-                out.push(data);
+                out.push({first:data});
             })
             .html('table[class="Lower_court_table table table-responsive"]')
             .then(function (data) {
@@ -593,7 +629,7 @@ router.post('/view', function (request, response) {
                     data = "<table style='text-align:left;' border='1'>" + data + "</table>";
                     console.log('done');
                     console.log(data);
-                    out.push(data);
+                    out.push({second:data});
                 }
                 else {
                     console.log('Empty!');
@@ -606,7 +642,7 @@ router.post('/view', function (request, response) {
                     console.log('done');
                     data = "<table style='width:100%;text-align:left;' border='1'>" + data + "</table>";
                     console.log(data);
-                    out.push(data);
+                    out.push({third:data});
                 }
                 else {
                     console.log('Empty!');
@@ -622,7 +658,7 @@ router.post('/view', function (request, response) {
                     });
                     final.push(res);
                 });
-                out.push(final);
+                out.push({fourth:final});
                 return out;
             }, out)
             .then(function (data) {
