@@ -1,0 +1,4 @@
+3
+21
+<option value="1@11,12,13">Court Complex- Anekal</option><option value="3@6,7,5">Court Complex- Doddaballapur</option><option value="4@8">Court Complex- Hosakote</option><option value="5@9,10">Court Complex- Nelamangala</option><option value="6@1,2,3,14,15">City Civil Court Complex-Bengalurur Rual</option>
+EOF
