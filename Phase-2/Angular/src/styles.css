@@ -14,6 +14,7 @@ body{
 
 footer{
   margin-top: -50px;
+  border: 0px;
 }
 
 .heading{
@@ -25,6 +26,8 @@ footer{
 .inner-content{
   position: static;
   padding-top: 70px;
+  margin-bottom: 0px;
+  margin-top: 0px;
 }
 
 a{
@@ -114,3 +117,5 @@ a{
 .loader_holder{
   padding-left: 2vw;
 }
+
+

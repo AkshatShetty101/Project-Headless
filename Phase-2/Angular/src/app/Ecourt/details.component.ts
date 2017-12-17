@@ -18,6 +18,7 @@ export class DetailsComponent implements OnInit {
 
   ngOnInit() {
     this.data = this.logic.getDetails();
+    console.log(this.data);
   }
 
   leave(){
