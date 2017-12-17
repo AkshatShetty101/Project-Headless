@@ -13,12 +13,13 @@
 }
 
 .logo{
-  padding-left: 170px;
   font-size: 23px;
   font-family: 'Oswald', sans-serif;
   word-spacing: 0.5vw;
-  margin-left: 4vw;
+  margin-left: 0;
   color: #9B9B9B!important;
+  position: absolute;
+  left: 43%;
 }
 
 .navbar-header{
@@ -28,7 +29,7 @@
   margin-left: 1vw;
 }
 .navbar-brand{
-  margin-left: 15%!important;
+  margin-left: 0!important;
 }
 
 @media (min-width: 1260px)and (max-width: 1300px) {
@@ -46,7 +47,7 @@
 
 @media (min-width: 991px)and (max-width: 1199px){
   .navbar-brand{
-    margin-left: 10%!important;
+    margin-left: 0%!important;
   }
   ul.home-work li {
     height: 230px;
@@ -55,7 +56,7 @@
 }
 @media (max-width: 992px){
   .navbar-brand{
-    margin-left: 8%!important;
+    margin-left: 0%!important;
     font-size: 15px;
   }
   .navbar-left{
