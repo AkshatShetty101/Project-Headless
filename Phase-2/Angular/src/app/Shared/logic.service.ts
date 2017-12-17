@@ -13,7 +13,8 @@ export class LogicService {
   username: any;
   searchesNumber: any;
   searchesDuration: any;
-  data: any;
+  data: any[] = new Array(5);
+  bdata: any;
   recordFlag: boolean;
   requests: any[];
   no_years: any;
@@ -62,8 +63,20 @@ export class LogicService {
     this.norecords.push(data);
   }
 
-  fillDetails(data: any){
-    this.data = data;
+  fillDetails(data1: any, data2: any, data3: any, data4: any, code: any){
+    this.data[0] = data1;
+    this.data[1] = data2;
+    this.data[2] = data3;
+    this.data[3] = data4;
+    this.data[4] = code;
+  }
+
+  fillBData(data: any){
+    this.bdata = data;
+  }
+
+  getBData(){
+    return this.bdata;
   }
 
   getDetails(){

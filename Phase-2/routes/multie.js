@@ -54,7 +54,7 @@ router.post('/', function (request, response) {
         var unique = gen().toString();
         code.push(unique);
         time.push(timestamp('HH'));
-        var horseman = new Horseman({timeout: 120000, interval: 0});
+        var horseman = new Horseman({timeout: 120000, interval: 50});
         var x = request.body.val1.toString();
         var y = request.body.val2.toString();
         var z = request.body.val3.toString();
@@ -587,7 +587,8 @@ router.post('/more', function (request, response) {
 router.post('/view', function (request, response) {
     var code = request.body.code.toString();
     var x = (parseInt(request.body.x)).toString();
-    var out = [];
+    var out = {};
+    out.code = code;
     if (horseman1["'" + code + "'"] !== undefined) {
         //noinspection JSCheckFunctionSignatures,SpellCheckingInspection
         horseman1["'" + code + "'"]
@@ -609,20 +610,18 @@ router.post('/view', function (request, response) {
             })
             .html('#caseHistoryDiv div')
             .then(function (data) {
-                console.log('done');
-                console.log(data);
-                // response.json(data);
-                out.push({first:data});
+                console.log('data');
+                out.first=data;
             })
             .html('table[class="Lower_court_table table table-responsive"]')
             .then(function (data) {
                 if (data !== undefined) {
-                    data = "<table style='text-align:left;' border='1'>" + data + "</table>";
-                    console.log('done');
-                    console.log(data);
-                    out.push({second:data});
+                    data = "<table width=100% border='1'>" + data + "</table>";
+                    console.log('data');
+                    out.second=data;
                 }
                 else {
+                    out.second=null;
                     console.log('Empty!');
                 }
 
@@ -630,33 +629,40 @@ router.post('/view', function (request, response) {
             .html('table[class="FIR_details_table table table-responsive table_o"]')
             .then(function (data) {
                 if (data !== undefined) {
-                    console.log('done');
-                    data = "<table style='width:100%;text-align:left;' border='1'>" + data + "</table>";
-                    console.log(data);
-                    out.push({third:data});
+                    data = "<table width=100% border='1'>" + data + "</table>";
+                    console.log('data');
+                    out.third=data;
                 }
                 else {
+                    out.third=null;
                     console.log('Empty!');
                 }
             })
             .evaluate(function (out) {
                 var final = [];
-                console.log('here!');
                 jQuery('table[class="history_table table table-responsive"]').find('tbody').find('tr').each(function () {
                     var res = [];
+                    var i=0;
                     jQuery(this).find('td').each(function () {
-                        res.push(jQuery(this).html());
+                        if(i!==1)
+                            res.push(jQuery(this).html());
+                        else
+                        {
+                            res.push(jQuery(this).find('a').html());
+                        }
+                        i++;
                     });
                     final.push(res);
                 });
-                out.push({fourth:final});
+                if(final.length === 0)
+                    out.fourth=null;
+                else
+                    out.fourth=final;
                 return out;
             }, out)
             .then(function (data) {
                 response.json(data);
             });
-
-
     }
     else {
         response.json("Too early");

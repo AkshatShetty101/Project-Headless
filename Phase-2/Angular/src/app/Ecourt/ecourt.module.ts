@@ -6,6 +6,7 @@ import {RecordsComponent} from "./records.component";
 import {InputComponent} from "./input.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { DetailsComponent } from './details.component';
+import { BdetailsComponent } from './bdetails.component';
 
 @NgModule({
   imports: [
@@ -14,6 +15,6 @@ import { DetailsComponent } from './details.component';
     ReactiveFormsModule,
     ecourtRouting
   ],
-  declarations: [ EcourtComponent, RecordsComponent, InputComponent, DetailsComponent]
+  declarations: [ EcourtComponent, RecordsComponent, InputComponent, DetailsComponent, BdetailsComponent]
 })
 export class EcourtModule { }

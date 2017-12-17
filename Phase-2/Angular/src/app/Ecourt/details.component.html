@@ -1,4 +1,39 @@
 <div class="row">
   <button class="btn btn-raised" (click)="leave()">Go back</button>
 </div>
-<div class="row" style="color: black!important;" [innerHTML]="data"></div>
+<div *ngIf="flag[0] == 1" class="row" style="color: black!important;" [innerHTML]="data[0]"></div>
+<div *ngIf="flag[1] == 1" class="row">
+  <h2>Subordinate Court Information</h2>
+</div>
+<div *ngIf="flag[1] == 1" class="row" style="color: black!important;" [innerHTML]="data[1]"></div>
+<div *ngIf="flag[2] == 1" class="row">
+  <h2>FIR Details</h2>
+</div>
+<div *ngIf="flag[2] == 1" class="row" style="color: black!important;" [innerHTML]="data[2]"></div>
+<div *ngIf="flag[3] == 1" class="row">
+  <h2>History of Case Hearing</h2>
+</div>
+<div *ngIf="flag[3] == 1" class="row">
+  <table width="100%" class="history_table table table-responsive" align="center" border="1">
+    <thead>
+    <tr>
+      <th scope="col">Judge</th>
+      <th scope="col" style="">Business On Date</th>
+      <th scope="col">Hearing Date</th>
+      <th scope="col">Purpose of hearing</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let row of data[3];let i = index">
+      <td align="left" [innerHTML]="row[0]"></td>
+      <td align="left">
+        <a (click)="viewBusiness(i)" [innerHTML]="row[1]"></a>
+      </td>
+      <td [innerHTML]="row[2]"></td>
+      <td [innerHTML]="row[3]"></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+
