@@ -54,7 +54,7 @@ router.post('/', function (request, response) {
         var unique = gen().toString();
         code.push(unique);
         time.push(timestamp('HH'));
-        var horseman = new Horseman({timeout: 15000, interval: 10});
+        var horseman = new Horseman({timeout: 120000, interval: 10});
         var x = request.body.val1.toString();
         var y = request.body.val2.toString();
         var z = request.body.val3.toString();
@@ -79,7 +79,6 @@ router.post('/', function (request, response) {
                     "year": year
                 });
                 return horseman.close();
-
             })
             .click('div[id="leftPaneMenuCS"]')
             .evaluate(function (x) {
@@ -99,15 +98,17 @@ router.post('/', function (request, response) {
             }, '#sess_dist_code', true)
             .catch(function (err) {
                 console.log("Unable to access site1");
-                response.send({
-                    "status": "-5",
-                    "html": "Unable to access site",
-                    "val1": x,
-                    "val2": y,
-                    "val3": z,
-                    "name": name,
-                    "year": year
-                });
+                if (response.headersSent === false) {
+                    response.send({
+                        "status": "-5",
+                        "html": "Unable to access site",
+                        "val1": x,
+                        "val2": y,
+                        "val3": z,
+                        "name": name,
+                        "year": year
+                    });
+                }
                 return horseman.close();
             })
             .screenshot("2.jpg")
@@ -278,8 +279,9 @@ router.post('/a', function (request, response) {
             .then(function (data) {
             })
             .screenshot('img.png')
-            .wait(2000)
+            .wait(7000)
             .evaluate(function (selector1, selector2) {
+                console.log('between!');
                 return {
                     height: jQuery(selector1).css("display"),
                     height1: jQuery(selector2).css("display"),
@@ -299,7 +301,6 @@ router.post('/a', function (request, response) {
             .catch(function (err) {
                 console.log("Timeout Occurred");
                 console.log("here!");
-                return horseman1["'" + code + "'"].close();
             })
             .evaluate(function (selector1, selector2, selector3, selector4, selector5, selector6, name, year) {
                 return {
@@ -576,7 +577,7 @@ router.post('/view', function (request, response) {
             .catch(function () {
                 console.log("Unable to access site");
                 //noinspection NodeModulesDependencies
-                response.send({"status": "-5", "html": "Unable to access site"});
+                response.send({status: "-5", html: "Unable to access site"});
                 return horseman1["'" + code + "'"].close();
             })
             .html('#caseHistoryDiv div')
